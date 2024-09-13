@@ -1,5 +1,5 @@
 ﻿using SimoneAPI.EndpointHandlers;
-using SimoneAPI.Tobe.Features;
+using SimoneAPI.Tobe.Features.Dancer;
 using System.Runtime.CompilerServices;
 
 namespace SimoneAPI.EndpointExtensions

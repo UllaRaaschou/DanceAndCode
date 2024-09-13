@@ -8,7 +8,7 @@ using SimoneAPI.DbContexts;
 using SimoneAPI.Dtos.Dancer;
 using SimoneAPI.Dtos.Team;
 
-namespace SimoneAPI.Tobe.Features
+namespace SimoneAPI.Tobe.Features.Dancer
 {
     public static class UpdateDancer
     {
@@ -19,7 +19,7 @@ namespace SimoneAPI.Tobe.Features
         }
 
         //public static async Task<Results<NotFound, IEnumerable<SearchDancerResponceDto>>> SearchForDancer(SimoneDbContext dbContext,
-        
+
 
         public static async Task<Results<NotFound, Ok<UpdateDancerResponceDto>>> Put(SimoneDbContext dbContext,
             IMapper mapper, Guid dancerId, UpdateDancerDto updateDancerDto)
@@ -37,7 +37,7 @@ namespace SimoneAPI.Tobe.Features
             if (dancerDataModel.TeamDancerRelations != null)
             {
                 dancerDataModel.TeamDancerRelations.Clear();
-            
+
                 foreach (var teamName in updateDancerDto.Teams ?? Enumerable.Empty<string>())
                 {
                     var teamDataModel = await dbContext.TeamDataModels.FirstOrDefaultAsync(t =>
@@ -58,28 +58,28 @@ namespace SimoneAPI.Tobe.Features
 
             var responseDto = mapper.Map<UpdateDancerResponceDto>(dancerDataModel);
 
-            if(dancerDataModel.TeamDancerRelations != null)
+            if (dancerDataModel.TeamDancerRelations != null)
             {
-                foreach(var relation in dancerDataModel.TeamDancerRelations) 
+                foreach (var relation in dancerDataModel.TeamDancerRelations)
                 {
                     var teamDataModel = await dbContext.TeamDataModels.FirstOrDefaultAsync(t => t.TeamId == relation.TeamId);
                     var teamName = teamDataModel?.Name;
-                    if (teamName != null) 
+                    if (teamName != null)
                     {
                         responseDto.Teams.Add(teamName);
-                    }                    
+                    }
                 }
             }
 
             return TypedResults.Ok(responseDto);
-        }           
-        
-        public class UpdateDancerDto 
+        }
+
+        public class UpdateDancerDto
         {
             public Guid DancerId { get; set; }
             public string Name { get; set; } = string.Empty;
             public DateTime TimeOfBirth { get; set; }
-            public IEnumerable<String>? Teams { get; set; } = null;
+            public IEnumerable<string>? Teams { get; set; } = null;
         }
 
         public class UpdateDancerResponceDto
@@ -87,7 +87,7 @@ namespace SimoneAPI.Tobe.Features
             public Guid DancerId { get; set; }
             public string Name { get; set; } = string.Empty;
             public DateTime TimeOfBirth { get; set; }
-            public List<String> Teams { get; set; } = new List<String>();
+            public List<string> Teams { get; set; } = new List<string>();
         }
 
         //public class DancerDataModel

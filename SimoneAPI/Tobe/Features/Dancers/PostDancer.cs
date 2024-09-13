@@ -4,7 +4,7 @@ using SimoneAPI.DbContexts;
 using SimoneAPI.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace SimoneAPI.Tobe.Features
+namespace SimoneAPI.Tobe.Features.Dancer
 {
     public static class PostDancer
     {

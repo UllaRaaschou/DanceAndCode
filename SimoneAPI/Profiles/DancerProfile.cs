@@ -3,9 +3,9 @@ using SimoneAPI.DataModels;
 using SimoneAPI.Dtos.Dancer;
 using SimoneAPI.Dtos.Team;
 using SimoneAPI.Entities;
-using SimoneAPI.Tobe.Features;
-using static SimoneAPI.Tobe.Features.PostDancer;
-using static SimoneAPI.Tobe.Features.UpdateDancer;
+using SimoneAPI.Tobe.Features.Dancer;
+using static SimoneAPI.Tobe.Features.Dancer.PostDancer;
+using static SimoneAPI.Tobe.Features.Dancer.UpdateDancer;
 
 
 namespace SimoneAPI.Profiles

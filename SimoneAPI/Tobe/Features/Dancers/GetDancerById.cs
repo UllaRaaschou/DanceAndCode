@@ -4,7 +4,7 @@ using SimoneAPI.DbContexts;
 using SimoneAPI.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace SimoneAPI.Tobe.Features
+namespace SimoneAPI.Tobe.Features.Dancer
 {
 
     public static class GetDancerById
@@ -28,7 +28,7 @@ namespace SimoneAPI.Tobe.Features
     {
         public Guid DancerId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public IEnumerable<String> Teams { get; set; } = new List<String>();
+        public IEnumerable<string> Teams { get; set; } = new List<string>();
 
     }
 }

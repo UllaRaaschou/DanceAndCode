@@ -5,7 +5,7 @@ using SimoneAPI.DbContexts;
 using System.Runtime.CompilerServices;
 
 
-namespace SimoneAPI.Tobe.Features
+namespace SimoneAPI.Tobe.Features.Dancer
 {
     public static class DeleteDancer
     {
@@ -21,7 +21,7 @@ namespace SimoneAPI.Tobe.Features
             {
                 return TypedResults.NotFound();
             }
-            
+
             dbContext.Remove(dancerDataModel);
             return TypedResults.NoContent();
 

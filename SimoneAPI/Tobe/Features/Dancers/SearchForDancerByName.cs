@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
 
-namespace SimoneAPI.Tobe.Features
+namespace SimoneAPI.Tobe.Features.Dancer
 {
     public static class SearchForDancerByName
     {
@@ -50,10 +50,10 @@ namespace SimoneAPI.Tobe.Features
         //    public DancerDataModel DancerDataModel { get; set; } = null!;
         //}
 
-        public class TeamDataDto 
+        public class TeamDataDto
         {
             public Guid TeamId { get; set; }
-            public int Number {  get; set; }
+            public int Number { get; set; }
             public string Name { get; set; }
         }
 
@@ -62,7 +62,8 @@ namespace SimoneAPI.Tobe.Features
             public Guid DancerId { get; set; }
             public string Name { get; set; } = string.Empty;
             public DateTime TimeOfBirth { get; set; }
-            public IEnumerable<TeamDataDto> Teams { get; set; } = null;
+            public IEnumerable<TeamDataDto> Teams { get; set; } = new List<TeamDataDto>();
+            public bool TrialLesson { get; set; } = false;  
         }
     }
 }
