@@ -1,4 +1,5 @@
 ﻿using SimoneAPI.EndpointHandlers;
+using SimoneAPI.Tobe.Features;
 using System.Runtime.CompilerServices;
 
 namespace SimoneAPI.EndpointExtensions
@@ -7,17 +8,18 @@ namespace SimoneAPI.EndpointExtensions
     {
         public static void RegisterDancersEndpoints(this IEndpointRouteBuilder endpointRouiteBuilder)
         {
-            var dancersEndpoints = endpointRouiteBuilder.MapGroup("/dancers").RequireAuthorization();
+            var dancersEndpoints = endpointRouiteBuilder.MapGroup("/dancers");
+                //.RequireAuthorization();
             var dancersWithGuidEndpoints = dancersEndpoints.MapGroup("/{dancerId:guid}");
 
-            dancersWithGuidEndpoints.MapGet("", DancersHandlers.GetDancerAsync)
+            dancersWithGuidEndpoints.MapGet("", DancersHandlers.GetDancerByIdAsync)
                 .WithName("GetDancerAsync")
                 .WithOpenApi()
                 .WithSummary("Get a dancer by adding an id")
                 .WithDescription("This could be a longer desccription of the process");
-            dancersEndpoints.MapGet("", DancersHandlers.GetDancersAsync);
-            dancersEndpoints.MapPost("", DancersHandlers.PostDancer);
-            dancersWithGuidEndpoints.MapPut("", DancersHandlers.PutDancer);
+            dancersEndpoints.MapGet("", DancersHandlers.GetDancersOnTeamAsync);
+            dancersEndpoints.MapPost("", PostDancer.Post);
+            //dancersWithGuidEndpoints.MapPut("", DancersHandlers.PutDancer);
                 //.AddEndpointFilter(async(dbContext, next) =>
                 //{ 
                 //    var result = await next.Invoke(dbContext);
@@ -27,7 +29,8 @@ namespace SimoneAPI.EndpointExtensions
 
         public static void RegisterTeamsEndpoints(this IEndpointRouteBuilder endpointRouiteBuilder)
         {
-            var teamsEndpoints = endpointRouiteBuilder.MapGroup("/teams").RequireAuthorization();
+            var teamsEndpoints = endpointRouiteBuilder.MapGroup("/teams");
+                //.RequireAuthorization();
             var teamsWithGuidEndpoints = teamsEndpoints.MapGroup("/{teamId:guid}");
 
             teamsEndpoints.MapPost("", () =>

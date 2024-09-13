@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
@@ -10,7 +11,7 @@ namespace SimoneAPI.EndpointHandlers
 {
     public class DancersHandlers
     {
-        public static async Task<IResult> GetDancersAsync(SimoneDbContext dbContext, IMapper mapper, Guid? teamId)
+        public static async Task<IResult> GetDancersOnTeamAsync(SimoneDbContext dbContext, IMapper mapper, Guid? teamId)
         {
 
             var listOfEnrolledDancerDataModels = await dbContext.TeamDancerRelations
@@ -30,24 +31,24 @@ namespace SimoneAPI.EndpointHandlers
 
         }
 
-        public static async Task<IResult> PostDancer(SimoneDbContext dbContext, IMapper mapper, PostDancerDto dto)
-        {
-            var dancer = mapper.Map<Dancer>(dto);
-            var datamodel = mapper.Map<DancerDataModel>(dancer);
-            dbContext.DancerDataModels.Add(datamodel);
-            await dbContext.SaveChangesAsync();
+        //public static async Task<IResult> PostDancer(SimoneDbContext dbContext, IMapper mapper, PostDancerDto dto)
+        //{
+        //    var dancer = mapper.Map<Dancer>(dto);
+        //    var datamodel = mapper.Map<DancerDataModel>(dancer);
+        //    dbContext.DancerDataModels.Add(datamodel);
+        //    await dbContext.SaveChangesAsync();
 
-            var dancerResponse = mapper.Map<Dancer>(datamodel);
-            var postDancerResponseDto = mapper.Map<PostDancerResponseDto>(dancerResponse);
+        //    var dancerResponse = mapper.Map<Dancer>(datamodel);
+        //    var postDancerResponseDto = mapper.Map<PostDancerResponseDto>(dancerResponse);
 
-            return TypedResults.CreatedAtRoute(
-                routeName: "GetDancerAsync",
-                routeValues:
-                new { dancerId = postDancerResponseDto.DancerId }
-               );
-        }
+        //    return TypedResults.CreatedAtRoute(
+        //        routeName: "GetDancerAsync",
+        //        routeValues:
+        //        new { dancerId = postDancerResponseDto.DancerId }
+        //       );
+        //}
 
-        public static async Task<Results<NotFound, Ok<RequestDancerDto>>> GetDancerAsync(SimoneDbContext dbContext,
+        public static async Task<Results<NotFound, Ok<RequestDancerDto>>> GetDancerByIdAsync(SimoneDbContext dbContext,
             IMapper mapper, Guid dancerId)
         {
             var datamodel = await dbContext.DancerDataModels
@@ -59,23 +60,46 @@ namespace SimoneAPI.EndpointHandlers
 
         }
 
-        public static async Task<Results<NotFound, NoContent>> PutDancer(SimoneDbContext dbContext,
-            IMapper mapper, Guid dancerId, UpdateDancerDto updateDancerDto)
-        {
-            var dancerDataModel = await dbContext.DancerDataModels.FirstOrDefaultAsync(d =>
-            d.DancerId == dancerId);
 
-            if (dancerDataModel == null)
-            {
-                return TypedResults.NotFound();
-            }
+        //public static async Task<IResult> GetDancersByNameAsync(SimoneDbContext dbContext,
+        //    IMapper mapper, [FromQuery] string? name) =>
+        //    {
+                
+        //    }
 
-            mapper.Map(updateDancerDto, dancerDataModel);
-            await dbContext.SaveChangesAsync();
+        //{
+        //    return mapper.Map<IEnumerable<RequestDancerDto>> 
+                
+                
+                
+        //        await dbContext.DancerDataModels
+        //        .Where(d => name == null || d.Name == name);
+                
+        //    var dancer = mapper.Map<Dancer>(datamodel);
+        //    return (dancer != null)
+        //    ? TypedResults.Ok(mapper.Map<RequestDancerDto>(dancer))
+        //    : TypedResults.NotFound();
 
-            return TypedResults.NoContent();
+        //}
 
-        }
+
+        //public static async Task<Results<NotFound, NoContent>> PutDancer(SimoneDbContext dbContext,
+        //    IMapper mapper, Guid dancerId, UpdateDancerDto updateDancerDto)
+        //{
+        //    var dancerDataModel = await dbContext.DancerDataModels.FirstOrDefaultAsync(d =>
+        //    d.DancerId == dancerId);
+
+        //    if (dancerDataModel == null)
+        //    {
+        //        return TypedResults.NotFound();
+        //    }
+
+        //    mapper.Map(updateDancerDto, dancerDataModel);
+        //    await dbContext.SaveChangesAsync();
+
+        //    return TypedResults.NoContent();
+
+        //}
 
         public static async Task<Results<NotFound, NoContent>> DeleteDancer(SimoneDbContext dbContext,
         IMapper mapper, Guid dancerId)

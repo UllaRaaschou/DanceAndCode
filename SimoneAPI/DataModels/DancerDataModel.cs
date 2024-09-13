@@ -5,11 +5,11 @@ namespace SimoneAPI.DataModels
     public class DancerDataModel
     {
         public Guid DancerId { get; set; }
-        public string Name { get; set; } = string.Empty;    
+        public string Name { get; set; } = string.Empty;
         public DateTime TimeOfBirth { get; set; }
-        public ICollection<TeamDancerRelation>? TeamDancerRelations { get; set; } = new HashSet<TeamDancerRelation>();
+        public ICollection<TeamDancerRelation> TeamDancerRelations { get; set; } = new HashSet<TeamDancerRelation>();
 
-        
+
 
     }
 }

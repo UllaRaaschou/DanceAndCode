@@ -1,12 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Xml.Linq;
-using SimoneAPI.Entities;
 using SimoneAPI.DataModels;
 
 namespace SimoneAPI.DbContexts
 {
-    
+
 
     public class SimoneDbContext: DbContext
     {

@@ -3,6 +3,7 @@ using SimoneAPI.DataModels;
 using SimoneAPI.Dtos.Dancer;
 using SimoneAPI.Dtos.Team;
 using SimoneAPI.Entities;
+using SimoneAPI.Tobe.Features;
 
 namespace SimoneAPI.Profiles
 {
@@ -10,6 +11,11 @@ namespace SimoneAPI.Profiles
     {
         public TeamProfile() 
         {
+
+            //CreateMap<TeamDataModel, SearchForTeamByName.SearchTeamResponceDto>()
+            //    .ForMember(dest => dest.)
+            
+            
             //TODO: Tilføjet manglende mapping så get->Teams virker.
             CreateMap<TeamDataModel, RequestTeamDto>();
 
