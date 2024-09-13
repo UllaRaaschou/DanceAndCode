@@ -30,7 +30,8 @@ namespace SimoneAPI.Tobe.Features.Dancer
                 .Add(new TeamDancerRelation
                 {
                     TeamId = teamId,
-                    DancerId = dto.DancerId
+                    DancerId = dto.DancerId,
+                    IsTrialLesson = true
 
                 });
             var updatedDto = mapper.Map<DancerDto>(dancerDataModel);

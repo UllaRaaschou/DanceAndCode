@@ -12,6 +12,8 @@ namespace SimoneAPI.DataModels
         public TeamDataModel TeamDataModel { get; set; } = null!;
         public DancerDataModel DancerDataModel { get; set; } = null!;
 
+        public bool IsTrialLesson { get; set; } = false; 
+
         public TeamDancerRelation() { }
         
 
