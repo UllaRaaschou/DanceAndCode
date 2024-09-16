@@ -17,6 +17,32 @@ namespace SimoneAPI.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
+            modelBuilder.Entity("SimoneAPI.DataModels.Attendance", b =>
+                {
+                    b.Property<Guid>("AttendanceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsPresent")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("TeamDancerRelationId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AttendanceId");
+
+                    b.HasIndex("TeamDancerRelationId");
+
+                    b.ToTable("Attendances");
+                });
+
             modelBuilder.Entity("SimoneAPI.DataModels.DancerDataModel", b =>
                 {
                     b.Property<Guid>("DancerId")
@@ -51,12 +77,15 @@ namespace SimoneAPI.Migrations
 
             modelBuilder.Entity("SimoneAPI.DataModels.TeamDancerRelation", b =>
                 {
-                    b.Property<Guid>("TeamDancerRelationId")
+                    b.Property<Guid?>("TeamDancerRelationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("DancerId")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsTrialLesson")
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("TeamId")
                         .HasColumnType("TEXT");
@@ -72,27 +101,30 @@ namespace SimoneAPI.Migrations
                     b.HasData(
                         new
                         {
-                            TeamDancerRelationId = new Guid("0b7681c5-6d18-440e-a578-f00c5573e553"),
+                            TeamDancerRelationId = new Guid("292e4a4b-82f3-4554-ae34-a940729bdfb3"),
                             DancerId = new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
+                            IsTrialLesson = false,
                             TeamId = new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("e6b822b6-318d-406f-bd28-d30c4cddf6ab"),
+                            TeamDancerRelationId = new Guid("bd1c53dc-e315-4e17-8449-2a118d611f89"),
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
+                            IsTrialLesson = false,
                             TeamId = new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("8c78c350-a137-48b2-ba04-e16cf29a718b"),
+                            TeamDancerRelationId = new Guid("69f47309-7c41-48dd-98f0-73c828890150"),
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
+                            IsTrialLesson = false,
                             TeamId = new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
                         });
                 });
 
             modelBuilder.Entity("SimoneAPI.DataModels.TeamDataModel", b =>
                 {
-                    b.Property<Guid?>("TeamId")
+                    b.Property<Guid>("TeamId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -128,6 +160,17 @@ namespace SimoneAPI.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SimoneAPI.DataModels.Attendance", b =>
+                {
+                    b.HasOne("SimoneAPI.DataModels.TeamDancerRelation", "TeamDancerRelation")
+                        .WithMany("Attendances")
+                        .HasForeignKey("TeamDancerRelationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TeamDancerRelation");
+                });
+
             modelBuilder.Entity("SimoneAPI.DataModels.TeamDancerRelation", b =>
                 {
                     b.HasOne("SimoneAPI.DataModels.DancerDataModel", "DancerDataModel")
@@ -150,6 +193,11 @@ namespace SimoneAPI.Migrations
             modelBuilder.Entity("SimoneAPI.DataModels.DancerDataModel", b =>
                 {
                     b.Navigation("TeamDancerRelations");
+                });
+
+            modelBuilder.Entity("SimoneAPI.DataModels.TeamDancerRelation", b =>
+                {
+                    b.Navigation("Attendances");
                 });
 
             modelBuilder.Entity("SimoneAPI.DataModels.TeamDataModel", b =>

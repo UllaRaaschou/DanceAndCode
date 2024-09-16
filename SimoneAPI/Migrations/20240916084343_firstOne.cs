@@ -46,7 +46,8 @@ namespace SimoneAPI.Migrations
                 {
                     TeamDancerRelationId = table.Column<Guid>(type: "TEXT", nullable: false),
                     TeamId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    DancerId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    DancerId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IsTrialLesson = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,6 +63,27 @@ namespace SimoneAPI.Migrations
                         column: x => x.TeamId,
                         principalTable: "TeamDataModels",
                         principalColumn: "TeamId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Attendances",
+                columns: table => new
+                {
+                    AttendanceId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    TeamDancerRelationId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsPresent = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Note = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attendances", x => x.AttendanceId);
+                    table.ForeignKey(
+                        name: "FK_Attendances_TeamDancerRelations_TeamDancerRelationId",
+                        column: x => x.TeamDancerRelationId,
+                        principalTable: "TeamDancerRelations",
+                        principalColumn: "TeamDancerRelationId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -85,13 +107,18 @@ namespace SimoneAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "TeamDancerRelations",
-                columns: new[] { "TeamDancerRelationId", "DancerId", "TeamId" },
+                columns: new[] { "TeamDancerRelationId", "DancerId", "IsTrialLesson", "TeamId" },
                 values: new object[,]
                 {
-                    { new Guid("0b7681c5-6d18-440e-a578-f00c5573e553"), new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
-                    { new Guid("8c78c350-a137-48b2-ba04-e16cf29a718b"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
-                    { new Guid("e6b822b6-318d-406f-bd28-d30c4cddf6ab"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") }
+                    { new Guid("292e4a4b-82f3-4554-ae34-a940729bdfb3"), new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
+                    { new Guid("69f47309-7c41-48dd-98f0-73c828890150"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
+                    { new Guid("bd1c53dc-e315-4e17-8449-2a118d611f89"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendances_TeamDancerRelationId",
+                table: "Attendances",
+                column: "TeamDancerRelationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeamDancerRelations_DancerId",
@@ -107,6 +134,9 @@ namespace SimoneAPI.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Attendances");
+
             migrationBuilder.DropTable(
                 name: "TeamDancerRelations");
 

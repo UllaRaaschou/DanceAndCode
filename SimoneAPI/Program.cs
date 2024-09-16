@@ -8,6 +8,7 @@ using SimoneAPI.Dtos.Dancer;
 using SimoneAPI.Dtos.Team;
 using SimoneAPI.EndpointExtensions;
 using SimoneAPI.Entities;
+using SimoneAPI.Tobe.Features.Dancer;
 using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,13 +47,15 @@ builder.Services.AddAuthentication().AddJwtBearer();
 builder.Services.AddAuthorization();
 
 
-
 //Har profiler som parametre, som scannes for mapping-konfigurationer
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
 var app = builder.Build();
 
+//TODO: Register endpoints
+// NAMING IS IMPORTENT !!
+app.RegisterDancerEndpoint();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -80,9 +83,9 @@ if (!app.Environment.IsDevelopment())
     app.UseAuthorization();
 }
 
-
-app.RegisterDancersEndpoints();
-app.RegisterTeamsEndpoints();
+// TODO remove!!!!!
+//app.RegisterDancersEndpoints();
+//app.RegisterTeamsEndpoints();
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>

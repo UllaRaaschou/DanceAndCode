@@ -9,6 +9,8 @@ namespace SimoneAPI.DataModels
         public DateTime TimeOfBirth { get; set; }
         public ICollection<TeamDancerRelation> TeamDancerRelations { get; set; } = new HashSet<TeamDancerRelation>();
 
+       
+
 
 
     }

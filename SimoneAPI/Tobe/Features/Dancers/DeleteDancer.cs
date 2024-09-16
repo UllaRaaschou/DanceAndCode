@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DbContexts;
 using System.Runtime.CompilerServices;
@@ -9,12 +10,14 @@ namespace SimoneAPI.Tobe.Features.Dancer
 {
     public static class DeleteDancer
     {
-        public static void RegisterDancerEndpoint(this IEndpointRouteBuilder endpointRouteBuilder)
+        //TODO: change to WebApplication
+        public static void RegisterDancerEndpoint(this WebApplication endpointRouteBuilder)
         {
             endpointRouteBuilder.MapDelete("/dancers", Delete);
         }
 
-        public static async Task<IResult> Delete(SimoneDbContext dbContext, IMapper mapper, DancerDto dto)
+        //TODO:ADDED [FromBody]
+        public static async Task<IResult> Delete(SimoneDbContext dbContext, IMapper mapper, [FromBody] DancerDto dto)
         {
             var dancerDataModel = await dbContext.DancerDataModels.FirstOrDefaultAsync(d => d.DancerId == dto.DancerId);
             if (dancerDataModel == null)

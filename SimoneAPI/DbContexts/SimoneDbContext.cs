@@ -10,6 +10,7 @@ namespace SimoneAPI.DbContexts
         public DbSet<TeamDancerRelation> TeamDancerRelations { get; set; }
         public  DbSet<DancerDataModel> DancerDataModels { get; set; }
         public DbSet<TeamDataModel> TeamDataModels { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
        
         public SimoneDbContext(DbContextOptions<SimoneDbContext> options) : base(options)
         {
@@ -24,13 +25,16 @@ namespace SimoneAPI.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
             modelBuilder.Entity<TeamDancerRelation>()
                 .HasKey(tdr => tdr.TeamDancerRelationId);
 
+            modelBuilder.Entity<TeamDancerRelation>()
+                .HasMany(tdr => tdr.Attendances)
+                .WithOne(a => a.TeamDancerRelation)
+                .HasForeignKey(a => a.TeamDancerRelationId);
+
             modelBuilder.Entity<TeamDataModel>()
                 .HasKey(t => t.TeamId);
-
 
             modelBuilder.Entity<TeamDataModel>()
                 .HasMany(t => t.TeamDancerRelations)

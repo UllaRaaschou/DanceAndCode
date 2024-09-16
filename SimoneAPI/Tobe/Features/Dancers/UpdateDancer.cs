@@ -24,8 +24,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
         public static async Task<Results<NotFound, Ok<UpdateDancerResponceDto>>> Put(SimoneDbContext dbContext,
             IMapper mapper, Guid dancerId, UpdateDancerDto updateDancerDto)
         {
-            var dancerDataModel = await dbContext.DancerDataModels.FirstOrDefaultAsync(d =>
-            d.DancerId == dancerId);
+            var dancerDataModel = await dbContext.DancerDataModels.FirstOrDefaultAsync(d => d.DancerId == dancerId);
 
             if (dancerDataModel == null)
             {
