@@ -5,14 +5,14 @@ using SimoneAPI.DbContexts;
 
 namespace SimoneAPI.Tobe.Features.Attendances
 {
-    public class PutAttendance
+    public class UpdateAttendance
     {
-        public void RegisterEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
+        public void RegisterAttendanceEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
         {
-            endpointRouteBuilder.MapPut("/TeamDancerRelations/Attendances", Put);
+            endpointRouteBuilder.MapPut("", Put);
         }
 
-        public async Task<IResult> Put(SimoneDbContext dBContext, IMapper mapper, PutAttendanceDto dto)
+        public static async Task<IResult> Put(SimoneDbContext dBContext, IMapper mapper, PutAttendanceDto dto)
         {
             var attendanceToUpdate = await dBContext.Attendances.FirstOrDefaultAsync( a => a.AttendanceId == dto.AttendanceId );
             if (attendanceToUpdate == null)

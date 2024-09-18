@@ -27,6 +27,20 @@ namespace SimoneAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Teachers",
+                columns: table => new
+                {
+                    StaffId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Role = table.Column<int>(type: "INTEGER", nullable: false),
+                    TimeofBirth = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teachers", x => x.StaffId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TeamDataModels",
                 columns: table => new
                 {
@@ -38,6 +52,26 @@ namespace SimoneAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TeamDataModels", x => x.TeamId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RegisteredLesson",
+                columns: table => new
+                {
+                    LessonId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    TeamId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    StaffId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RegisteredLesson", x => x.LessonId);
+                    table.ForeignKey(
+                        name: "FK_RegisteredLesson_Teachers_StaffId",
+                        column: x => x.StaffId,
+                        principalTable: "Teachers",
+                        principalColumn: "StaffId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,15 +144,20 @@ namespace SimoneAPI.Migrations
                 columns: new[] { "TeamDancerRelationId", "DancerId", "IsTrialLesson", "TeamId" },
                 values: new object[,]
                 {
-                    { new Guid("292e4a4b-82f3-4554-ae34-a940729bdfb3"), new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
-                    { new Guid("69f47309-7c41-48dd-98f0-73c828890150"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
-                    { new Guid("bd1c53dc-e315-4e17-8449-2a118d611f89"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") }
+                    { new Guid("20cbc2f7-68ed-4a0c-a401-08b4609b36cc"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
+                    { new Guid("471b78d5-dd53-4fa9-bcb1-d7f51f2c165d"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
+                    { new Guid("e9fb5d41-506f-40ab-8f3d-79c1d968782a"), new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attendances_TeamDancerRelationId",
                 table: "Attendances",
                 column: "TeamDancerRelationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RegisteredLesson_StaffId",
+                table: "RegisteredLesson",
+                column: "StaffId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeamDancerRelations_DancerId",
@@ -138,7 +177,13 @@ namespace SimoneAPI.Migrations
                 name: "Attendances");
 
             migrationBuilder.DropTable(
+                name: "RegisteredLesson");
+
+            migrationBuilder.DropTable(
                 name: "TeamDancerRelations");
+
+            migrationBuilder.DropTable(
+                name: "Teachers");
 
             migrationBuilder.DropTable(
                 name: "DancerDataModels");

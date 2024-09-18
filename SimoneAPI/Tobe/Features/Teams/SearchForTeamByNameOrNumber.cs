@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
@@ -7,18 +8,20 @@ namespace SimoneAPI.Tobe.Features
 {
     public static class SearchForTeamByName
     {
-        public static void RegisterDancerEndponts(this IEndpointRouteBuilder endpointRouteBuilder)
-        {
-            endpointRouteBuilder.MapGet("/Teams", Get);
+        //public static void RegisterDancerEndponts(this IEndpointRouteBuilder endpointRouteBuilder)
+        //{
+        //    endpointRouteBuilder.MapGet("/SearchTeam", Get);
 
-        }
+        //}
 
         public static async Task<IResult> Get(SimoneDbContext dbContext,
-            IMapper mapper, GetTeamDto dto)
+            IMapper mapper, [FromQuery] String? name, [FromQuery] int? number)
         {
-            IEnumerable<TeamDataModel> models = await dbContext.TeamDataModels
-                .Include(t => t.TeamDancerRelations)
-                .Where(d => d.Name.Contains(dto.Name) || d.Number == dto.Number).ToListAsync();
+            IEnumerable<TeamDataModel> models = await dbContext.TeamDataModels.Include(t => t.TeamDancerRelations)
+                .Where(d => name == null || d.Name.Contains(name))
+                .Where(d => number > 0 || d.Number == number)
+                .ToListAsync();
+              
 
             if (!models.Any())
             {
@@ -40,7 +43,7 @@ namespace SimoneAPI.Tobe.Features
             public Guid TeamId { get; set; }
             public string Name { get; set; } = string.Empty;
             public int Number { get; set; } = 0;            
-            public IEnumerable<DancerDto> DancersOnTeam { get; set; } = Enumerable.Empty<DancerDto>();
+            public IEnumerable<DancerDto> DancersOnTeam { get; set; }
         }
 
         public class DancerDto

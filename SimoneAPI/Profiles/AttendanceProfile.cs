@@ -1,7 +1,7 @@
 ﻿using SimoneAPI.DataModels;
-using static SimoneAPI.Tobe.Features.Attendances.AddAttendance;
+using static SimoneAPI.Tobe.Features.Attendances.PostAttendance;
 using AutoMapper;
-using static SimoneAPI.Tobe.Features.Attendances.PutAttendance;
+using static SimoneAPI.Tobe.Features.Attendances.UpdateAttendance;
 
 namespace SimoneAPI.Profiles
 {

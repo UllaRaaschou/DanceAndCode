@@ -1,15 +1,7 @@
-using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
-using SimoneAPI.Dtos.Dancer;
-using SimoneAPI.Dtos.Team;
 using SimoneAPI.EndpointExtensions;
-using SimoneAPI.Entities;
-using SimoneAPI.Tobe.Features.Dancer;
-using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,7 +47,11 @@ var app = builder.Build();
 
 //TODO: Register endpoints
 // NAMING IS IMPORTENT !!
-app.RegisterDancerEndpoint();
+app.RegisterDancersEndpoints();
+app.RegisterTeamsEndpoints();
+app.RegisterAttendanceEndpoints();
+app.RegisterStaffEndpoints();
+
 
 using (var scope = app.Services.CreateScope())
 {

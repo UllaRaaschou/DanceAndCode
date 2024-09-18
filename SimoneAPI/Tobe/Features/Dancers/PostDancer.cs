@@ -8,7 +8,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
 {
     public static class PostDancer
     {
-        public static void RegisterDancerEndponts(this IEndpointRouteBuilder endpointRouteBuilder)
+        public static void RegisterDancerEndpoint(this WebApplication endpointRouteBuilder)
         {
             endpointRouteBuilder.MapPost("/Dancers", Post);
 
@@ -24,11 +24,6 @@ namespace SimoneAPI.Tobe.Features.Dancer
 
             return TypedResults.Created("/dancers", postDancerResponseDto);
 
-            //return TypedResults.CreatedAtRoute(
-            //    routeName: "GetDancerAsync",
-            //    routeValues:
-            //    new { dancerId = postDancerResponseDto.DancerId }
-            //   );
         }
 
         public class PostDancerDto
@@ -41,7 +36,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
         public class PostDancerResponseDto
         {
             public Guid DancerId { get; set; }
-            public string Name { get; set; }
+            public string Name { get; set; } = string.Empty ;
             public DateTime TimeOfBirth { get; set; }
         }
     }

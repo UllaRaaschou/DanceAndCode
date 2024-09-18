@@ -6,7 +6,7 @@ namespace SimoneAPI.Tobe.Features.Teams
 {
     public static class AddDancerToTeam
     {
-        public static void RegisterEndpoint (IEndpointRouteBuilder endPointRouteBuilder) 
+        public static void RegisterTeamsWithGuidEndpoint (IEndpointRouteBuilder endPointRouteBuilder) 
         {
             endPointRouteBuilder.MapPut("/Teams/{teamId}/dancers", Put);
         }

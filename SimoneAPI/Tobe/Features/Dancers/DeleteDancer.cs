@@ -17,26 +17,28 @@ namespace SimoneAPI.Tobe.Features.Dancer
         }
 
         //TODO:ADDED [FromBody]
-        public static async Task<IResult> Delete(SimoneDbContext dbContext, IMapper mapper, [FromBody] DancerDto dto)
+        public static async Task<IResult> Delete(SimoneDbContext dbContext, 
+            IMapper mapper, Guid dancerId)
         {
-            var dancerDataModel = await dbContext.DancerDataModels.FirstOrDefaultAsync(d => d.DancerId == dto.DancerId);
+            var dancerDataModel = await dbContext.DancerDataModels.FirstOrDefaultAsync(d => d.DancerId == dancerId);
             if (dancerDataModel == null)
             {
                 return TypedResults.NotFound();
             }
 
-            dbContext.Remove(dancerDataModel);
+            dbContext.DancerDataModels.Remove(dancerDataModel);
+            await dbContext.SaveChangesAsync();
             return TypedResults.NoContent();
 
         }
 
-        public class DancerDto
-        {
-            public Guid DancerId { get; set; }
-            public string Name { get; set; } = string.Empty;
-            public DateTime TimeOfBirth { get; set; }
-            public IEnumerable<TeamDataDto> Teams { get; set; } = null;
-        }
+        //public class DancerDto
+        //{
+        //    public Guid DancerId { get; set; }
+        //    public string Name { get; set; } = string.Empty;
+        //    public DateTime TimeOfBirth { get; set; }
+        //    public IEnumerable<TeamDataDto> Teams { get; set; } = null;
+        //}
 
         public class TeamDataDto
         {

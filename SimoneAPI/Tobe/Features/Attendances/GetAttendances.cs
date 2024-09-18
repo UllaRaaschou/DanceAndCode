@@ -7,12 +7,12 @@ namespace SimoneAPI.Tobe.Features.Attendances
 {
     public class GetAttendances
     {
-        public void RegisterEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
+        public void RegisterAttendanceEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
         {
-            endpointRouteBuilder.MapGet("/TeamDancerRelations/Attendances", Get);
+            endpointRouteBuilder.MapGet("", Get);
         }
 
-        public async Task<IResult> Get(SimoneDbContext dBContext, IMapper mapper, Guid dancerId, Guid teamId)
+        public static async Task<IResult> Get(SimoneDbContext dBContext, IMapper mapper, Guid dancerId, Guid teamId)
         {
             var relation = await dBContext.TeamDancerRelations
                 .Include(tdr => tdr.Attendances)
@@ -26,5 +26,5 @@ namespace SimoneAPI.Tobe.Features.Attendances
 
         
     }
-}
+
 }

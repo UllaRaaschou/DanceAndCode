@@ -6,12 +6,12 @@ namespace SimoneAPI.Tobe.Features.Attendances
 {
     public class DeleteAttendance
     {
-        public void RegisterEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
+        public void RegisterAttendanceEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
         {
             endpointRouteBuilder.MapDelete("/TeamDancerRelations/Attendances", Delete);
         }
 
-        public async Task<IResult> Delete(SimoneDbContext dBContext, Guid AttendanceId)
+        public static async Task<IResult> Delete(SimoneDbContext dBContext, Guid AttendanceId)
         {
             var attendance = await dBContext.Attendances.FirstOrDefaultAsync(a => a.AttendanceId == AttendanceId);
             if (attendance == null)

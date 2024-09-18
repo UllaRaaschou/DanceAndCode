@@ -9,9 +9,9 @@ namespace SimoneAPI.Tobe.Features.Dancer
 
     public static class GetDancerById
     {
-        public static void RegisterDancersEndpoints(this IEndpointRouteBuilder endpointRouiteBuilder)
+        public static void RegisterDancerEndpoint(this WebApplication endpointRouteBuilder)
         {
-            endpointRouiteBuilder.MapGet("dancers/{dancerId:guid}", Get);
+            endpointRouteBuilder.MapGet("dancers/{dancerId:guid}", Get);
         }
 
         public static async Task<Results<NotFound, Ok<GetDancerResponceDto>>> Get(SimoneDbContext dbContext, IMapper mapper, Guid dancerId)
@@ -28,6 +28,8 @@ namespace SimoneAPI.Tobe.Features.Dancer
     {
         public Guid DancerId { get; set; }
         public string Name { get; set; } = string.Empty;
+
+        public DateTime TimeOfBirth { get; set; }
         public IEnumerable<string> Teams { get; set; } = new List<string>();
 
     }

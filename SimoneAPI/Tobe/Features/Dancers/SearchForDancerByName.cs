@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
@@ -7,17 +8,17 @@ namespace SimoneAPI.Tobe.Features.Dancer
 {
     public static class SearchForDancerByName
     {
-        public static void RegisterDancerEndponts(this IEndpointRouteBuilder endpointRouteBuilder)
-        {
-            endpointRouteBuilder.MapGet("/Dancers", SearchForDancer);
+        //public static void RegisterDancerEndpoint(this WebApplication endpointRouteBuilder)
+        //{
+        //    endpointRouteBuilder.MapGet("/Dancers", SearchForDancer).WithTags("Dancers");
 
-        }
+        //}
 
         public static async Task<IResult> SearchForDancer(SimoneDbContext dbContext,
-            IMapper mapper, SearchForDancerDto dto)
+            IMapper mapper, [FromQuery] string name)
         {
             IEnumerable<DancerDataModel> models = (IEnumerable<DancerDataModel>)await dbContext.DancerDataModels
-                 .Where(d => d.Name.Contains(dto.Name)).ToListAsync();
+                 .Where(d => d.Name.Contains(name)).ToListAsync();
 
             if (!models.Any())
             {
@@ -28,11 +29,6 @@ namespace SimoneAPI.Tobe.Features.Dancer
             return TypedResults.Ok(responce);
         }
 
-        public class SearchForDancerDto
-        {
-            public string Name { get; set; } = string.Empty;
-        }
-
         public class DancerDataModel
         {
             public Guid DancerId { get; set; }
@@ -40,15 +36,6 @@ namespace SimoneAPI.Tobe.Features.Dancer
             public DateTime TimeOfBirth { get; set; }
             public ICollection<TeamDancerRelation>? TeamDancerRelations { get; set; } = new HashSet<TeamDancerRelation>();
         }
-
-        //public class TeamDancerRelation
-        //{           
-        //    public Guid TeamDancerRelationId { get; set; }
-        //    public Guid TeamId { get; set; }
-        //    public Guid DancerId { get; set; }
-        //    public TeamDataModel TeamDataModel { get; set; } = null!;
-        //    public DancerDataModel DancerDataModel { get; set; } = null!;
-        //}
 
         public class TeamDataDto
         {

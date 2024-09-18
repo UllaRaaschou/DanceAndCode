@@ -6,9 +6,9 @@ namespace SimoneAPI.Tobe.Features.Teams
 {
     public static class AddDancerToTrialLessonOnTeam
     {
-        public static void RegisterEndpoint(IEndpointRouteBuilder endPointRouteBuilder)
+        public static void RegisterTeamsWithGuidEndpoint(IEndpointRouteBuilder endPointRouteBuilder)
         {
-            endPointRouteBuilder.MapPut("/Teams/{teamId}/dancers", Put);
+            endPointRouteBuilder.MapPut("/addTrialLesson", Put);
         }
 
         public static async Task<IResult> Put(SimoneDbContext dbContext, IMapper mapper, Guid teamId, Guid dancerId)

@@ -9,7 +9,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
     public static class DeleteItemFromDancersListOfTeams
     {
 
-        public static void RegisterDancerEndponts(this IEndpointRouteBuilder endpointRouteBuilder)
+        public static void RegisterDancerEndpoint(this WebApplication endpointRouteBuilder)
         {
             endpointRouteBuilder.MapDelete("/Dancers/{dancerId}/Teams/{teamId}", DeleteItemFromListOfTeams);
 

@@ -4,14 +4,14 @@ using SimoneAPI.DbContexts;
 
 namespace SimoneAPI.Tobe.Features.Attendances
 {
-    public class AddAttendance
+    public class PostAttendance
     {
-        public void RegisterEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
+        public void RegisterAttendanceEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
         {
-            endpointRouteBuilder.MapPost("/TeamDancerRelations/Attendances", Post);
+            endpointRouteBuilder.MapPost("", Post);
         }
 
-        public async Task<IResult> Post (SimoneDbContext dBContext, IMapper mapper, PostAttendanceDto dto)
+        public static async Task<IResult> Post (SimoneDbContext dBContext, IMapper mapper, PostAttendanceDto dto)
         {
             var attendance = mapper.Map<Attendance>(dto);
             dBContext.Attendances.Add(attendance);

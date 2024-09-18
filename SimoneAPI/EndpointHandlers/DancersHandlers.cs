@@ -11,6 +11,17 @@ namespace SimoneAPI.EndpointHandlers
 {
     public class DancersHandlers
     {
+        public static async Task<Results<NotFound, Ok<RequestDancerDto>>> GetDancerByIdAsync(SimoneDbContext dbContext,
+            IMapper mapper, Guid dancerId)
+        {
+            var datamodel = await dbContext.DancerDataModels
+                .FirstOrDefaultAsync(x => x.DancerId == dancerId);
+            var dancer = mapper.Map<Dancer>(datamodel);
+            return (dancer != null)
+            ? TypedResults.Ok(mapper.Map<RequestDancerDto>(dancer))
+            : TypedResults.NotFound();
+
+        }
         public static async Task<IResult> GetDancersOnTeamAsync(SimoneDbContext dbContext, IMapper mapper, Guid? teamId)
         {
 
@@ -48,33 +59,23 @@ namespace SimoneAPI.EndpointHandlers
         //       );
         //}
 
-        public static async Task<Results<NotFound, Ok<RequestDancerDto>>> GetDancerByIdAsync(SimoneDbContext dbContext,
-            IMapper mapper, Guid dancerId)
-        {
-            var datamodel = await dbContext.DancerDataModels
-                .FirstOrDefaultAsync(x => x.DancerId == dancerId);
-            var dancer = mapper.Map<Dancer>(datamodel);
-            return (dancer != null)
-            ? TypedResults.Ok(mapper.Map<RequestDancerDto>(dancer))
-            : TypedResults.NotFound();
 
-        }
 
 
         //public static async Task<IResult> GetDancersByNameAsync(SimoneDbContext dbContext,
         //    IMapper mapper, [FromQuery] string? name) =>
         //    {
-                
+
         //    }
 
         //{
         //    return mapper.Map<IEnumerable<RequestDancerDto>> 
-                
-                
-                
+
+
+
         //        await dbContext.DancerDataModels
         //        .Where(d => name == null || d.Name == name);
-                
+
         //    var dancer = mapper.Map<Dancer>(datamodel);
         //    return (dancer != null)
         //    ? TypedResults.Ok(mapper.Map<RequestDancerDto>(dancer))
@@ -101,21 +102,21 @@ namespace SimoneAPI.EndpointHandlers
 
         //}
 
-        public static async Task<Results<NotFound, NoContent>> DeleteDancer(SimoneDbContext dbContext,
-        IMapper mapper, Guid dancerId)
+        //public static async Task<Results<NotFound, NoContent>> DeleteDancer(SimoneDbContext dbContext,
+        //IMapper mapper, Guid dancerId)
 
-        {
-            var dancerDataModel = await dbContext.DancerDataModels
-            .FirstOrDefaultAsync(d => d.DancerId == dancerId);
+        //{
+        //    var dancerDataModel = await dbContext.DancerDataModels
+        //    .FirstOrDefaultAsync(d => d.DancerId == dancerId);
 
-            if (dancerDataModel == null)
-            {
-                return TypedResults.NotFound();
-            }
+        //    if (dancerDataModel == null)
+        //    {
+        //        return TypedResults.NotFound();
+        //    }
 
-            dbContext.DancerDataModels.Remove(dancerDataModel);
-            await dbContext.SaveChangesAsync();
-            return TypedResults.NoContent();
-        }
+        //    dbContext.DancerDataModels.Remove(dancerDataModel);
+        //    await dbContext.SaveChangesAsync();
+        //    return TypedResults.NoContent();
+        //}
     }
 }

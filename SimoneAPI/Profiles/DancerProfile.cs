@@ -33,8 +33,8 @@ namespace SimoneAPI.Profiles
             CreateMap<UpdateDancer.UpdateDancerDto, DancerDataModel>()
                 .ForMember(dest => dest.TeamDancerRelations, opt => opt.Ignore());
 
-            CreateMap<DancerDataModel, UpdateDancerResponceDto>()
-                .ForMember(dest => dest.Teams, opt => opt.Ignore());
+            CreateMap<DancerDataModel, UpdateDancerResponceDto>();
+                //.ForMember(dest => dest.Teams, opt => opt.Ignore());
 
             CreateMap<DancerDataModel, GetDancerResponceDto>()
                 .ForMember(dest => dest.Teams, opt =>
@@ -42,11 +42,15 @@ namespace SimoneAPI.Profiles
                 ? src.TeamDancerRelations.Select(tdr => tdr.TeamDataModel.Name)
                 : Enumerable.Empty<string>()));
 
-            CreateMap<DancerDataModel, AddItemToDancersListOfTeams.DancerDto>()
+            CreateMap<DancerDataModel, AddTeamToDancersListOfTeams.DancerDto>()
                 .ForMember(dest => dest.Teams, opt =>
                 opt.MapFrom(src => src.TeamDancerRelations != null
                 ? src.TeamDancerRelations.Select(tdr => tdr.TeamDataModel.Name)
                 : Enumerable.Empty<string>()));
+
+            CreateMap<DancerDataModel, AddTeamToDancersListOfTeams.DancerDto>()
+                .ForMember(dest => dest.Teams, opt => opt.MapFrom(src => 
+                src.TeamDancerRelations.Select(tr => tr.TeamDataModel)));
 
 
 
