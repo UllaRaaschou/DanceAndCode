@@ -23,6 +23,7 @@ namespace SimoneAPI.Tobe.Features.StaffMembers
                 return TypedResults.NotFound();
             }
             mapper.Map(updateStaffDto, staffMember);
+            await dbContext.SaveChangesAsync();
 
             return TypedResults.Ok();
 
@@ -34,7 +35,7 @@ namespace SimoneAPI.Tobe.Features.StaffMembers
             public string Name { get; set; }
             public JobRoleEnum Role { get; set; }
             public DateTime TimeofBirth { get; set; }
-            public ICollection<RegisteredLesson> RegisteredLessons { get; set; } = new HashSet<RegisteredLesson>();
+            //public ICollection<RegisteredLesson> RegisteredLessons { get; set; } = new HashSet<RegisteredLesson>();
 
         }
 
@@ -44,7 +45,7 @@ namespace SimoneAPI.Tobe.Features.StaffMembers
             public DateTime Date { get; set; }
             public Guid TeamId { get; set; }
             public Guid StaffId { get; set; }
-            public UpdateStaffDto StaffDtos { get; set; }
+            //public UpdateStaffDto StaffDtos { get; set; }
         }
     }
 }

@@ -11,7 +11,7 @@ using SimoneAPI.DbContexts;
 namespace SimoneAPI.Migrations
 {
     [DbContext(typeof(SimoneDbContext))]
-    [Migration("20240917060410_firstOne")]
+    [Migration("20240923061958_firstOne")]
     partial class firstOne
     {
         /// <inheritdoc />
@@ -78,28 +78,6 @@ namespace SimoneAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SimoneAPI.DataModels.RegisteredLesson", b =>
-                {
-                    b.Property<Guid>("LessonId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("StaffId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("TeamId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("LessonId");
-
-                    b.HasIndex("StaffId");
-
-                    b.ToTable("RegisteredLesson");
-                });
-
             modelBuilder.Entity("SimoneAPI.DataModels.Staff", b =>
                 {
                     b.Property<Guid>("StaffId")
@@ -113,12 +91,12 @@ namespace SimoneAPI.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("TimeofBirth")
+                    b.Property<DateTime>("TimeOfBirth")
                         .HasColumnType("TEXT");
 
                     b.HasKey("StaffId");
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Staffs");
                 });
 
             modelBuilder.Entity("SimoneAPI.DataModels.TeamDancerRelation", b =>
@@ -147,21 +125,21 @@ namespace SimoneAPI.Migrations
                     b.HasData(
                         new
                         {
-                            TeamDancerRelationId = new Guid("e9fb5d41-506f-40ab-8f3d-79c1d968782a"),
+                            TeamDancerRelationId = new Guid("51b72350-fa0b-43e3-9cf0-cd188518497c"),
                             DancerId = new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("20cbc2f7-68ed-4a0c-a401-08b4609b36cc"),
+                            TeamDancerRelationId = new Guid("040cae79-fee2-40a1-b6db-acc7bd1e323e"),
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("471b78d5-dd53-4fa9-bcb1-d7f51f2c165d"),
+                            TeamDancerRelationId = new Guid("98840dd0-8af9-4839-8eaf-f4e4cacfaf2b"),
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
@@ -206,6 +184,28 @@ namespace SimoneAPI.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SimoneAPI.DataModels.WorkingHours", b =>
+                {
+                    b.Property<Guid>("WorkingHoursId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("ChosenValueOfWorkingHours")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("StaffId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("WorkingHoursId");
+
+                    b.HasIndex("StaffId");
+
+                    b.ToTable("WorkingHours");
+                });
+
             modelBuilder.Entity("SimoneAPI.DataModels.Attendance", b =>
                 {
                     b.HasOne("SimoneAPI.DataModels.TeamDancerRelation", "TeamDancerRelation")
@@ -215,17 +215,6 @@ namespace SimoneAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("TeamDancerRelation");
-                });
-
-            modelBuilder.Entity("SimoneAPI.DataModels.RegisteredLesson", b =>
-                {
-                    b.HasOne("SimoneAPI.DataModels.Staff", "Staff")
-                        .WithMany("RegisteredLessons")
-                        .HasForeignKey("StaffId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Staff");
                 });
 
             modelBuilder.Entity("SimoneAPI.DataModels.TeamDancerRelation", b =>
@@ -247,6 +236,17 @@ namespace SimoneAPI.Migrations
                     b.Navigation("TeamDataModel");
                 });
 
+            modelBuilder.Entity("SimoneAPI.DataModels.WorkingHours", b =>
+                {
+                    b.HasOne("SimoneAPI.DataModels.Staff", "Staff")
+                        .WithMany("RegisteredWorkingHours")
+                        .HasForeignKey("StaffId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Staff");
+                });
+
             modelBuilder.Entity("SimoneAPI.DataModels.DancerDataModel", b =>
                 {
                     b.Navigation("TeamDancerRelations");
@@ -254,7 +254,7 @@ namespace SimoneAPI.Migrations
 
             modelBuilder.Entity("SimoneAPI.DataModels.Staff", b =>
                 {
-                    b.Navigation("RegisteredLessons");
+                    b.Navigation("RegisteredWorkingHours");
                 });
 
             modelBuilder.Entity("SimoneAPI.DataModels.TeamDancerRelation", b =>

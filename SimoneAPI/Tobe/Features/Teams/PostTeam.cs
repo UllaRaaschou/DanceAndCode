@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
-using SimoneAPI.Dtos.Dancer;
-using SimoneAPI.Dtos.Team;
-using SimoneAPI.Entities;
-using System.Runtime.CompilerServices;
 
 namespace SimoneAPI.Tobe.Features.Teams
 {

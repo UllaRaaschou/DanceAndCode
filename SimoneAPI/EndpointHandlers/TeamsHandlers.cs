@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
-using SimoneAPI.DbContexts;
-using SimoneAPI.Dtos.Team;
-
-namespace SimoneAPI.EndpointHandlers
+﻿namespace SimoneAPI.EndpointHandlers
 {
     public class TeamsHandlers
     {

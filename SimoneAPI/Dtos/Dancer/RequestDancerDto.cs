@@ -1,6 +1,4 @@
-﻿using SimoneAPI.Dtos.Team;
-
-namespace SimoneAPI.Dtos.Dancer
+﻿namespace SimoneAPI.Dtos.Dancer
 {
     public class RequestDancerDto
     {

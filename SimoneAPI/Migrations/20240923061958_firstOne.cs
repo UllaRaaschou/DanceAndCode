@@ -27,17 +27,17 @@ namespace SimoneAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Teachers",
+                name: "Staffs",
                 columns: table => new
                 {
                     StaffId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Role = table.Column<int>(type: "INTEGER", nullable: false),
-                    TimeofBirth = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    TimeOfBirth = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Teachers", x => x.StaffId);
+                    table.PrimaryKey("PK_Staffs", x => x.StaffId);
                 });
 
             migrationBuilder.CreateTable(
@@ -55,21 +55,21 @@ namespace SimoneAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RegisteredLesson",
+                name: "WorkingHours",
                 columns: table => new
                 {
-                    LessonId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    WorkingHoursId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    StaffId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    TeamId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    StaffId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    ChosenValueOfWorkingHours = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RegisteredLesson", x => x.LessonId);
+                    table.PrimaryKey("PK_WorkingHours", x => x.WorkingHoursId);
                     table.ForeignKey(
-                        name: "FK_RegisteredLesson_Teachers_StaffId",
+                        name: "FK_WorkingHours_Staffs_StaffId",
                         column: x => x.StaffId,
-                        principalTable: "Teachers",
+                        principalTable: "Staffs",
                         principalColumn: "StaffId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -144,20 +144,15 @@ namespace SimoneAPI.Migrations
                 columns: new[] { "TeamDancerRelationId", "DancerId", "IsTrialLesson", "TeamId" },
                 values: new object[,]
                 {
-                    { new Guid("20cbc2f7-68ed-4a0c-a401-08b4609b36cc"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
-                    { new Guid("471b78d5-dd53-4fa9-bcb1-d7f51f2c165d"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
-                    { new Guid("e9fb5d41-506f-40ab-8f3d-79c1d968782a"), new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") }
+                    { new Guid("040cae79-fee2-40a1-b6db-acc7bd1e323e"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
+                    { new Guid("51b72350-fa0b-43e3-9cf0-cd188518497c"), new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
+                    { new Guid("98840dd0-8af9-4839-8eaf-f4e4cacfaf2b"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attendances_TeamDancerRelationId",
                 table: "Attendances",
                 column: "TeamDancerRelationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RegisteredLesson_StaffId",
-                table: "RegisteredLesson",
-                column: "StaffId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeamDancerRelations_DancerId",
@@ -168,6 +163,11 @@ namespace SimoneAPI.Migrations
                 name: "IX_TeamDancerRelations_TeamId",
                 table: "TeamDancerRelations",
                 column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkingHours_StaffId",
+                table: "WorkingHours",
+                column: "StaffId");
         }
 
         /// <inheritdoc />
@@ -177,13 +177,13 @@ namespace SimoneAPI.Migrations
                 name: "Attendances");
 
             migrationBuilder.DropTable(
-                name: "RegisteredLesson");
+                name: "WorkingHours");
 
             migrationBuilder.DropTable(
                 name: "TeamDancerRelations");
 
             migrationBuilder.DropTable(
-                name: "Teachers");
+                name: "Staffs");
 
             migrationBuilder.DropTable(
                 name: "DancerDataModels");

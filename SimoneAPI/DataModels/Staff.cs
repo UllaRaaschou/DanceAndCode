@@ -7,8 +7,8 @@ namespace SimoneAPI.DataModels
         public Guid StaffId { get; set; }
         public string Name { get; set; }
         public JobRoleEnum Role { get; set; }
-        public DateTime TimeofBirth { get; set; }
-        public ICollection<RegisteredLesson> RegisteredLessons { get; set; } = new HashSet<RegisteredLesson>(); 
+        public DateTime TimeOfBirth { get; set; }
+        public ICollection<WorkingHours> RegisteredWorkingHours{ get; set; } = new HashSet<WorkingHours>(); 
 
         //    public async Task<IResult> GetCountOfRegisteredLessons(SimoneDbContext dbContext, Guid staffId, DateTime countStartDate, DateTime countEndDate)
         //    {

@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using SimoneAPI.DataModels;
-using SimoneAPI.Dtos.Dancer;
-using SimoneAPI.Dtos.Team;
-using SimoneAPI.Entities;
+using SimoneAPI.Tobe.Features;
 using SimoneAPI.Tobe.Features.Dancer;
 using static SimoneAPI.Tobe.Features.Dancer.PostDancer;
 using static SimoneAPI.Tobe.Features.Dancer.UpdateDancer;
@@ -34,7 +32,9 @@ namespace SimoneAPI.Profiles
                 .ForMember(dest => dest.TeamDancerRelations, opt => opt.Ignore());
 
             CreateMap<DancerDataModel, UpdateDancerResponceDto>();
-                //.ForMember(dest => dest.Teams, opt => opt.Ignore());
+            //.ForMember(dest => dest.Teams, opt => opt.Ignore());
+
+            CreateMap<DancerDataModel, SearchForTeamByNameOrNumber.DancerDto>();
 
             CreateMap<DancerDataModel, GetDancerResponceDto>()
                 .ForMember(dest => dest.Teams, opt =>

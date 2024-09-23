@@ -58,6 +58,11 @@ namespace SimoneAPI.EndpointExtensions
                 .WithName("UpdateDancer")
                 .WithOpenApi()
                 .WithSummary("Update basic data of a dancer");
+
+            dancersWithGuidEndpoints.MapDelete("/Teams/{teamId}", DeleteTeamFromDancersListOfTeams.Delete)
+                .WithName("DeleteTeamFromDancersListOfTeams")
+                .WithOpenApi()
+                .WithSummary("Delete a team from a dancers list of teams");
         }
 
         public static void RegisterTeamsEndpoints(this IEndpointRouteBuilder endpointRouiteBuilder)
@@ -67,7 +72,7 @@ namespace SimoneAPI.EndpointExtensions
             var teamsWithGuidEndpoints = teamsEndpoints.MapGroup("/{teamId:guid}");
 
 
-            teamsEndpoints.MapGet("", SearchForTeamByName.Get)
+            teamsEndpoints.MapGet("", SearchForTeamByNameOrNumber.Get)
                 .WithName("Search by team name or number")
                 .WithOpenApi()
                 .WithSummary("Write a team number or a team name/part of a name and the system will return a match if possible");
@@ -141,14 +146,25 @@ namespace SimoneAPI.EndpointExtensions
                 .WithTags("StaffMember")
                 .WithOpenApi();
 
+            var staffWithGuidEndpoints = staffEndpoints.MapGroup("staffEndpoints/{staffId:guid}");
+
             staffEndpoints.MapPost("", PostStaff.Post)
                 .WithSummary("Post a new member of staff");
 
-            staffEndpoints.MapGet("/{staffId:guid}", GetStaffById.Get)
+            staffWithGuidEndpoints.MapGet("", GetStaffById.Get)
                 .WithSummary("Get a member of staff by Id");
 
-            staffEndpoints.MapPut("", UpdateStaff.Put)
-                .WithSummary("Update a member of staff by Id");
+            staffWithGuidEndpoints.MapPut("", UpdateStaff.Put)
+                .WithName("UpdateStaff")
+                .WithSummary("Update basic data of a member of staff by Id");
+
+            staffWithGuidEndpoints.MapPut("/{workedHours:decimal}/{date:datetime}", RegisterWorkingHours.Register)
+                .WithName("RegisterWorkingHours")
+                .WithSummary("Add a new register of working hours");
+
+            staffWithGuidEndpoints.MapGet("/{firstDayOfPeriod:dateOnly}/{lastDayInPeriod:dateOnly}", GetNumberOfWorkingHoursForPeriod.Get)
+                .WithName("GeNumberOfWorkingHoursForPeriod")
+                .WithSummary("Write a period and get the number of working hours for a staff in that periode returned");
 
             //staffEndpoints.MapPut("", UpdateStaff.Put)
             //    .WithName("UpdateStaff")

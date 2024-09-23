@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
 using SimoneAPI.EndpointExtensions;
 
@@ -32,6 +33,10 @@ builder.Services.AddSwaggerGen(options =>
             new List<string>()
         }
     });
+});
+builder.Services.Configure<RouteOptions>(options =>
+{
+    options.ConstraintMap.Add("dateOnly", typeof(DateOnlyRouteConstraint));
 });
 
 builder.Services.AddProblemDetails();

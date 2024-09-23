@@ -13,8 +13,8 @@ namespace SimoneAPI.Profiles
             CreateMap<Staff, PostStaff.PostStaffResponceDto>();
             CreateMap<Staff, GetStaffById.GetStaffResponceDto>()
                 .ForMember(dest => dest.RegisteredLessonDtos, opt =>
-                opt.MapFrom(rl => rl.RegisteredLessons));
-            //CreateMap<UpdateStaffDto, Staff>()
+                opt.MapFrom(rl => rl.RegisteredWorkingHours));
+            CreateMap<UpdateStaff.UpdateStaffDto, Staff>();
                 //.ForMember(dest => dest.RegisteredLessons, opt => opt
                 //.MapFrom(usd => usd.RegisteredLessons));
                 

@@ -75,28 +75,6 @@ namespace SimoneAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SimoneAPI.DataModels.RegisteredLesson", b =>
-                {
-                    b.Property<Guid>("LessonId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("StaffId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("TeamId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("LessonId");
-
-                    b.HasIndex("StaffId");
-
-                    b.ToTable("RegisteredLesson");
-                });
-
             modelBuilder.Entity("SimoneAPI.DataModels.Staff", b =>
                 {
                     b.Property<Guid>("StaffId")
@@ -110,7 +88,7 @@ namespace SimoneAPI.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("TimeofBirth")
+                    b.Property<DateTime>("TimeOfBirth")
                         .HasColumnType("TEXT");
 
                     b.HasKey("StaffId");
@@ -144,21 +122,21 @@ namespace SimoneAPI.Migrations
                     b.HasData(
                         new
                         {
-                            TeamDancerRelationId = new Guid("3b6e0bc7-93bf-4046-a7e1-37031866cdc4"),
+                            TeamDancerRelationId = new Guid("51b72350-fa0b-43e3-9cf0-cd188518497c"),
                             DancerId = new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("4bfa37e8-2250-43bc-a39e-2669f9a8c1f8"),
+                            TeamDancerRelationId = new Guid("040cae79-fee2-40a1-b6db-acc7bd1e323e"),
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("bf26d228-170b-466e-a573-da863d2b8a31"),
+                            TeamDancerRelationId = new Guid("98840dd0-8af9-4839-8eaf-f4e4cacfaf2b"),
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
@@ -203,6 +181,28 @@ namespace SimoneAPI.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SimoneAPI.DataModels.WorkingHours", b =>
+                {
+                    b.Property<Guid>("WorkingHoursId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("ChosenValueOfWorkingHours")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("StaffId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("WorkingHoursId");
+
+                    b.HasIndex("StaffId");
+
+                    b.ToTable("WorkingHours");
+                });
+
             modelBuilder.Entity("SimoneAPI.DataModels.Attendance", b =>
                 {
                     b.HasOne("SimoneAPI.DataModels.TeamDancerRelation", "TeamDancerRelation")
@@ -212,17 +212,6 @@ namespace SimoneAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("TeamDancerRelation");
-                });
-
-            modelBuilder.Entity("SimoneAPI.DataModels.RegisteredLesson", b =>
-                {
-                    b.HasOne("SimoneAPI.DataModels.Staff", "Staff")
-                        .WithMany("RegisteredLessons")
-                        .HasForeignKey("StaffId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Staff");
                 });
 
             modelBuilder.Entity("SimoneAPI.DataModels.TeamDancerRelation", b =>
@@ -244,6 +233,17 @@ namespace SimoneAPI.Migrations
                     b.Navigation("TeamDataModel");
                 });
 
+            modelBuilder.Entity("SimoneAPI.DataModels.WorkingHours", b =>
+                {
+                    b.HasOne("SimoneAPI.DataModels.Staff", "Staff")
+                        .WithMany("RegisteredWorkingHours")
+                        .HasForeignKey("StaffId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Staff");
+                });
+
             modelBuilder.Entity("SimoneAPI.DataModels.DancerDataModel", b =>
                 {
                     b.Navigation("TeamDancerRelations");
@@ -251,7 +251,7 @@ namespace SimoneAPI.Migrations
 
             modelBuilder.Entity("SimoneAPI.DataModels.Staff", b =>
                 {
-                    b.Navigation("RegisteredLessons");
+                    b.Navigation("RegisteredWorkingHours");
                 });
 
             modelBuilder.Entity("SimoneAPI.DataModels.TeamDancerRelation", b =>

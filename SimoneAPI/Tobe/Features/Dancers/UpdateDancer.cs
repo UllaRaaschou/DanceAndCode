@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
 using SimoneAPI.Dtos.Dancer;
-using SimoneAPI.Dtos.Team;
 
 namespace SimoneAPI.Tobe.Features.Dancer
 {

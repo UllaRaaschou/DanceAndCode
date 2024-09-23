@@ -17,7 +17,7 @@ namespace SimoneAPI.Tobe.Features.StaffMembers
         IMapper mapper, Guid staffId)
         {
             var staffMember = await dbContext.Staffs
-                .Include(s => s.RegisteredLessons)
+                .Include(s => s.RegisteredWorkingHours)
                 .FirstOrDefaultAsync(s => s.StaffId == staffId);                
 
             return staffMember != null

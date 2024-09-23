@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using SimoneAPI.DbContexts;
-using SimoneAPI.Dtos.Team;
 
 namespace SimoneAPI.Tobe.Features.Teams
 {
@@ -22,6 +20,23 @@ namespace SimoneAPI.Tobe.Features.Teams
             return team != null
             ? TypedResults.Ok(mapper.Map<RequestTeamDto>(team))
             : TypedResults.NotFound();
+        }
+
+        public class RequestTeamDto
+        {
+            public Guid TeamId { get; set; }
+            public int Number { get; set; } = 0;
+            public string Name { get; set; } = string.Empty;
+            public string SceduledTime { get; set; } = string.Empty;
+            public ICollection<RequestDancerDto> DancersOnTeam { get; set; } = new List<RequestDancerDto>();
+
+        }
+
+        public class RequestDancerDto
+        {
+            public Guid DancerId { get; set; }
+            public string Name { get; set; } = string.Empty;
+
         }
     }
 }
