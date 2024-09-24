@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-    x:Class="SimoneMAUI.AppShell"
+    x:Class="SimoneMaui.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:SimoneMAUI"
+    xmlns:local="clr-namespace:SimoneMaui"
     Shell.FlyoutBehavior="Disabled"
-    Title="SimoneMAUI">
+    Title="SimoneMaui">
 
     <ShellContent
         Title="Home"

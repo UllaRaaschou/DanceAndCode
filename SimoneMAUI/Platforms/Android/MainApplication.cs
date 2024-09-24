@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace SimoneMAUI
+namespace SimoneMaui
 {
     [Application]
     public class MainApplication : MauiApplication

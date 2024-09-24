@@ -1,4 +1,4 @@
-﻿namespace SimoneMAUI
+﻿namespace SimoneMaui
 {
     public partial class AppShell : Shell
     {

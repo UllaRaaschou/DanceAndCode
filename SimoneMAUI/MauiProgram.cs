@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace SimoneMAUI
+namespace SimoneMaui
 {
     public static class MauiProgram
     {

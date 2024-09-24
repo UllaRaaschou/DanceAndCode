@@ -2,7 +2,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using System;
 
-namespace SimoneMAUI
+namespace SimoneMaui
 {
     internal class Program : MauiApplication
     {

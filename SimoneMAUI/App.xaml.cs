@@ -1,4 +1,6 @@
-﻿namespace SimoneMAUI
+﻿using SimoneMaui.Views;
+
+namespace SimoneMaui
 {
     public partial class App : Application
     {
@@ -6,7 +8,7 @@
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new PostDancerPage();
         }
     }
 }
