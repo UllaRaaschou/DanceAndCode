@@ -11,7 +11,7 @@ using SimoneAPI.DbContexts;
 namespace SimoneAPI.Migrations
 {
     [DbContext(typeof(SimoneDbContext))]
-    [Migration("20240923061958_firstOne")]
+    [Migration("20240930073809_firstOne")]
     partial class firstOne
     {
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace SimoneAPI.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("TimeOfBirth")
+                    b.Property<DateOnly>("TimeOfBirth")
                         .HasColumnType("TEXT");
 
                     b.HasKey("DancerId");
@@ -68,13 +68,13 @@ namespace SimoneAPI.Migrations
                         {
                             DancerId = new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             Name = "Petra",
-                            TimeOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            TimeOfBirth = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             Name = "Silje",
-                            TimeOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            TimeOfBirth = new DateOnly(1, 1, 1)
                         });
                 });
 
@@ -125,21 +125,21 @@ namespace SimoneAPI.Migrations
                     b.HasData(
                         new
                         {
-                            TeamDancerRelationId = new Guid("51b72350-fa0b-43e3-9cf0-cd188518497c"),
+                            TeamDancerRelationId = new Guid("adda491f-305e-4d5f-b76c-e6a07a6000c4"),
                             DancerId = new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("040cae79-fee2-40a1-b6db-acc7bd1e323e"),
+                            TeamDancerRelationId = new Guid("dc876bae-2645-4839-9bf4-fab33b9d3b36"),
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("98840dd0-8af9-4839-8eaf-f4e4cacfaf2b"),
+                            TeamDancerRelationId = new Guid("d9be05e2-2740-4022-bd43-3f2aa67c250b"),
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
@@ -193,7 +193,7 @@ namespace SimoneAPI.Migrations
                     b.Property<decimal>("ChosenValueOfWorkingHours")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("StaffId")

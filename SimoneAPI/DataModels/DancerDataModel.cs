@@ -6,7 +6,7 @@ namespace SimoneAPI.DataModels
     {
         public Guid DancerId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public DateTime TimeOfBirth { get; set; }
+        public DateOnly TimeOfBirth { get; set; }
         public ICollection<TeamDancerRelation> TeamDancerRelations { get; set; } = new HashSet<TeamDancerRelation>();
 
        

@@ -1,69 +1,70 @@
-﻿using RestSharp.Authenticators;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.AspNetCore.Mvc;
 using RestSharp;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Windows.Input;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SimoneMaui.ViewModels
 {
-    public class PostDancerViewModel : INotifyPropertyChanged
+    public partial class PostDancerViewModel : ObservableObject
+
     {
-        private DateOnly timeOfBirth;
+        [ObservableProperty]
+        private string timeOfBirth = string.Empty;
+
+        [ObservableProperty]
         private string name = string.Empty;
 
-        public string Name
+        partial void OnNameChanged(string value) => PostDancerCommand.NotifyCanExecuteChanged();
+        partial void OnTimeOfBirthChanged(string value) => PostDancerCommand.NotifyCanExecuteChanged();
+       
+
+        public IRelayCommand PostDancerCommand { get; }
+                 
+        public PostDancerViewModel()
         {
-            get => name;
-            set
-            {
-                if (!value.Equals(name))
-                {
-                    name = value;
-                    OnPropertyChanged();
-                }
-            }
+            PostDancerCommand = new RelayCommand(async () => await PostDancer(), CanPost);
         }
-
-        public DateOnly TimeOfBirth
-        {
-            get => timeOfBirth;
-            set
-            {
-                if (!value.Equals(timeOfBirth))
-                {
-                    timeOfBirth = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-        public ICommand PostDancerCommand { get; }
 
         private async Task PostDancer()
         {
-            var options = new RestClientOptions("https://localhost:7163");
-            var client = new RestClient(options);
-            // The cancellation token comes from the caller. You can still make a call without it.
-            var response = await client.PostJsonAsync("/dancers", new { Name, TimeOfBirth}, CancellationToken.None);
-            
+            if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate))
+            {
+                var options = new RestClientOptions("https://localhost:7163");
+                var client = new RestClient(options);
+                // The cancellation token comes from the caller. You can still make a call without it.
+                var request = new RestRequest("/dancers", Method.Post);
+                request.AddJsonBody(new { Name, TimeOfBirth = parsedDate });
 
+                var response = await client.ExecutePostAsync(request, CancellationToken.None);
+
+                if (!response.IsSuccessStatusCode) {
+                    JsonSerializerOptions _options = new();
+                    _options.PropertyNameCaseInsensitive = true;
+         
+                    ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(response.Content ?? "{}", _options)!;
+                                       
+                }
+
+                Name = string.Empty;
+                TimeOfBirth = string.Empty;
+
+            }
+
+            else 
+            {
+                System.Diagnostics.Debug.WriteLine("Invalid date format");
+            }          
         }
 
-        public PostDancerViewModel()
+        public bool CanPost() 
         {
-            PostDancerCommand = new Command(async () => await PostDancer());
+            return !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(TimeOfBirth);
         }
-            
-
 
     }
+
 }
+
 

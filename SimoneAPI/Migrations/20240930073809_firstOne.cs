@@ -19,7 +19,7 @@ namespace SimoneAPI.Migrations
                 {
                     DancerId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    TimeOfBirth = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    TimeOfBirth = table.Column<DateOnly>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,7 +60,7 @@ namespace SimoneAPI.Migrations
                 {
                     WorkingHoursId = table.Column<Guid>(type: "TEXT", nullable: false),
                     StaffId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Date = table.Column<DateOnly>(type: "TEXT", nullable: false),
                     ChosenValueOfWorkingHours = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -126,8 +126,8 @@ namespace SimoneAPI.Migrations
                 columns: new[] { "DancerId", "Name", "TimeOfBirth" },
                 values: new object[,]
                 {
-                    { new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), "Petra", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), "Silje", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), "Petra", new DateOnly(1, 1, 1) },
+                    { new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), "Silje", new DateOnly(1, 1, 1) }
                 });
 
             migrationBuilder.InsertData(
@@ -144,9 +144,9 @@ namespace SimoneAPI.Migrations
                 columns: new[] { "TeamDancerRelationId", "DancerId", "IsTrialLesson", "TeamId" },
                 values: new object[,]
                 {
-                    { new Guid("040cae79-fee2-40a1-b6db-acc7bd1e323e"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
-                    { new Guid("51b72350-fa0b-43e3-9cf0-cd188518497c"), new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
-                    { new Guid("98840dd0-8af9-4839-8eaf-f4e4cacfaf2b"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") }
+                    { new Guid("adda491f-305e-4d5f-b76c-e6a07a6000c4"), new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
+                    { new Guid("d9be05e2-2740-4022-bd43-3f2aa67c250b"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
+                    { new Guid("dc876bae-2645-4839-9bf4-fab33b9d3b36"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") }
                 });
 
             migrationBuilder.CreateIndex(
