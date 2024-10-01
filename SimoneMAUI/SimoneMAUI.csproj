@@ -75,12 +75,21 @@
 	  <Compile Update="Views\PostDancerPage.xaml.cs">
 	    <DependentUpon>PostDancerPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\UpdateDancerPage.xaml.cs">
+	    <DependentUpon>UpdateDancerPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\DeleteDancer.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\PostDancerPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UpdateDancerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

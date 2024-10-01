@@ -2,6 +2,7 @@
 using SimoneAPI.DataModels;
 using SimoneAPI.Tobe.Features;
 using SimoneAPI.Tobe.Features.Dancer;
+using SimoneAPI.Tobe.Features.Dancers;
 using static SimoneAPI.Tobe.Features.Dancer.PostDancer;
 using static SimoneAPI.Tobe.Features.Dancer.UpdateDancer;
 
@@ -15,6 +16,9 @@ namespace SimoneAPI.Profiles
             CreateMap<PostDancer.PostDancerDto, DancerDataModel>()
                 .ForMember(dest => dest.DancerId, opt => opt.Ignore())
                 .ForMember(dest => dest.TeamDancerRelations, opt => opt.Ignore());
+
+            CreateMap<DancerDataModel, SearchDancerFromNameOrTimeOfBirth.ResponceDto>();
+
 
             CreateMap<SearchForDancerByName.DancerDataModel, SearchForDancerByName.SearchDancerResponceDto>()
                 .ForMember(dest => dest.Teams, opt =>
