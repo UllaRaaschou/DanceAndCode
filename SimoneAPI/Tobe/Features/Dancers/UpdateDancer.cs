@@ -27,42 +27,9 @@ namespace SimoneAPI.Tobe.Features.Dancer
 
             mapper.Map(updateDancerDto, dancerDataModel);
 
-            //if (dancerDataModel.TeamDancerRelations != null)
-            //{
-            //    dancerDataModel.TeamDancerRelations.Clear();
-
-            //    foreach (var teamName in updateDancerDto.Teams ?? Enumerable.Empty<string>())
-            //    {
-            //        var teamDataModel = await dbContext.TeamDataModels.FirstOrDefaultAsync(t =>
-            //        t.Name == teamName);
-
-            //        if (teamDataModel != null)
-            //        {
-            //            dancerDataModel.TeamDancerRelations.Add(new TeamDancerRelation
-            //            {
-            //                TeamId = teamDataModel.TeamId,
-            //                DancerId = dancerDataModel.DancerId
-            //            });
-            //        }
-            //    }
-            //}
-
             await dbContext.SaveChangesAsync();
 
             var responseDto = mapper.Map<UpdateDancerResponceDto>(dancerDataModel);
-
-            //if (dancerDataModel.TeamDancerRelations != null)
-            //{
-            //    foreach (var relation in dancerDataModel.TeamDancerRelations)
-            //    {
-            //        var teamDataModel = await dbContext.TeamDataModels.FirstOrDefaultAsync(t => t.TeamId == relation.TeamId);
-            //        var teamName = teamDataModel?.Name;
-            //        if (teamName != null)
-            //        {
-            //            responseDto.Teams.Add(teamName);
-            //        }
-            //    }
-            //}
 
             return TypedResults.Ok(responseDto);
         }
@@ -71,15 +38,14 @@ namespace SimoneAPI.Tobe.Features.Dancer
         {
             public Guid DancerId { get; set; }
             public string Name { get; set; } = string.Empty;
-            public DateTime TimeOfBirth { get; set; }
-            //public IEnumerable<string>? Teams { get; set; } = null;
+            public DateOnly TimeOfBirth { get; set; }
         }
 
         public class UpdateDancerResponceDto
         {
             public Guid DancerId { get; set; }
             public string Name { get; set; } = string.Empty;
-            public DateTime TimeOfBirth { get; set; }
+            public DateOnly TimeOfBirth { get; set; }
             //public List<string> Teams { get; set; } = new List<string>();
         }
 

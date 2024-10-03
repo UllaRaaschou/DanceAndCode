@@ -49,7 +49,7 @@ namespace SimoneAPI.EndpointExtensions
             //    .WithOpenApi()
             //    .WithSummary("Delete a team from a dancers list of teams");
 
-            dancersEndpoints.MapGet("/SerachForDancerFromNameOrBirthday/{Name}/{timeOfBirth}", SearchDancerFromNameOrTimeOfBirth.Search)
+            dancersEndpoints.MapGet("/SearchForDancerFromNameOrBirthday", SearchDancerFromNameOrTimeOfBirth.Search)
                 .WithName("SearchForDancerFromNameOrBirthday")
                 .WithOpenApi()
                 .WithSummary("Write a name or a time of birth and search for dancers from one of these properties");

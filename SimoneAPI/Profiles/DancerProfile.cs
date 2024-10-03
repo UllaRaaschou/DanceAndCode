@@ -16,6 +16,7 @@ namespace SimoneAPI.Profiles
             CreateMap<PostDancer.PostDancerDto, DancerDataModel>()
                 .ForMember(dest => dest.DancerId, opt => opt.Ignore())
                 .ForMember(dest => dest.TeamDancerRelations, opt => opt.Ignore());
+               
 
             CreateMap<DancerDataModel, SearchDancerFromNameOrTimeOfBirth.ResponceDto>();
 
@@ -33,7 +34,8 @@ namespace SimoneAPI.Profiles
                 : Enumerable.Empty<SearchForDancerByName.TeamDataDto>()));
 
             CreateMap<UpdateDancer.UpdateDancerDto, DancerDataModel>()
-                .ForMember(dest => dest.TeamDancerRelations, opt => opt.Ignore());
+                .ForMember(dest => dest.TeamDancerRelations, opt => opt.Ignore())
+                .ForMember(dest => dest.DancerId, opt => opt.Ignore());
 
             CreateMap<DancerDataModel, UpdateDancerResponceDto>();
             //.ForMember(dest => dest.Teams, opt => opt.Ignore());

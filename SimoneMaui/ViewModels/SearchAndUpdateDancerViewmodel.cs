@@ -10,16 +10,36 @@ namespace SimoneMaui.ViewModels
     public partial class SearchAndUpdateDancerViewmodel: ObservableObject
     {
         [ObservableProperty]
-        private ObservableCollection<DancerDto> dancerDtoList = new ObservableCollection<DancerDto>();
+        private ObservableCollection<DancerDto> dancerDtoList;
 
         [ObservableProperty]
-        private string name;
+        private string? name = string.Empty;
 
         [ObservableProperty]
-        private string timeOfBirth;
+        private string? timeOfBirth= string.Empty;
 
-        private DancerDto selectedDancer;
-        public DancerDto SelectedDancer
+        [ObservableProperty]
+        private bool searchExecuted = false;
+
+        partial void OnNameChanged(string value)
+        {
+            SearchDancerCommand.NotifyCanExecuteChanged();
+            UpdateDancerCommand.NotifyCanExecuteChanged();
+        }
+        partial void OnTimeOfBirthChanged(string value)
+        {
+            SearchDancerCommand.NotifyCanExecuteChanged();
+            UpdateDancerCommand.NotifyCanExecuteChanged();
+        }
+        partial void OnSearchExecutedChanged(bool value)
+        {
+            SearchDancerCommand.NotifyCanExecuteChanged();
+            UpdateDancerCommand.NotifyCanExecuteChanged();
+        }
+
+
+        private DancerDto? selectedDancer = null;
+        public DancerDto? SelectedDancer
         {
             get => selectedDancer;
             set
@@ -30,8 +50,8 @@ namespace SimoneMaui.ViewModels
                     OnPropertyChanged();
 
                     //Her sørger jeg for, at de observable Proprties sættes til værdierne for den selectede danser
-                    Name = selectedDancer.Name; 
-                    TimeOfBirth = selectedDancer.TimeOfBirth;
+                    Name = selectedDancer?.Name; 
+                    TimeOfBirth = selectedDancer?.TimeOfBirth;
                     
                     OnPropertyChanged(nameof(Name));
                     OnPropertyChanged(nameof(TimeOfBirth));
@@ -45,46 +65,86 @@ namespace SimoneMaui.ViewModels
 
         public SearchAndUpdateDancerViewmodel() 
         {
-            SearchDancerCommand = new RelayCommand(async () => await SearchDancer());
-            UpdateDancerCommand = new RelayCommand(async () => await UpdateDancer());
+            SearchDancerCommand = new RelayCommand(async () => await SearchDancer(), CanSearch);
+            UpdateDancerCommand = new RelayCommand(async () => await UpdateDancer(), CanUpdate);
+            DancerDtoList = new ObservableCollection<DancerDto>()
+            {
+                new DancerDto{Name="Test", TimeOfBirth="01-01-2001" }
+            };
+
 
         }
+                  
+        private bool CanSearch()
+        {
+            var dataWritten = !string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(TimeOfBirth);
+            if(dataWritten==true && SelectedDancer==null) 
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool CanUpdate()
+        {
+            var dataWritten = !string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(TimeOfBirth);
+            if (dataWritten == true && SelectedDancer != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
         private async Task<ObservableCollection<DancerDto>> SearchDancer()
         {
-            if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate))
+            var options = new RestClientOptions("https://localhost:7163");
+            var client = new RestClient(options);
+            var request = new RestRequest("/dancers/SearchForDancerFromNameOrBirthday", Method.Get);
+
+            if (!string.IsNullOrEmpty(TimeOfBirth))
             {
-                var options = new RestClientOptions("https://localhost:7163");
-                var client = new RestClient(options);
-                // The cancellation token comes from the caller. You can still make a call without it.
-                var request = new RestRequest("/dancers/SerachForDancerFromNameOrBirthday", Method.Get);
-                request.AddJsonBody(new { Name, TimeOfBirth = parsedDate });
+                DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate);
+                request.AddOrUpdateParameter("TimeOfBirth", parsedDate); //.AddJsonBody(new { Name, TimeOfBirth = parsedDate });
+            }
+            if (Name != null)
+            {
+                request.AddOrUpdateParameter("name", Name);
+               // request.AddJsonBody(new { Name, TimeOfBirth });
+            }
 
-                var returnedCollection = await client.ExecuteGetAsync<List<DancerDto>>(request, CancellationToken.None);
+            // The cancellation token comes from the caller. You can still make a call without it.
 
-                if (!returnedCollection.IsSuccessStatusCode)
-                {
-                    JsonSerializerOptions _options = new();
-                    _options.PropertyNameCaseInsensitive = true;
+            var returnedCollection = await client.ExecuteGetAsync<List<DancerDto>>(request, CancellationToken.None);
 
-                    ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedCollection.Content ?? "{}", _options)!;
+            if (!returnedCollection.IsSuccessStatusCode)
+            {
+                JsonSerializerOptions _options = new();
+                _options.PropertyNameCaseInsensitive = true;
 
-                }
-
-                Name = string.Empty;
-                TimeOfBirth = string.Empty;
-
-                if (!returnedCollection.Data.Any() || returnedCollection.Data == null)
-                {
-                    return null;
-                }
-
-                var dancerCollection = new ObservableCollection<DancerDto>(returnedCollection.Data);
-                return dancerCollection;
+                ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedCollection.Content ?? "{}", _options)!;
 
             }
-            else { return null; }
-        }
 
+            Name = string.Empty;
+            TimeOfBirth = string.Empty;
+
+            if (!returnedCollection.Data.Any() || returnedCollection.Data == null)
+            {
+                return null;
+            }
+
+            var dancerCollection = new ObservableCollection<DancerDto>(returnedCollection.Data);
+            
+            DancerDtoList.Clear();
+            foreach (var item in dancerCollection)
+            {
+                DancerDtoList.Add(item);
+                
+            }
+            return dancerCollection;
+        }
+            
         public async Task UpdateDancer() 
         {
             if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate))
@@ -92,10 +152,11 @@ namespace SimoneMaui.ViewModels
                 var options = new RestClientOptions("https://localhost:7163");
                 var client = new RestClient(options);
                 // The cancellation token comes from the caller. You can still make a call without it.
-                var request = new RestRequest("/dancers", Method.Put);
+                var request = new RestRequest($"/dancers/{SelectedDancer.DancerId}", Method.Put);
+
                 request.AddJsonBody(new { Name, TimeOfBirth = parsedDate });
 
-                var returnedStatus = await client.ExecuteGetAsync(request, CancellationToken.None);
+                var returnedStatus = await client.ExecutePutAsync(request, CancellationToken.None);
 
                 if (!returnedStatus.IsSuccessStatusCode)
                 {
@@ -105,6 +166,11 @@ namespace SimoneMaui.ViewModels
                     ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedStatus.Content ?? "{}", _options)!;
 
                 }
+
+                SelectedDancer = null;
+                DancerDtoList.Clear();
+
+
             }
             else 
             {
@@ -118,6 +184,7 @@ namespace SimoneMaui.ViewModels
 
     public class DancerDto
     {
+        public Guid DancerId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string TimeOfBirth { get; set;} = string.Empty;
     }

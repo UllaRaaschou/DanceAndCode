@@ -2,9 +2,9 @@ using SimoneMaui.ViewModels;
 
 namespace SimoneMaui.Views;
 
-public partial class UpdateDancerPage : ContentPage
+public partial class PostDancerPage : ContentPage
 {
-	public UpdateDancerPage()
+	public PostDancerPage()
 	{
 		InitializeComponent();
     }

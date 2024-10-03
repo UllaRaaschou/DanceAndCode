@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:SimoneMaui.ViewModels" 
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="SimoneMaui.Views.UpdateDancer"   
+             x:Class="SimoneMaui.Views.UpdateDancerPage"   
              x:DataType="vm:SearchAndUpdateDancerViewmodel"
              Title="UpdateDancer">
 
@@ -19,27 +19,34 @@
                      Padding="20" >
                     <Label Text="Rediger stamdata på elev" FontSize="24" HorizontalOptions="Center"></Label>
                     <Grid 
-                        RowDefinitions="Auto, Auto"
+                        RowDefinitions="Auto, Auto, Auto, Auto, Auto"
                         RowSpacing="10"
                         VerticalOptions="Center"
                         HorizontalOptions="Center">
                         
                         <Entry
+                            Grid.Row="0"
                             Placeholder="Navn"
                             Text="{Binding Name, Mode=TwoWay}"/>
+                        
                         <Entry
+                            Grid.Row="1"
                             Placeholder="Fødselsdato dd-MM-åååå"
                             Text="{Binding TimeOfBirth, Mode=TwoWay}"/>
-
+                        
                         <Button
+                            Grid.Row="2" 
                             Text="Søg"
-                            Command="{Binding SearchDancerCommand}"/>
+                             Command="{Binding SearchDancerCommand}"/>                       
 
                         <Button
+                            Grid.Row="3"
                             Text="Opdater"
                             Command="{Binding UpdateDancerCommand}"/>
+                        
 
                         <CollectionView
+                            Grid.Row="4"
                             ItemsSource="{Binding DancerDtoList}"
                             SelectedItem="{Binding SelectedDancer, Mode=TwoWay}"
                             SelectionMode="Single">

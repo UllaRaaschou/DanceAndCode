@@ -1,8 +1,8 @@
 namespace SimoneMaui.Views;
 
-public partial class UpdateDancer : ContentPage
+public partial class UpdateDancerPage : ContentPage
 {
-	public UpdateDancer()
+	public UpdateDancerPage()
 	{
 		InitializeComponent();
 	}
