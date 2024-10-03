@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace SimoneMaui.ViewModels
 {
-    public partial class SearchAndUpdateDancerViewmodel: ObservableObject
+    public partial class SearchAndDeleteDancerViewmodel : ObservableObject
     {
         [ObservableProperty]
         private ObservableCollection<DancerDto> dancerDtoList;
@@ -16,19 +16,20 @@ namespace SimoneMaui.ViewModels
         private string? name = string.Empty;
 
         [ObservableProperty]
-        private string? timeOfBirth= string.Empty;
+        private string? timeOfBirth = string.Empty;
 
         partial void OnNameChanged(string value)
         {
             SearchDancerCommand.NotifyCanExecuteChanged();
-            UpdateDancerCommand.NotifyCanExecuteChanged();
+            DeleteDancerCommand.NotifyCanExecuteChanged();
         }
         partial void OnTimeOfBirthChanged(string value)
         {
             SearchDancerCommand.NotifyCanExecuteChanged();
-            UpdateDancerCommand.NotifyCanExecuteChanged();
+            DeleteDancerCommand.NotifyCanExecuteChanged();
         }
-       
+        
+
         private DancerDto? selectedDancer = null;
         public DancerDto? SelectedDancer
         {
@@ -41,23 +42,23 @@ namespace SimoneMaui.ViewModels
                     OnPropertyChanged();
 
                     //Her sørger jeg for, at de observable Proprties sættes til værdierne for den selectede danser
-                    Name = selectedDancer?.Name; 
+                    Name = selectedDancer?.Name;
                     TimeOfBirth = selectedDancer?.TimeOfBirth;
-                    
+
                     OnPropertyChanged(nameof(Name));
                     OnPropertyChanged(nameof(TimeOfBirth));
                 };
-            }           
+            }
         }
 
-        
-        public RelayCommand SearchDancerCommand { get; }
-        public RelayCommand UpdateDancerCommand {get; }
 
-        public SearchAndUpdateDancerViewmodel() 
+        public RelayCommand SearchDancerCommand { get; }
+        public RelayCommand DeleteDancerCommand { get; }
+
+        public SearchAndDeleteDancerViewmodel()
         {
             SearchDancerCommand = new RelayCommand(async () => await SearchDancer(), CanSearch);
-            UpdateDancerCommand = new RelayCommand(async () => await UpdateDancer(), CanUpdate);
+            DeleteDancerCommand = new RelayCommand(async () => await DeleteDancer(), CanDelete);
             DancerDtoList = new ObservableCollection<DancerDto>()
             {
                 new DancerDto{Name="Test", TimeOfBirth="01-01-2001" }
@@ -65,18 +66,18 @@ namespace SimoneMaui.ViewModels
 
 
         }
-                  
+
         private bool CanSearch()
         {
             var dataWritten = !string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(TimeOfBirth);
-            if(dataWritten==true && SelectedDancer==null) 
+            if (dataWritten == true && SelectedDancer == null)
             {
                 return true;
             }
             return false;
         }
 
-        private bool CanUpdate()
+        private bool CanDelete()
         {
             var dataWritten = !string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(TimeOfBirth);
             if (dataWritten == true && SelectedDancer != null)
@@ -101,7 +102,7 @@ namespace SimoneMaui.ViewModels
             if (Name != null)
             {
                 request.AddOrUpdateParameter("name", Name);
-               // request.AddJsonBody(new { Name, TimeOfBirth });
+                // request.AddJsonBody(new { Name, TimeOfBirth });
             }
 
             // The cancellation token comes from the caller. You can still make a call without it.
@@ -126,28 +127,26 @@ namespace SimoneMaui.ViewModels
             }
 
             var dancerCollection = new ObservableCollection<DancerDto>(returnedCollection.Data);
-            
+
             DancerDtoList.Clear();
             foreach (var item in dancerCollection)
             {
                 DancerDtoList.Add(item);
-                
+
             }
             return dancerCollection;
         }
-            
-        public async Task UpdateDancer() 
+
+        public async Task DeleteDancer()
         {
-            if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate))
+            if (SelectedDancer != null)
             {
                 var options = new RestClientOptions("https://localhost:7163");
                 var client = new RestClient(options);
                 // The cancellation token comes from the caller. You can still make a call without it.
-                var request = new RestRequest($"/dancers/{SelectedDancer.DancerId}", Method.Put);
+                var request = new RestRequest($"/dancers/{SelectedDancer.DancerId}", Method.Delete);
 
-                request.AddJsonBody(new { Name, TimeOfBirth = parsedDate });
-
-                var returnedStatus = await client.ExecutePutAsync(request, CancellationToken.None);
+                var returnedStatus = await client.ExecuteDeleteAsync(request, CancellationToken.None);
 
                 if (!returnedStatus.IsSuccessStatusCode)
                 {
@@ -163,20 +162,20 @@ namespace SimoneMaui.ViewModels
 
 
             }
-            else 
+            else
             {
-                await Application.Current.MainPage.DisplayAlert("Fejl", "Ugyldigt datoformat. Brug venligst dd-MM-yyyy.", "OK");
+                await Application.Current.MainPage.DisplayAlert("Fejl", "Der er ikke valgt en danser", "OK");
             }
         }
-        
 
-       
+
+
     }
 
-    public class DancerDto
+    public class DeleteDancerDto
     {
         public Guid DancerId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string TimeOfBirth { get; set;} = string.Empty;
+        public string TimeOfBirth { get; set; } = string.Empty;
     }
 }

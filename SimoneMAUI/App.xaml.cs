@@ -8,7 +8,7 @@ namespace SimoneMaui
         {
             InitializeComponent();
 
-            MainPage = new UpdateDancerPage();
+            MainPage = new DeleteDancerPage();
         }
     }
 }

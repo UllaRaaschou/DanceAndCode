@@ -4,17 +4,71 @@
              xmlns:vm="clr-namespace:SimoneMaui.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="SimoneMaui.Views.DeleteDancerPage"
-             x:DataType="vm:DeleteDancerViewModel"
+             x:DataType="vm:SearchAndDeleteDancerViewmodel"
              Title="DeleteDancerPage">
     <ContentPage.BindingContext>
-        <vm:DeleteDancerViewModel/>
+        <vm:SearchAndDeleteDancerViewmodel/>
     </ContentPage.BindingContext>
-    
-    
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+
+    <Grid>
+        <ScrollView>
+            <Grid>
+                <VerticalStackLayout 
+                 Padding="20" >
+                    <Label Text="Rediger stamdata på elev" FontSize="24" HorizontalOptions="Center"></Label>
+                    <Grid 
+                    RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+                    RowSpacing="10"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+
+                        <Entry
+                        Grid.Row="0"
+                        Placeholder="Navn"
+                        Text="{Binding Name, Mode=TwoWay}"/>
+
+                        <Entry
+                        Grid.Row="1"
+                        Placeholder="Fødselsdato dd-MM-åååå"
+                        Text="{Binding TimeOfBirth, Mode=TwoWay}"/>
+
+                        <Button
+                        Grid.Row="2" 
+                        Text="Søg"
+                         Command="{Binding SearchDancerCommand}"/>
+
+                        <Button
+                        Grid.Row="3"
+                        Text="Slet elev"
+                        Command="{Binding DeleteDancerCommand}"/>
+
+
+                        <CollectionView
+                        Grid.Row="4"
+                        ItemsSource="{Binding DancerDtoList}"
+                        SelectedItem="{Binding SelectedDancer, Mode=TwoWay}"
+                        SelectionMode="Single">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid
+                                    ColumnDefinitions="Auto, Auto">
+                                        <Label
+                                        Grid.Column="0"
+                                        Text="{Binding Name}">
+                                        </Label>
+                                        <Label
+                                        Grid.Column="1"
+                                        Text="{Binding TimeOfBirth}">
+                                        </Label>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                    </Grid>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+    </Grid>
 </ContentPage>

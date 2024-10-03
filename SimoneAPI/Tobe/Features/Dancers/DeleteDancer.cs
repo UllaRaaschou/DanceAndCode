@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DbContexts;
-using System.Runtime.CompilerServices;
 
 
 namespace SimoneAPI.Tobe.Features.Dancer
