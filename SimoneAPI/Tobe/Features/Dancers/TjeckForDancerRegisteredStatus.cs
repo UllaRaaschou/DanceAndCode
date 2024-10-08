@@ -3,7 +3,7 @@ using SimoneAPI.DbContexts;
 
 namespace SimoneAPI.Tobe.Features.Dancers
 {
-    public class GetDancerByNameAndTimeOfBirth
+    public class TjeckForDancerRegisteredStatus
     {
         public async static Task<IResult> CheckForNOTRegistered(SimoneDbContext dbContext, string name, DateOnly timeOfBirth) 
         {

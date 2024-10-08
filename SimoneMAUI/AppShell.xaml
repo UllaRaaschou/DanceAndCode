@@ -4,12 +4,29 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SimoneMaui"
+    xmlns:views="clr-namespace:SimoneMaui.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="SimoneMaui">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <ShellItem Title="Home">
+        <ShellSection Title="Main">
+            <ShellContent
+                Title="Home"
+                ContentTemplate="{DataTemplate local:MainPage}"
+                Route="MainPage" />
+        </ShellSection>
+        <ShellSection Title="Update Dancer">
+            <ShellContent
+                Title="Update Dancer"
+                ContentTemplate="{DataTemplate views:UpdateDancerPage}"
+                Route="UpdateDancerPage" />
+        </ShellSection>
+        <ShellSection Title="Search Dancer">
+            <ShellContent
+                Title="Search Dancer"
+                ContentTemplate="{DataTemplate views:SearchDancerPage}"
+                Route="searchdancer" />
+        </ShellSection>
+    </ShellItem>
 
 </Shell>

@@ -59,7 +59,7 @@ namespace SimoneAPI.EndpointExtensions
                 .WithOpenApi()
                 .WithSummary("Write a name and search for dancers with that name");
 
-            dancersEndpoints.MapGet("/Check", GetDancerByNameAndTimeOfBirth.CheckForNOTRegistered)
+            dancersEndpoints.MapGet("/Check", TjeckForDancerRegisteredStatus.CheckForNOTRegistered)
                 .WithName("CheckForNOTRegistered")
                 .WithOpenApi()
                 .WithSummary("Write a name and time of birth and get a false returned, if danser is already registered");

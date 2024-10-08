@@ -7,6 +7,7 @@ using static SimoneAPI.Tobe.Features.Dancer.PostDancer;
 using static SimoneAPI.Tobe.Features.Dancer.UpdateDancer;
 
 
+
 namespace SimoneAPI.Profiles
 {
     public class DancerProfile: Profile
@@ -18,8 +19,20 @@ namespace SimoneAPI.Profiles
                 .ForMember(dest => dest.TeamDancerRelations, opt => opt.Ignore());
                
 
-            CreateMap<DancerDataModel, SearchDancerFromNameOrTimeOfBirth.ResponceDto>();
+            CreateMap<DancerDataModel, SearchDancerFromNameOrTimeOfBirth.ResponceDto>()
+                .ForMember(dest => dest.Teams, opt =>
+                opt.MapFrom(src => src.TeamDancerRelations != null
+                ? src.TeamDancerRelations.Select(tdr
+                => new SearchDancerFromNameOrTimeOfBirth.TeamDto
+                {
+                    TeamId = tdr.TeamDataModel.TeamId,
+                    Number = tdr.TeamDataModel.Number,
+                    Name = tdr.TeamDataModel.Name,
+                    SceduledTime = tdr.TeamDataModel.SceduledTime
+                })
+                : Enumerable.Empty<SearchDancerFromNameOrTimeOfBirth.TeamDto>()));
 
+          
 
             CreateMap<SearchForDancerByName.DancerDataModel, SearchForDancerByName.SearchDancerResponceDto>()
                 .ForMember(dest => dest.Teams, opt =>
@@ -30,6 +43,7 @@ namespace SimoneAPI.Profiles
                     TeamId = tdr.TeamDataModel.TeamId,
                     Number = tdr.TeamDataModel.Number,
                     Name = tdr.TeamDataModel.Name
+                   
                 })               
                 : Enumerable.Empty<SearchForDancerByName.TeamDataDto>()));
 
@@ -41,6 +55,7 @@ namespace SimoneAPI.Profiles
             //.ForMember(dest => dest.Teams, opt => opt.Ignore());
 
             CreateMap<DancerDataModel, SearchForTeamByNameOrNumber.DancerDto>();
+                
 
             CreateMap<DancerDataModel, GetDancerResponceDto>()
                 .ForMember(dest => dest.Teams, opt =>

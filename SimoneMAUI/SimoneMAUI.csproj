@@ -63,6 +63,7 @@
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.3" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.91" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.91" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
@@ -72,27 +73,33 @@
 	
 
 	<ItemGroup>
-	  <Compile Update="Views\DeleteDancerPage.xaml.cs">
+	  <Compile Update="Views\DancerViews\DeleteDancerPage.xaml.cs">
 	    <DependentUpon>DeleteDancerPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\PostDancerPage.xaml.cs">
+	  <Compile Update="Views\DancerViews\PostDancerPage.xaml.cs">
 	    <DependentUpon>PostDancerPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\UpdateDancerPage.xaml.cs">
-	    <DependentUpon>UpdateDancerPage.xaml</DependentUpon>
+	  <Compile Update="Views\DancerViews\SearchDancerPage.xaml.cs">
+	    <DependentUpon>SearchDancerPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\DeleteDancerPage.xaml">
+	  <MauiXaml Update="Views\DancerViews\DeleteDancerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\PostDancerPage.xaml">
+	  <MauiXaml Update="Views\DancerViews\PostDancerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\UpdateDancerPage.xaml">
+	  <MauiXaml Update="Views\DancerViews\SearchDancerPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\DancerViews\UpdateDancerPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PostTeamPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

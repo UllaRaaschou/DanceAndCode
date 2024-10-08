@@ -1,12 +1,23 @@
-﻿namespace SimoneMaui
+﻿using SimoneMaui.Navigation;
+using System.Diagnostics.Tracing;
+
+namespace SimoneMaui
 {
     public partial class MainPage : ContentPage
     {
         int count = 0;
 
-        public MainPage()
+        private INavigationService NavigationService;
+
+        public MainPage(INavigationService navigationService )
         {
             InitializeComponent();
+            NavigationService = navigationService;
+        }
+
+        private void OnSearchDancerClicked(object sender, EventArgs e)
+        {
+            this.NavigationService.GoToSearchDancer();
         }
 
         private void OnCounterClicked(object sender, EventArgs e)

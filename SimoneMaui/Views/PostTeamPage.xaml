@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:SimoneMaui.ViewModels"
+             x:Class="SimoneMaui.Views.PostTeamPage"
+             x:DataType="vm:PostTeamViewModel"
+             Title="PostTeamPage">
+
+    <ContentPage.BindingContext>
+        <vm:PostTeamViewModel/>
+    </ContentPage.BindingContext>
+
+
+    <VerticalStackLayout>
+        <Label 
+            Text="Opret dansehold"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry 
+            Text="Holdnummer"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry 
+            Text="Holdnavn"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry 
+            Text="HoldDetaljer"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>
+

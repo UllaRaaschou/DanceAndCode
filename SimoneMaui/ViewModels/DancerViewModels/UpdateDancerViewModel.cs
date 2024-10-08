@@ -3,77 +3,57 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text.Json;
 
 namespace SimoneMaui.ViewModels
 {
-    public partial class SearchAndUpdateDancerViewmodel: ObservableObject
+    public partial class UpdateDancerViewmodel : ObservableObject, IQueryAttributable
     {
         [ObservableProperty]
-        private ObservableCollection<DancerDto> dancerDtoList;
-
+        private DancerDto? selectedDancer = null;
+        
+        
         [ObservableProperty]
         private string? name = string.Empty;
 
         [ObservableProperty]
-        private string? timeOfBirth= string.Empty;
+        private string? timeOfBirth = string.Empty;
+
+        [ObservableProperty]
+        private string teamDetailsString = string.Empty;
+
+        partial void OnSelectedDancerChanged(DancerDto? selecetedDancer)
+        {
+            if (selectedDancer != null)
+            {
+                Name = selectedDancer.Name;
+                TimeOfBirth = selectedDancer.TimeOfBirth;
+            }
+        }
 
         partial void OnNameChanged(string value)
         {
-            SearchDancerCommand.NotifyCanExecuteChanged();
             UpdateDancerCommand.NotifyCanExecuteChanged();
         }
         partial void OnTimeOfBirthChanged(string value)
         {
-            SearchDancerCommand.NotifyCanExecuteChanged();
             UpdateDancerCommand.NotifyCanExecuteChanged();
         }
-       
-        private DancerDto? selectedDancer = null;
-        public DancerDto? SelectedDancer
-        {
-            get => selectedDancer;
-            set
-            {
-                if (selectedDancer != value)
-                {
-                    selectedDancer = value;
-                    OnPropertyChanged();
 
-                    //Her sørger jeg for, at de observable Proprties sættes til værdierne for den selectede danser
-                    Name = selectedDancer?.Name; 
-                    TimeOfBirth = selectedDancer?.TimeOfBirth;
-                    
-                    OnPropertyChanged(nameof(Name));
-                    OnPropertyChanged(nameof(TimeOfBirth));
-                };
-            }           
-        }
 
-        
+        [ObservableProperty]
+        private TeamDto? selectedTeam = null;
+
+        [ObservableProperty]
+        private ObservableCollection<TeamDto> teams = new ObservableCollection<TeamDto>();
+
         public RelayCommand SearchDancerCommand { get; }
-        public RelayCommand UpdateDancerCommand {get; }
+        public RelayCommand UpdateDancerCommand { get; }
 
-        public SearchAndUpdateDancerViewmodel() 
+        public UpdateDancerViewmodel()
         {
-            SearchDancerCommand = new RelayCommand(async () => await SearchDancer(), CanSearch);
             UpdateDancerCommand = new RelayCommand(async () => await UpdateDancer(), CanUpdate);
-            DancerDtoList = new ObservableCollection<DancerDto>()
-            {
-                new DancerDto{Name="Test", TimeOfBirth="01-01-2001" }
-            };
-
-
-        }
-                  
-        private bool CanSearch()
-        {
-            var dataWritten = !string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(TimeOfBirth);
-            if(dataWritten==true && SelectedDancer==null) 
-            {
-                return true;
-            }
-            return false;
         }
 
         private bool CanUpdate()
@@ -101,7 +81,7 @@ namespace SimoneMaui.ViewModels
             if (Name != null)
             {
                 request.AddOrUpdateParameter("name", Name);
-               // request.AddJsonBody(new { Name, TimeOfBirth });
+                // request.AddJsonBody(new { Name, TimeOfBirth });
             }
 
             // The cancellation token comes from the caller. You can still make a call without it.
@@ -126,17 +106,22 @@ namespace SimoneMaui.ViewModels
             }
 
             var dancerCollection = new ObservableCollection<DancerDto>(returnedCollection.Data);
-            
-            DancerDtoList.Clear();
+
+            //foreach (var dancer in dancerCollection)
+            //{
+            //    dancer.TeamDetails = new ObservableCollection<string>(dancer.Teams.Select(team => team.TeamDetailsString));
+            //}
+
+            //DancerDtoList.Clear();
             foreach (var item in dancerCollection)
             {
-                DancerDtoList.Add(item);
-                
+                //DancerDtoList.Add(item);
+
             }
             return dancerCollection;
         }
-            
-        public async Task UpdateDancer() 
+
+        public async Task UpdateDancer()
         {
             if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate))
             {
@@ -159,24 +144,49 @@ namespace SimoneMaui.ViewModels
                 }
 
                 SelectedDancer = null;
-                DancerDtoList.Clear();
+                //DancerDtoList.Clear();
 
 
             }
-            else 
+            else
             {
                 await Application.Current.MainPage.DisplayAlert("Fejl", "Ugyldigt datoformat. Brug venligst dd-MM-yyyy.", "OK");
             }
         }
-        
 
-       
-    }
+      
 
-    public class DancerDto
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        public Guid DancerId { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string TimeOfBirth { get; set;} = string.Empty;
+        if (query.ContainsKey("dancerDto") && query["dancerDto"] is DancerDto dancerDto)
+        {
+            SelectedDancer = dancerDto;
+            Name = dancerDto.Name; // Assuming DancerDto has a Name property
+            TimeOfBirth = dancerDto.TimeOfBirth; // Assuming DancerDto has a TimeOfBirth property
+        }
     }
+
+
+    }
+
+    public class UpdateDancerDto
+    {
+        public Guid DancerId { get; set; } = Guid.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string TimeOfBirth { get; set; } = string.Empty;
+        public ObservableCollection<TeamDto> Teams { get; set; } = new ObservableCollection<TeamDto>();
+    }
+
+    public class UpdateTeamDto
+    {
+        public Guid TeamId { get; set; } = Guid.Empty;
+        public int Number { get; set; } = 0;
+        public string Name { get; set; } = string.Empty;
+        public string SceduledTime { get; set; } = string.Empty;
+        public string TeamDetailsString => $"Hold {Number} '{Name}' - {SceduledTime}";
+
+
+
+    }
+
 }

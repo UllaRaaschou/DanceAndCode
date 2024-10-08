@@ -1,4 +1,8 @@
-﻿using SimoneMaui.Views;
+﻿using Microsoft.Extensions.DependencyModel;
+using SimoneMaui.Navigation;
+using SimoneMaui.ViewModels;
+using SimoneMaui.Views;
+using System.Diagnostics;
 
 namespace SimoneMaui
 {
@@ -7,8 +11,8 @@ namespace SimoneMaui
         public App()
         {
             InitializeComponent();
-
-            MainPage = new DeleteDancerPage();
+            MainPage = new AppShell();
         }
+            
     }
 }
