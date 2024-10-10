@@ -9,12 +9,6 @@ namespace SimoneAPI.Tobe.Features
     public static class SearchForTeamByNameOrNumber
 
     {
-        public static void RegisterTeamsEndpoint(this WebApplication endPointRouteBuilder)
-        {
-            endPointRouteBuilder.MapGet("", Get);
-        }
-
-
         public static async Task<IResult> Get(SimoneDbContext dbContext,
             IMapper mapper, [FromQuery] String? name, [FromQuery] int? number)
         {

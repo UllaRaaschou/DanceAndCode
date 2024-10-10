@@ -4,7 +4,7 @@ namespace SimoneMaui.Views;
 
 public partial class UpdateDancerPage : ContentPage
 {
-    public UpdateDancerPage(UpdateDancerViewmodel viewmodel)
+    public UpdateDancerPage(UpdateDancerViewModel viewmodel)
 	{
 		InitializeComponent();
 		BindingContext = viewmodel;

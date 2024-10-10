@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SimoneMaui.ViewModels"
              x:Class="SimoneMaui.Views.UpdateDancerPage"
+             x:DataType="vm:UpdateDancerViewModel"
              Title="UpdateDancerPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!!!!!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
 
-        <Label 
-            Text="{Binding SelectedDancer.Name}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
 
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout  
+            Padding="20" >
+            <Label Text="Rediger elev" FontSize="24" HorizontalOptions="Center"></Label> 
+            <Entry
+                Text="{Binding SelectedDancer.Name, Mode=TwoWay}"></Entry>
+            <Entry
+                Text="{Binding SelectedDancer.TimeOfBirth, Mode=TwoWay}"></Entry>
+            <CollectionView
+                ItemsSource ="{Binding Teams}"
+                SelectedItem="{Binding SelectedTeam, Mode=TwoWay}"
+                SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding TeamDetailsString, Mode=TwoWay}"></Label>                        
+                    </DataTemplate>                   
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Text="Fjern eleven fra dette hold"  Margin="10, 10, 10, 10" Command="{Binding RemoveTeamCommand}" />
+            <Button Text="Sæt eleven på et nyt dansehold"  Margin="10, 10, 10, 10" Command="{Binding WannaSearchCommand}" />
+
+            <Label Text="Valgt dansehold" Margin="10, 10, 10, 10" FontSize="24" HorizontalOptions="Center"></Label>
+            <HorizontalStackLayout>
+                <Label Text="{Binding TeamToAdd.Number, Mode=TwoWay}" FontSize="18" HorizontalOptions="Center"></Label>
+                <Label Text="{Binding TeamToAdd.Name, Mode=TwoWay}" FontSize="18" HorizontalOptions="Center"></Label>
+                <Label Text="{Binding TeamToAdd.TeamDetailsString, Mode=TwoWay}" FontSize="18" HorizontalOptions="Center"></Label>
+                
+            </HorizontalStackLayout>
+
+
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

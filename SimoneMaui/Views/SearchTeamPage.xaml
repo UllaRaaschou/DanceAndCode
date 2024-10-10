@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SimoneMaui.ViewModels"
+             x:Class="SimoneMaui.Views.SearchTeamPage"
+             x:DataType="vm:SearchTeamViewModel"
+             Title="SearchTeamPage">
+
+    <ScrollView>
+        <VerticalStackLayout 
+              Padding="20" >
+            <Label Text="Fremsøg hold" FontSize="24" HorizontalOptions="Center"></Label>
+
+
+            <Entry
+                     Placeholder="Holdnummer"
+                     Text="{Binding TeamNumberEntry, Mode=TwoWay}"
+                     IsEnabled="{Binding IsTeamNumberEntryEnabled, Mode=TwoWay}"/>
+            <Entry
+                     Placeholder="Holdnavn"
+                     Text="{Binding TeamNameEntry, Mode=TwoWay}"
+                     IsEnabled="{Binding IsTeamNameEntryEnabled, Mode=TwoWay}"/>
+            <Button
+                     Margin="20,10,20,10"
+                     Text="Søg"
+                     Command="{Binding SearchTeamCommand}"/>
+
+            <Label Text="Hold, der matcher søgningen:" FontSize="24" HorizontalOptions="Center" Margin=" 40,20,10,20"></Label>
+            <CollectionView                    
+                     ItemsSource="{Binding TeamDtoCollection}"
+                     SelectedItem="{Binding SelectedTeam, Mode=TwoWay}"
+                     SelectionChangedCommand="{Binding NavigateToUpdateDancerCommand}"
+                     SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="10,5,10,5" Padding="10,10,10,10" BackgroundColor="White">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="{Binding Name}"/>
+                            <Label Grid.Column="1" Text="{Binding Number}"/>
+                            <Label Grid.Column="2" Text="{Binding TeamDetailsString}"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

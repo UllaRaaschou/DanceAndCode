@@ -2,18 +2,19 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
+using SimoneMaui.Navigation;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Text.Json;
 
 namespace SimoneMaui.ViewModels
 {
-    public partial class UpdateDancerViewmodel : ObservableObject, IQueryAttributable
+    public partial class UpdateDancerViewModel : ObservableObject, IQueryAttributable
     {
         [ObservableProperty]
         private DancerDto? selectedDancer = null;
-        
-        
+
+        public INavigationService NavigationService { get; set; }
+
         [ObservableProperty]
         private string? name = string.Empty;
 
@@ -21,14 +22,62 @@ namespace SimoneMaui.ViewModels
         private string? timeOfBirth = string.Empty;
 
         [ObservableProperty]
+        private ObservableCollection<TeamDto> teams;
+
+        [ObservableProperty]
         private string teamDetailsString = string.Empty;
 
-        partial void OnSelectedDancerChanged(DancerDto? selecetedDancer)
+        private TeamDto? selectedTeam;
+        public TeamDto? SelectedTeam
+        {
+            get => selectedTeam;
+            set
+            {
+                SetProperty(ref selectedTeam, value);
+                TeamDetailsString = value?.TeamDetailsString;
+                RemoveTeamCommand.NotifyCanExecuteChanged();
+            }
+        }
+
+        private TeamDto? teamToAdd;
+        public TeamDto? TeamToAdd
+        {
+            get => teamToAdd;
+            set
+            {
+                SetProperty(ref teamToAdd, value);
+                TeamDetailsString = value?.TeamDetailsString;
+            }
+        }
+
+
+        public RelayCommand RemoveTeamCommand { get; }
+        public RelayCommand WannaSearchCommand { get; }
+        public RelayCommand UpdateDancerCommand { get; }
+
+
+        
+
+
+
+
+        public UpdateDancerViewModel(INavigationService navigationService)
+        {
+            NavigationService = navigationService;
+            RemoveTeamCommand = new RelayCommand(async() => await RemoveTeam(), CanRemoveTeam);
+            WannaSearchCommand = new RelayCommand(async () => await WannaSearch(), CanWannaSearch);
+            UpdateDancerCommand = new RelayCommand(async () => await UpdateDancer(), CanUpdate);
+
+        }
+
+
+        partial void OnSelectedDancerChanged(DancerDto? selectedDancer)
         {
             if (selectedDancer != null)
-            {
+            {                
                 Name = selectedDancer.Name;
                 TimeOfBirth = selectedDancer.TimeOfBirth;
+                Teams = selectedDancer.Teams;
             }
         }
 
@@ -42,19 +91,46 @@ namespace SimoneMaui.ViewModels
         }
 
 
-        [ObservableProperty]
-        private TeamDto? selectedTeam = null;
-
-        [ObservableProperty]
-        private ObservableCollection<TeamDto> teams = new ObservableCollection<TeamDto>();
-
-        public RelayCommand SearchDancerCommand { get; }
-        public RelayCommand UpdateDancerCommand { get; }
-
-        public UpdateDancerViewmodel()
+        private bool CanRemoveTeam()
         {
-            UpdateDancerCommand = new RelayCommand(async () => await UpdateDancer(), CanUpdate);
+            if (SelectedDancer != null && SelectedTeam != null)
+            {
+                return true;
+            }
+            return false;
         }
+
+        public async Task RemoveTeam() 
+        {
+            var options = new RestClientOptions("https://localhost:7163");
+            var client = new RestClient(options);
+            var request = new RestRequest($"/dancers/{SelectedDancer.DancerId}/teams/{SelectedTeam.TeamId}", Method.Delete);
+            var returnedStatus = await client.ExecuteAsync(request, CancellationToken.None);
+            if (!returnedStatus.IsSuccessStatusCode)
+            {
+                JsonSerializerOptions _options = new();
+                _options.PropertyNameCaseInsensitive = true;
+
+                ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedStatus.Content ?? "{}", _options)!;
+            }
+            Teams.Remove(SelectedTeam);
+            SelectedTeam = null;
+        }
+
+        private bool CanWannaSearch()
+        {
+            if(selectedDancer != null && selectedTeam == null) 
+            {
+                return true;    
+            }
+            return false;
+        }
+
+        public async Task WannaSearch()
+        {
+            await NavigationService.GoToSearchTeam(SelectedDancer);
+        }
+      
 
         private bool CanUpdate()
         {
@@ -67,61 +143,7 @@ namespace SimoneMaui.ViewModels
         }
 
 
-        private async Task<ObservableCollection<DancerDto>> SearchDancer()
-        {
-            var options = new RestClientOptions("https://localhost:7163");
-            var client = new RestClient(options);
-            var request = new RestRequest("/dancers/SearchForDancerFromNameOrBirthday", Method.Get);
-
-            if (!string.IsNullOrEmpty(TimeOfBirth))
-            {
-                DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate);
-                request.AddOrUpdateParameter("TimeOfBirth", parsedDate); //.AddJsonBody(new { Name, TimeOfBirth = parsedDate });
-            }
-            if (Name != null)
-            {
-                request.AddOrUpdateParameter("name", Name);
-                // request.AddJsonBody(new { Name, TimeOfBirth });
-            }
-
-            // The cancellation token comes from the caller. You can still make a call without it.
-
-            var returnedCollection = await client.ExecuteGetAsync<List<DancerDto>>(request, CancellationToken.None);
-
-            if (!returnedCollection.IsSuccessStatusCode)
-            {
-                JsonSerializerOptions _options = new();
-                _options.PropertyNameCaseInsensitive = true;
-
-                ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedCollection.Content ?? "{}", _options)!;
-
-            }
-
-            Name = string.Empty;
-            TimeOfBirth = string.Empty;
-
-            if (!returnedCollection.Data.Any() || returnedCollection.Data == null)
-            {
-                return null;
-            }
-
-            var dancerCollection = new ObservableCollection<DancerDto>(returnedCollection.Data);
-
-            //foreach (var dancer in dancerCollection)
-            //{
-            //    dancer.TeamDetails = new ObservableCollection<string>(dancer.Teams.Select(team => team.TeamDetailsString));
-            //}
-
-            //DancerDtoList.Clear();
-            foreach (var item in dancerCollection)
-            {
-                //DancerDtoList.Add(item);
-
-            }
-            return dancerCollection;
-        }
-
-        public async Task UpdateDancer()
+       public async Task UpdateDancer()
         {
             if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate))
             {
@@ -158,12 +180,17 @@ namespace SimoneMaui.ViewModels
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (query.ContainsKey("dancerDto") && query["dancerDto"] is DancerDto dancerDto)
-        {
-            SelectedDancer = dancerDto;
-            Name = dancerDto.Name; // Assuming DancerDto has a Name property
-            TimeOfBirth = dancerDto.TimeOfBirth; // Assuming DancerDto has a TimeOfBirth property
-        }
+            if (query.ContainsKey("dancerDto") && query["dancerDto"] is DancerDto dancerDto) 
+               
+            {
+                SelectedDancer = dancerDto;
+                
+            }
+
+            if (query.ContainsKey("teamDto") && query["teamDto"] is TeamDto teamDto)
+            {
+                TeamToAdd = teamDto;
+            }
     }
 
 

@@ -1,11 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RestSharp;
 using SimoneMaui.Navigation;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Text.Json;
 
 namespace SimoneMaui.ViewModels
@@ -29,8 +27,9 @@ namespace SimoneMaui.ViewModels
 
         [ObservableProperty]
         private string teamDetailsString= string.Empty;
+        public RelayCommand SearchDancerCommand { get; }
 
-
+        public INavigationService NavigationService { get; set; }
 
 
         private DancerDto? selectedDancer = null;
@@ -46,6 +45,14 @@ namespace SimoneMaui.ViewModels
             }
         }
 
+        [RelayCommand]
+        private async Task NavigateToUpdateDancer()
+        {
+            if (SelectedDancer is not null)
+            {
+                await NavigationService.GoToUpdateDancer(SelectedDancer);
+            }
+        }
 
 
         public SearchDancerViewmodel(INavigationService navigationService)
@@ -66,7 +73,7 @@ namespace SimoneMaui.ViewModels
         }
 
 
-        public RelayCommand SearchDancerCommand { get; }
+        
         private bool CanSearch()
         {
             var dataWritten = !string.IsNullOrWhiteSpace(NameEntry);
@@ -123,15 +130,8 @@ namespace SimoneMaui.ViewModels
             return dancerCollection;
         }
 
-        public INavigationService NavigationService { get; set; }
-        [RelayCommand]
-        private async Task NavigateToUpdateDancer()
-        {
-            if (SelectedDancer is not null)
-            {
-                await NavigationService.GoToUpdateDancer(SelectedDancer);
-            }
-        }
+        
+        
 
 
     }
