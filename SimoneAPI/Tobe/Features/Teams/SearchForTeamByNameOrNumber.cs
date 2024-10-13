@@ -14,9 +14,10 @@ namespace SimoneAPI.Tobe.Features
         {
             IEnumerable<TeamDataModel> models = await dbContext.TeamDataModels
                 .Include(t => t.TeamDancerRelations)
-                
-                //.Where(d => name == null || d.TeamDataModel.Name.Contains(name))
-                .Where(d => number == 0 || d.Number == number)
+                .Where(d => 
+                    (name == null || d.Name.Contains(name)) ||
+                    (number == null || d.Number == number)
+                )
                 .ToListAsync();
               
 

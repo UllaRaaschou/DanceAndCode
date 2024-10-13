@@ -29,12 +29,12 @@
             <Button Text="Sæt eleven på et nyt dansehold"  Margin="10, 10, 10, 10" Command="{Binding WannaSearchCommand}" />
 
             <Label Text="Valgt dansehold" Margin="10, 10, 10, 10" FontSize="24" HorizontalOptions="Center"></Label>
-            <HorizontalStackLayout>
-                <Label Text="{Binding TeamToAdd.Number, Mode=TwoWay}" FontSize="18" HorizontalOptions="Center"></Label>
-                <Label Text="{Binding TeamToAdd.Name, Mode=TwoWay}" FontSize="18" HorizontalOptions="Center"></Label>
-                <Label Text="{Binding TeamToAdd.TeamDetailsString, Mode=TwoWay}" FontSize="18" HorizontalOptions="Center"></Label>
-                
+            <HorizontalStackLayout
+                HorizontalOptions="Center">               
+                <Label Text="{Binding TeamToAdd.TeamDetailsString, Mode=TwoWay}" FontSize="18" HorizontalOptions="Center"></Label>                
             </HorizontalStackLayout>
+            
+            
 
 
 

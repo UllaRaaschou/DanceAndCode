@@ -28,7 +28,7 @@
             <Label Text="Hold, der matcher søgningen:" FontSize="24" HorizontalOptions="Center" Margin=" 40,20,10,20"></Label>
             <CollectionView                    
                      ItemsSource="{Binding TeamDtoCollection}"
-                     SelectedItem="{Binding SelectedTeam, Mode=TwoWay}"
+                     SelectedItem="{Binding TeamToAdd, Mode=TwoWay}"
                      SelectionChangedCommand="{Binding NavigateToUpdateDancerCommand}"
                      SelectionMode="Single">
                 <CollectionView.ItemTemplate>

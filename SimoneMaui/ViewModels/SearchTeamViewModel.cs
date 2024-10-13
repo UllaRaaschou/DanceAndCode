@@ -35,11 +35,28 @@ namespace SimoneMaui.ViewModels
         [ObservableProperty]
         private string teamDetailsString = string.Empty;
 
-        private TeamDto selectedTeam;
-        public TeamDto SelectedTeam
+        public RelayCommand NavigateToUpdateDancerCommand { get; }
+
+        private TeamDto teamToAdd;
+        public TeamDto TeamToAdd
         {
-            get => selectedTeam;
-            set => SetProperty(ref selectedTeam, value);            
+            get => teamToAdd;
+            set
+            {
+                SetProperty(ref teamToAdd, value);
+                if (value is not null)
+                {
+                    HandleSelectedTeamChanged();
+                }
+            }
+        }
+
+        private async Task HandleSelectedTeamChanged()
+        {
+            if (TeamToAdd is not null)
+            {
+                await NavigateToUpdateDancer();
+            }
         }
 
         private string? teamNumberEntry;
@@ -94,15 +111,15 @@ namespace SimoneMaui.ViewModels
             IsTeamNameEntryEnabled = string.IsNullOrWhiteSpace(TeamNumberEntry);
         }
 
-
-
-        [RelayCommand]
-        private async Task NavigateToUpdateDancer()
+        private bool CanNavigateToUpdateDancer()
         {
-            if (SelectedTeam is not null && SelectedDancer is not null)
-            {
-                await NavigationService.GoToUpdateDancer(SelectedDancer, SelectedTeam);
-            }
+            return TeamToAdd is not null && SelectedDancer is not null;
+        }
+
+       
+        private async Task NavigateToUpdateDancer()
+        {            
+            await NavigationService.GoToUpdateDancer(SelectedDancer, TeamToAdd);
         }
 
 
@@ -110,32 +127,20 @@ namespace SimoneMaui.ViewModels
         {
             NavigationService = navigationService;
             SearchTeamCommand = new RelayCommand(async () => await SearchTeam(), CanSearchTeam);
+            NavigateToUpdateDancerCommand = new RelayCommand(async () => await NavigateToUpdateDancer(), CanNavigateToUpdateDancer);
         }
-
-        //[RelayCommand]
-        //public async Task Tusse()
-        //{
-        //    await CanSearchTeam();
-        //    await SearchTeam();
-        //}
-
-
 
         private bool CanSearchTeam()
         {
             return true;
-            //if(!string.IsNullOrEmpty(teamNameEntry) || !string.IsNullOrEmpty(teamNumberEntry))
-            //{
-            //    return true;
-            //}
-            //return false;
+           
         }
         
-        private async Task<ObservableCollection<TeamDto>> SearchTeam()
+        private async Task SearchTeam()
         {
             var options = new RestClientOptions("https://localhost:7163");
             var client = new RestClient(options);
-            var request = new RestRequest("/teams/SearchForTeamByNameOrNumber", Method.Get);
+            var request = new RestRequest("/teams", Method.Get);
 
             if (TeamNameEntry != null)
             {
@@ -162,11 +167,6 @@ namespace SimoneMaui.ViewModels
             TeamNameEntry = string.Empty;
             TeamNumberEntry = string.Empty;
 
-            if (!returnedCollection.Data.Any() || returnedCollection.Data == null)
-            {
-                return null;
-            }
-
             var teamCollection = new ObservableCollection<TeamDto>(returnedCollection.Data);
 
             if (teamCollection.Count > 0)
@@ -178,7 +178,7 @@ namespace SimoneMaui.ViewModels
 
                 }
             }
-            return TeamDtoCollection;
+            
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
