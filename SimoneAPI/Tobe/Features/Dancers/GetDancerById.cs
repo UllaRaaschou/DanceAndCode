@@ -29,8 +29,16 @@ namespace SimoneAPI.Tobe.Features.Dancer
         public Guid DancerId { get; set; }
         public string Name { get; set; } = string.Empty;
 
-        public DateTime TimeOfBirth { get; set; }
-        public IEnumerable<string> Teams { get; set; } = new List<string>();
+        public DateOnly TimeOfBirth { get; set; }
+        public IEnumerable<GetTeamResponceDto> Teams { get; set; } = new List<GetTeamResponceDto>();
 
+    }
+
+    public class GetTeamResponceDto
+    {
+        public Guid TeamId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public int Number { get; set; } = 0;
+        public IEnumerable<GetDancerResponceDto> DancersOnTeam { get; set; } = Enumerable.Empty<GetDancerResponceDto>();
     }
 }

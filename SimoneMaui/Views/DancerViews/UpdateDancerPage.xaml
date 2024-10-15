@@ -15,11 +15,12 @@
                 Text="{Binding SelectedDancer.Name, Mode=TwoWay}"></Entry>
             <Entry
                 Text="{Binding SelectedDancer.TimeOfBirth, Mode=TwoWay}"></Entry>
+            <Label Text="Elevens dansehold" Margin="10, 10, 10, 10" FontSize="24" HorizontalOptions="Center"></Label>
             <CollectionView
                 ItemsSource ="{Binding Teams}"
                 SelectedItem="{Binding SelectedTeam, Mode=TwoWay}"
                 SelectionMode="Single">
-                <CollectionView.ItemTemplate>
+                <CollectionView.ItemTemplate>                   
                     <DataTemplate>
                         <Label Text="{Binding TeamDetailsString, Mode=TwoWay}"></Label>                        
                     </DataTemplate>                   
@@ -33,13 +34,11 @@
                 HorizontalOptions="Center">               
                 <Label Text="{Binding TeamToAdd.TeamDetailsString, Mode=TwoWay}" FontSize="18" HorizontalOptions="Center"></Label>                
             </HorizontalStackLayout>
+
+            <Button Text="Tilføj eleven til valgte hold"  Margin="10, 10, 10, 10" Command="{Binding AddTeamCommand}" ></Button>
             
             
-
-
-
-
         </VerticalStackLayout>
     </ScrollView>
 
-</ContentPage>
+</ContentPage>  

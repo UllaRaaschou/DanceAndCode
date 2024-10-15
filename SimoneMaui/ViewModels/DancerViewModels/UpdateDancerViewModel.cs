@@ -10,8 +10,19 @@ namespace SimoneMaui.ViewModels
 {
     public partial class UpdateDancerViewModel : ObservableObject, IQueryAttributable
     {
-        [ObservableProperty]
-        private DancerDto? selectedDancer = null;
+        //[ObservableProperty]
+        //private DancerDto? selectedDancer;
+
+        private DancerDto? selectedDancer;
+        public DancerDto? SelectedDancer 
+        {
+            get => selectedDancer;
+            set
+            {
+                SetProperty(ref selectedDancer, value);
+                OnSelectedDancerChanged(value);
+            }
+        }
 
         public INavigationService NavigationService { get; set; }
 
@@ -26,6 +37,9 @@ namespace SimoneMaui.ViewModels
 
         [ObservableProperty]
         private string teamDetailsString = string.Empty;
+
+        //[ObservableProperty]
+        //private DancerDto? updatedDancerDto = null;
 
         private TeamDto? selectedTeam;
         public TeamDto? SelectedTeam
@@ -54,6 +68,9 @@ namespace SimoneMaui.ViewModels
         public RelayCommand RemoveTeamCommand { get; }
         public RelayCommand WannaSearchCommand { get; }
         public RelayCommand UpdateDancerCommand { get; }
+        public RelayCommand AddTeamCommand { get; }
+
+
 
 
         
@@ -66,12 +83,14 @@ namespace SimoneMaui.ViewModels
             NavigationService = navigationService;
             RemoveTeamCommand = new RelayCommand(async() => await RemoveTeam(), CanRemoveTeam);
             WannaSearchCommand = new RelayCommand(async () => await WannaSearch(), CanWannaSearch);
+            AddTeamCommand = new RelayCommand(async () => await AddTeam(), CanAddTeam);
             UpdateDancerCommand = new RelayCommand(async () => await UpdateDancer(), CanUpdate);
+
 
         }
 
 
-        partial void OnSelectedDancerChanged(DancerDto? selectedDancer)
+        private void OnSelectedDancerChanged(DancerDto? selectedDancer)
         {
             if (selectedDancer != null)
             {                
@@ -130,7 +149,25 @@ namespace SimoneMaui.ViewModels
         {
             await NavigationService.GoToSearchTeam(SelectedDancer);
         }
-      
+
+        private bool CanAddTeam() 
+        {
+            if (selectedDancer != null && teamToAdd != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task AddTeam()
+        {
+            var options = new RestClientOptions("https://localhost:7163");
+            var client = new RestClient(options);
+            var request = new RestRequest($"/dancers/{SelectedDancer.DancerId}/teams/{teamToAdd.TeamId}", Method.Put);
+            var returnedStatus = await client.ExecuteAsync<DancerDto>(request, CancellationToken.None);
+            SelectedDancer = returnedStatus.Data;          
+            
+        }
 
         private bool CanUpdate()
         {

@@ -14,12 +14,12 @@ using System.Xml.Linq;
 
 namespace SimoneMaui.ViewModels
 {
-    public partial class SearchTeamViewModel: ObservableObject
+    public partial class SearchTeamViewModel: ObservableObject, IQueryAttributable
     {
         public INavigationService NavigationService { get; set; }
 
         [ObservableProperty]
-        private DancerDto? selectedDancer = null;
+        private DancerDto? selectedDancer;
 
         public RelayCommand SearchTeamCommand { get; }
 
@@ -37,27 +37,12 @@ namespace SimoneMaui.ViewModels
 
         public RelayCommand NavigateToUpdateDancerCommand { get; }
 
+        [ObservableProperty]
         private TeamDto teamToAdd;
-        public TeamDto TeamToAdd
-        {
-            get => teamToAdd;
-            set
-            {
-                SetProperty(ref teamToAdd, value);
-                if (value is not null)
-                {
-                    HandleSelectedTeamChanged();
-                }
-            }
-        }
+        
+       
 
-        private async Task HandleSelectedTeamChanged()
-        {
-            if (TeamToAdd is not null)
-            {
-                await NavigateToUpdateDancer();
-            }
-        }
+        
 
         private string? teamNumberEntry;
         public string? TeamNumberEntry
@@ -113,13 +98,13 @@ namespace SimoneMaui.ViewModels
 
         private bool CanNavigateToUpdateDancer()
         {
-            return TeamToAdd is not null && SelectedDancer is not null;
+            return (teamToAdd != null && selectedDancer != null);
         }
 
        
         private async Task NavigateToUpdateDancer()
         {            
-            await NavigationService.GoToUpdateDancer(SelectedDancer, TeamToAdd);
+            await NavigationService.GoToUpdateDancer(selectedDancer, teamToAdd);
         }
 
 

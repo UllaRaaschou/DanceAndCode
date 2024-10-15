@@ -2,57 +2,46 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
-using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
 
 namespace SimoneMaui.ViewModels
 {
-    public partial class PostTeamViewModel : ObservableObject
+    public partial class PostTeamViewModel : ObservableObject, IQueryAttributable
     {
         [ObservableProperty]
-        private int number;
+        [NotifyCanExecuteChangedFor(nameof(PostTeamCommand))]
+        private string? number;
 
         [ObservableProperty]
-        private string name;
-
-
-        [ObservableProperty]
-        private string dayOfWeek;
-        partial void OnDayOfWeekChanged(string value)
-        {
-            OnPropertyChanged(nameof(SceduledTime));
-        }
+        [NotifyCanExecuteChangedFor(nameof(PostTeamCommand))]
+        private string? name;
 
 
         [ObservableProperty]
-        private string startAndEndTime;
-        partial void OnStartAndEndTimeChanged(string value)
-        {
-            OnPropertyChanged(nameof(SceduledTime));
-        }
+        [NotifyCanExecuteChangedFor(nameof(PostTeamCommand))]
+        private string? dayOfWeek;
 
-
-
-        public string SceduledTime
-        {
-            get
-            {
-                return $"{dayOfWeek} + {startAndEndTime}";
-            }
-        }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(PostTeamCommand))]
+        private string? startAndEndTime;
+       
+        public string SceduledTime => $"{DayOfWeek} + {StartAndEndTime}";
 
         public IRelayCommand PostTeamCommand { get; }
 
-
         public PostTeamViewModel()
         {
-            PostTeamCommand= new RelayCommand(async () => await PostTeam(), canPost);
+            PostTeamCommand = new AsyncRelayCommand(PostTeam, CanPost);
         }
 
-        private bool canPost()
+        private bool CanPost()
         {
-            return !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(dayOfWeek) && !string.IsNullOrEmpty(startAndEndTime);
+            return !string.IsNullOrEmpty(Number)
+                && !string.IsNullOrEmpty(Name) 
+                && !string.IsNullOrEmpty(DayOfWeek) 
+                && !string.IsNullOrEmpty(StartAndEndTime);
         }
 
         private async Task PostTeam()
@@ -74,11 +63,16 @@ namespace SimoneMaui.ViewModels
 
             }
 
-            Number = 0;
+            Number = string.Empty;
             Name = string.Empty;
             DayOfWeek = string.Empty;
             StartAndEndTime = string.Empty;
 
+        }
+
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            throw new NotImplementedException();
         }
     }
 }      

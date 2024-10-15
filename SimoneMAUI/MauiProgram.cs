@@ -32,6 +32,9 @@ namespace SimoneMaui
 
             builder.Services.AddTransient<SearchTeamViewModel>();
             builder.Services.AddTransient<SearchTeamPage>();
+
+            builder.Services.AddTransient<PostTeamViewModel>();
+            builder.Services.AddTransient<PostTeamPage>();
             
 
 #if DEBUG

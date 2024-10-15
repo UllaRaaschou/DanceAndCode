@@ -34,7 +34,7 @@ namespace SimoneAPI.EndpointExtensions
                 .WithOpenApi()
                 .WithSummary("Post a dancer");
 
-            dancersEndpoints.MapPut("", AddTeamToDancersListOfTeams.AddItemToListOfTeams)
+            dancersEndpoints.MapPut("/{dancerId:guid}/Teams/{teamId}", AddTeamToDancersListOfTeams.AddItemToListOfTeams)
                 .WithName("AddTeamToDancersTeamList")
                 .WithOpenApi()
                 .WithSummary("Add a team to a dancers list of teams");

@@ -49,6 +49,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
              await dbContext.SaveChangesAsync();    
 
             var updatedDto = mapper.Map<DancerDto>(dancerDataModel);
+            
             return TypedResults.Ok(updatedDto);
 
         }
@@ -57,7 +58,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
         {
             public Guid DancerId { get; set; }
             public string Name { get; set; } = string.Empty;
-            public DateTime TimeOfBirth { get; set; }
+            public DateOnly TimeOfBirth { get; set; }
             public IEnumerable<TeamDto> Teams { get; set; } = new List<TeamDto>();
         }
 

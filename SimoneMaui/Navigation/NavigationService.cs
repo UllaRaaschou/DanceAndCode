@@ -35,6 +35,7 @@ public class NavigationService : INavigationService
 
     public async Task GoToSearchTeam(DancerDto dancerDto)
     {
-        await Shell.Current.GoToAsync(SEARCH_TEAM_PAGE_ROUTE);
+        var parameters = new Dictionary<string, object> { { "dancerDto", dancerDto } };
+        await Shell.Current.GoToAsync(SEARCH_TEAM_PAGE_ROUTE, parameters);
     }
 }

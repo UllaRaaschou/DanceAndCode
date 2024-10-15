@@ -3,32 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:vm="clr-namespace:SimoneMaui.ViewModels"
+             xmlns:b="clr-namespace:SimoneMaui.Behaviors"
              x:Class="SimoneMaui.Views.PostTeamPage"
              x:DataType="vm:PostTeamViewModel"
              Title="PostTeamPage">
 
-    <ContentPage.BindingContext>
-        <vm:PostTeamViewModel/>
-    </ContentPage.BindingContext>
-
-
     <VerticalStackLayout>
-        <Label 
+        <Label            
             Text="Opret dansehold"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Entry 
-            Text="Holdnummer"
+            Placeholder="Holdnummer"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+            Text="{Binding Number}" />
         <Entry 
-            Text="Holdnavn"
+            Placeholder="Holdnavn"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center" 
+            Text="{Binding Name}" />
         <Entry 
-            Text="HoldDetaljer"
+            Placeholder="Ugedag"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center" 
+            Text="{Binding DayOfWeek}" />
+        <Entry 
+             Placeholder="Tidsrum"
+             VerticalOptions="Center" 
+             HorizontalOptions="Center" 
+             Text="{Binding StartAndEndTime}">
+                <Entry.Behaviors>
+                    <b:TimeEntryBehavior/>
+                </Entry.Behaviors>
+       </Entry>
+        <Button 
+            Text="Opret hold"
+            Command="{Binding PostTeamCommand}"
+            VerticalOptions="Center">            
+        </Button>
     </VerticalStackLayout>
 </ContentPage>
 
