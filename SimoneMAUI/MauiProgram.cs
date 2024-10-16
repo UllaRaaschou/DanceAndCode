@@ -35,7 +35,13 @@ namespace SimoneMaui
 
             builder.Services.AddTransient<PostTeamViewModel>();
             builder.Services.AddTransient<PostTeamPage>();
-            
+
+            builder.Services.AddTransient<DeleteTeamViewModel>();
+            builder.Services.AddTransient<DeleteTeamPage>();
+
+            builder.Services.AddTransient<UpdateTeamViewModel>();
+            builder.Services.AddTransient<UpdateTeamPage>();
+
 
 #if DEBUG
             builder.Logging.AddDebug();

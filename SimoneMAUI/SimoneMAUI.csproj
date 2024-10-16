@@ -82,6 +82,9 @@
 	  <Compile Update="Views\DancerViews\SearchDancerPage.xaml.cs">
 	    <DependentUpon>SearchDancerPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\DeleteTeamPage.xaml.cs">
+	    <DependentUpon>DeleteTeamPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	
@@ -99,10 +102,16 @@
 	  <MauiXaml Update="Views\DancerViews\UpdateDancerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\DeleteTeamPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\PostTeamPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SearchTeamPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UpdateTeamPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

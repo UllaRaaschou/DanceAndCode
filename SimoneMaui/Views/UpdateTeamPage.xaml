@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SimoneMaui.ViewModels"
+             x:Class="SimoneMaui.Views.UpdateTeamPage"
+             x:DataType="vm:UpdateTeamViewModel"
+             Title="UpdateTeamPage">
+
+    <VerticalStackLayout>
+        <Label            
+        Text="Hold, der skal opdateres"
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" />
+        <Entry
+         VerticalOptions="Center" 
+         HorizontalOptions="Center"
+        Text="{Binding Number}" />
+        <Entry      
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" 
+        Text="{Binding Name}" />
+        <Entry     
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" 
+        Text="{Binding DayOfWeek}" />
+        <Entry     
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" 
+        Text="{Binding StartAndEndTime}"/>
+
+        <Button 
+        Text="Tilføj elev til hold"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        Command="{Binding WannaAddDancerCommand}" />
+        
+        <Label Text="Valgt elev:" />
+
+        <HorizontalStackLayout>
+            <Label Text="{Binding SelectedDancer.Name}" />
+            <Label Text="{Binding SelectedDancer.TimeOfBirth}" />
+
+            <CollectionView ItemsSource="{Binding Teams}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding Name}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </HorizontalStackLayout>
+
+
+
+    </VerticalStackLayout>
+
+</ContentPage>

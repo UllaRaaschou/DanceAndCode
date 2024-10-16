@@ -110,7 +110,7 @@ namespace SimoneAPI.EndpointExtensions
                 .WithOpenApi()
                 .WithSummary("Delete a team using it's id"); 
 
-            teamsWithGuidEndpoints.MapPut("/addToListOfDancers", AddDancerToTeam.Put)
+            teamsWithGuidEndpoints.MapPut("/AddToListOfDancers", AddDancerToTeam.Put)
                 .WithName("Add Dancer to Team")
                 .WithOpenApi()
                 .WithSummary("Add a dancer to teams list of dancers");

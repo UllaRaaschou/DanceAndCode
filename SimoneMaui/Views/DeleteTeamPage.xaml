@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SimoneMaui.ViewModels"
+             x:Class="SimoneMaui.Views.DeleteTeamPage"
+             x:DataType="vm:DeleteTeamViewModel"
+             Title="DeleteTeamPage">
+    
+    
+    <VerticalStackLayout>
+        <Label            
+        Text="Hold, der skal slettes"
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" />
+        <Label
+        VerticalOptions="Center" 
+        HorizontalOptions="Center"
+        Text="{Binding Number}" />
+        <Label      
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" 
+        Text="{Binding Name}" />
+        <Label      
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" 
+        Text="{Binding DayOfWeek}" />
+        <Label     
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" 
+        Text="{Binding StartAndEndTime}"/>
+        <Button
+        Text="Slet hold"
+        Command="{Binding DeleteTeamCommand}"
+        HorizontalOptions="Center"/>
+
+    </VerticalStackLayout>
+   
+    
+</ContentPage>

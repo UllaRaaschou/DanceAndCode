@@ -5,6 +5,7 @@ using RestSharp;
 using SimoneMaui.Navigation;
 using System.Collections.ObjectModel;
 using System.Text.Json;
+using static SimoneMaui.ViewModels.SearchDancerViewmodel;
 
 namespace SimoneMaui.ViewModels
 {
@@ -69,14 +70,7 @@ namespace SimoneMaui.ViewModels
         public RelayCommand WannaSearchCommand { get; }
         public RelayCommand UpdateDancerCommand { get; }
         public RelayCommand AddTeamCommand { get; }
-
-
-
-
-        
-
-
-
+             
 
         public UpdateDancerViewModel(INavigationService navigationService)
         {

@@ -33,6 +33,12 @@
          ContentTemplate="{DataTemplate views:PostTeamPage}"
          Route="postTeam" />
         </ShellSection>
+        <ShellSection Title="Update Team">
+            <ShellContent
+         Title="Update Team"
+         ContentTemplate="{DataTemplate views:UpdateTeamPage}"
+         Route="updateTeam" />
+        </ShellSection>
     </ShellItem>
 
 </Shell>

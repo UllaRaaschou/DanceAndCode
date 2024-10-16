@@ -1,6 +1,7 @@
 ﻿
 using SimoneMaui.ViewModels;
 using SimoneMaui.Views;
+using static SimoneMaui.ViewModels.SearchDancerViewmodel;
 
 namespace SimoneMaui.Navigation;
 
@@ -33,9 +34,26 @@ public class NavigationService : INavigationService
         await Shell.Current.GoToAsync(SEARCH_DANCER_PAGE_ROUTE);
     }
 
+    public async Task GoToSearchDancer(TeamDto teamDto)
+    {
+        var paramters = new Dictionary<string, object> { { "teamDto", teamDto } };
+        await Shell.Current.GoToAsync(SEARCH_DANCER_PAGE_ROUTE);
+    }
+
+    public async Task GoToSearchTeam()
+    {
+        await Shell.Current.GoToAsync(SEARCH_TEAM_PAGE_ROUTE);
+    }
     public async Task GoToSearchTeam(DancerDto dancerDto)
     {
         var parameters = new Dictionary<string, object> { { "dancerDto", dancerDto } };
         await Shell.Current.GoToAsync(SEARCH_TEAM_PAGE_ROUTE, parameters);
+    } 
+
+    public Task GoToUpdateTeam(TeamDto selectedTeam, DancerDto selectedDancer)
+    {
+        throw new NotImplementedException();
     }
+
+    
 }

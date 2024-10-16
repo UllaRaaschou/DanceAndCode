@@ -32,7 +32,7 @@
                         <CollectionView                    
                             ItemsSource="{Binding DancerDtoList}"
                             SelectedItem="{Binding SelectedDancer, Mode=TwoWay}"
-                            SelectionChangedCommand="{Binding NavigateToUpdateDancerCommand}"
+                            SelectionChangedCommand="{Binding ChooseNavigationCommand}"
                             SelectionMode="Single">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
@@ -58,6 +58,8 @@
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
+                    
+                        
                     
 
                 </VerticalStackLayout>                   

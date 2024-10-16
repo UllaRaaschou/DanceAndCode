@@ -8,12 +8,13 @@ using System.Text.Json;
 
 namespace SimoneMaui.ViewModels
 {
-    public partial class SearchDancerViewmodel: ObservableObject
+    public partial class SearchDancerViewmodel: ObservableObject, IQueryAttributable
     {
         [ObservableProperty]
         private ObservableCollection<DancerDto> dancerDtoList;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SearchDancerCommand))]
         private string? nameEntry = string.Empty;
 
         [ObservableProperty]
@@ -23,11 +24,16 @@ namespace SimoneMaui.ViewModels
         private string? timeOfBirth = string.Empty;
 
         [ObservableProperty]
+        private TeamDto? selectedTeam;
+
+        [ObservableProperty]
         private ObservableCollection<TeamDto> teams = new ObservableCollection<TeamDto>();
 
         [ObservableProperty]
         private string teamDetailsString= string.Empty;
-        public RelayCommand SearchDancerCommand { get; }
+        public AsyncRelayCommand SearchDancerCommand { get; }
+
+        public RelayCommand ChooseNavigationCommand { get; }
 
         public INavigationService NavigationService { get; set; }
 
@@ -54,27 +60,41 @@ namespace SimoneMaui.ViewModels
             }
         }
 
+        [RelayCommand]
+        private async Task NavigateToUpdateTeam() 
+        {
+            if (SelectedTeam is not null && SelectedDancer is not null) 
+            {
+                await NavigationService.GoToUpdateTeam(SelectedTeam, SelectedDancer);
+            }
+        }
+
 
         public SearchDancerViewmodel(INavigationService navigationService)
         {
             NavigationService = navigationService;
-            SearchDancerCommand = new RelayCommand(async () => await SearchDancer(), CanSearch);
+            ChooseNavigationCommand = new RelayCommand(ChooseNavigation);
+            SearchDancerCommand = new AsyncRelayCommand(SearchAsyncDancer, CanSearchAsync);
             dancerDtoList = new ObservableCollection<DancerDto>()
             {
                 new DancerDto{Name="Test", TimeOfBirth="01-01-2001" }
             };
         }
 
-
-
-        partial void OnNameEntryChanged(string value)
+        private void ChooseNavigation()
         {
-            SearchDancerCommand.NotifyCanExecuteChanged();
+            if (SelectedTeam is not null && SelectedDancer != null)
+            {
+                NavigateToUpdateTeam();
+
+            }
+            if (SelectedTeam == null && SelectedDancer != null)
+            {
+                NavigateToUpdateDancer();
+            }
         }
 
-
-        
-        private bool CanSearch()
+        private bool CanSearchAsync()
         {
             var dataWritten = !string.IsNullOrWhiteSpace(NameEntry);
             if (dataWritten == true && SelectedDancer == null)
@@ -84,12 +104,16 @@ namespace SimoneMaui.ViewModels
             return false;
         }
 
-              
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.ContainsKey("teamDto") && query["teamDto"] is TeamDto teamDto)
 
-        
-      
+            {
+                SelectedTeam = teamDto;
+            }
+        }
 
-        private async Task<ObservableCollection<DancerDto>> SearchDancer()
+        private async Task<ObservableCollection<DancerDto>> SearchAsyncDancer()
         {
             var options = new RestClientOptions("https://localhost:7163");
             var client = new RestClient(options);
@@ -129,15 +153,11 @@ namespace SimoneMaui.ViewModels
             }
             return dancerCollection;
         }
-
-        //public void ApplyQueryAttributes(IDictionary<string, object> query)
-        //{
-        //    throw new NotImplementedException();
-        //}
+                  
     }
 
-
-    public class DancerDto
+        
+        public class DancerDto
     {
         public Guid DancerId { get; set; } = Guid.Empty;
         public string Name { get; set; } = string.Empty;
