@@ -12,16 +12,21 @@ namespace SimoneAPI.Tobe.Features
         public static async Task<IResult> Get(SimoneDbContext dbContext,
             IMapper mapper, [FromQuery] String? name, [FromQuery] int? number)
         {
-            IEnumerable<TeamDataModel> models = await dbContext.TeamDataModels
-                .Include(t => t.TeamDancerRelations)
-                .Where(d => 
-                    (name == null || d.Name.Contains(name)) ||
-                    (number == null || d.Number == number)
-                )
-                .ToListAsync();
-              
+            var models =  dbContext.TeamDataModels.Include(t => t.TeamDancerRelations).AsQueryable();
 
-            if (!models.Any())
+            if (!string.IsNullOrEmpty(name))
+            {
+                models = models.Where(t => t.Name.Contains(name));
+            }
+
+            if (number.HasValue)
+            {
+                models = models.Where(t => t.Number == number);
+            }
+
+            var res = await models.ToListAsync();
+               
+            if (res.Count == 0)
             {
                 return TypedResults.NotFound();
             }
@@ -40,7 +45,8 @@ namespace SimoneAPI.Tobe.Features
         {
             public Guid TeamId { get; set; }
             public string Name { get; set; } = string.Empty;
-            public int Number { get; set; } = 0;            
+            public int Number { get; set; } = 0;     
+            public string SceduledTime { get; set; } = string.Empty;
             public IEnumerable<DancerDto> DancersOnTeam { get; set; } = Enumerable.Empty<DancerDto>();
         }
 

@@ -5,6 +5,7 @@ using RestSharp;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+
 namespace SimoneMaui.ViewModels
 {
     public partial class PostDancerViewModel : ObservableObject

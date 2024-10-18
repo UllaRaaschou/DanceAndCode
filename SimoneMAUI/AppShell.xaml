@@ -15,23 +15,30 @@
                 ContentTemplate="{DataTemplate local:MainPage}"
                 Route="MainPage" />
         </ShellSection>
+        <ShellSection Title="Search Dancer">
+            <ShellContent
+         Title="Search Dancer"
+         ContentTemplate="{DataTemplate views:SearchDancerPage}"
+         Route="searchdancer" />
+        </ShellSection>
         <ShellSection Title="Update Dancer">
             <ShellContent
                 Title="Update Dancer"
                 ContentTemplate="{DataTemplate views:UpdateDancerPage}"
                 Route="UpdateDancerPage" />
         </ShellSection>
-        <ShellSection Title="Search Dancer">
-            <ShellContent
-                Title="Search Dancer"
-                ContentTemplate="{DataTemplate views:SearchDancerPage}"
-                Route="searchdancer" />
-        </ShellSection>
+       
         <ShellSection Title="Post Team">
             <ShellContent
          Title="Post Team"
          ContentTemplate="{DataTemplate views:PostTeamPage}"
          Route="postTeam" />
+        </ShellSection>
+        <ShellSection Title="Search Team">
+            <ShellContent
+         Title="Search Team"
+         ContentTemplate="{DataTemplate views:SearchTeamPage}"
+         Route="searchTeam" />
         </ShellSection>
         <ShellSection Title="Update Team">
             <ShellContent

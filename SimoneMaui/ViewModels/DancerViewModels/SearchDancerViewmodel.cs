@@ -5,6 +5,7 @@ using RestSharp;
 using SimoneMaui.Navigation;
 using System.Collections.ObjectModel;
 using System.Text.Json;
+using SimoneMaui.ViewModels.Dtos;
 
 namespace SimoneMaui.ViewModels
 {
@@ -157,22 +158,8 @@ namespace SimoneMaui.ViewModels
     }
 
         
-        public class DancerDto
-    {
-        public Guid DancerId { get; set; } = Guid.Empty;
-        public string Name { get; set; } = string.Empty;
-        public string TimeOfBirth { get; set; } = string.Empty;
-        public ObservableCollection<TeamDto> Teams  { get; set; } = new ObservableCollection<TeamDto>();
-    }
+        
 
-    public class TeamDto
-    {
-        public Guid TeamId { get; set; } = Guid.Empty;
-        public int Number { get; set; } = 0;
-        public string Name { get; set; } = string.Empty;
-        public string SceduledTime { get; set; } = string.Empty;
-        public string TeamDetailsString => $"Hold {Number} '{Name}' - {SceduledTime}";      
-
-    }
+    
 
 }

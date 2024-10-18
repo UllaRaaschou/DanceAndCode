@@ -6,11 +6,6 @@ namespace SimoneAPI.Tobe.Features.Teams
 {
     public static class AddDancerToTeam
     {
-        public static void RegisterTeamsWithGuidEndpoint (IEndpointRouteBuilder endPointRouteBuilder) 
-        {
-            endPointRouteBuilder.MapPut("/Teams/{teamId}/dancers", Put);
-        }
-
         public static async Task<IResult> Put(SimoneDbContext dbContext, IMapper mapper, Guid teamId, Guid dancerId) 
         {
             var teamDataModel = await dbContext.TeamDataModels

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
+using SimoneMaui.ViewModels.Dtos;
 
 
 namespace SimoneMaui.ViewModels

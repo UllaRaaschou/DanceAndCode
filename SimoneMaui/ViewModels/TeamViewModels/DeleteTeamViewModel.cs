@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 using System.Text.Json;
+using SimoneMaui.ViewModels.Dtos;
 
 namespace SimoneMaui.ViewModels
 {

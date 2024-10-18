@@ -60,13 +60,12 @@
 	
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.3" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.91" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.91" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.92" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.92" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
 		<PackageReference Include="RestSharp" Version="112.0.0" />
 	</ItemGroup>
 
@@ -82,7 +81,7 @@
 	  <Compile Update="Views\DancerViews\SearchDancerPage.xaml.cs">
 	    <DependentUpon>SearchDancerPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\DeleteTeamPage.xaml.cs">
+	  <Compile Update="Views\TeamViews\DeleteTeamPage.xaml.cs">
 	    <DependentUpon>DeleteTeamPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
@@ -102,16 +101,16 @@
 	  <MauiXaml Update="Views\DancerViews\UpdateDancerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\DeleteTeamPage.xaml">
+	  <MauiXaml Update="Views\TeamViews\DeleteTeamPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\PostTeamPage.xaml">
+	  <MauiXaml Update="Views\TeamViews\PostTeamPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\SearchTeamPage.xaml">
+	  <MauiXaml Update="Views\TeamViews\SearchTeamPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\UpdateTeamPage.xaml">
+	  <MauiXaml Update="Views\TeamViews\UpdateTeamPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

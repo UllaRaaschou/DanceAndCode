@@ -115,6 +115,11 @@ namespace SimoneAPI.EndpointExtensions
                 .WithOpenApi()
                 .WithSummary("Add a dancer to teams list of dancers");
 
+            teamsWithGuidEndpoints.MapDelete("/DeleteFromListOfDancers", DeleteDancerFromTeam.Delete)
+               .WithName("Delete Dancer From a Team")
+               .WithOpenApi()
+               .WithSummary("Delete a dancer from a teams list of dancers");
+
             teamsWithGuidEndpoints.MapPut("/addTrialLesson", AddDancerToTrialLessonOnTeam.Put)
                 .WithName("AddDancerToTrialLessonOnATeam")
                 .WithOpenApi()

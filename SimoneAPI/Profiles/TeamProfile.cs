@@ -3,6 +3,7 @@ using SimoneAPI.DataModels;
 using SimoneAPI.Tobe.Features;
 using SimoneAPI.Tobe.Features.Dancer;
 using SimoneAPI.Tobe.Features.Teams;
+using static SimoneAPI.Tobe.Features.Dancer.AddTeamToDancersListOfTeams;
 
 
 
@@ -22,7 +23,7 @@ namespace SimoneAPI.Profiles
             CreateMap<TeamDataModel, AddDancerToTeam.ResponceDto>()
                 .ForMember(dest => dest.DancersOnTeam, opt =>
                 opt.MapFrom(scr => scr.TeamDancerRelations != null
-                ? scr.TeamDancerRelations.Select(tdr => tdr.DancerDataModel)
+                ? scr.TeamDancerRelations.Select(tdr => tdr.DancerDataModel.Name)
                 : null));
 
 
@@ -43,7 +44,13 @@ namespace SimoneAPI.Profiles
                 => src.TeamDancerRelations.Select(tdr => tdr.DancerDataModel))
                 );
 
-
+            CreateMap<TeamDataModel, DeleteDto>()
+                .ForMember(dest => dest.TeamId, opt => opt.MapFrom(src => src.TeamId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.Number))
+                .ForMember(dest => dest.DancersOnTeam, opt => opt.MapFrom(src
+                => src.TeamDancerRelations.Select(tdr => tdr.DancerDataModel))
+                );
 
 
             //TODO: Tilføjet manglende mapping så get->Teams virker.

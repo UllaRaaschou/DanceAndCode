@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 using System.Collections.ObjectModel;
 using System.Text.Json;
+using SimoneMaui.ViewModels.Dtos;
+
 
 namespace SimoneMaui.ViewModels
 {
@@ -172,10 +174,5 @@ namespace SimoneMaui.ViewModels
 
     }
 
-    public class DeleteDancerDto
-    {
-        public Guid DancerId { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string TimeOfBirth { get; set; } = string.Empty;
-    }
+   
 }
