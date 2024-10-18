@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 using System.Text.Json;
 using SimoneMaui.ViewModels.Dtos;
+using CommunityToolkit.Maui.Alerts;
 
 namespace SimoneMaui.ViewModels
 {
@@ -12,16 +13,19 @@ namespace SimoneMaui.ViewModels
         public AsyncRelayCommand DeleteTeamCommand { get; }
 
         [ObservableProperty]
-        private string name;
+        private string teamDetailsString;
 
-        [ObservableProperty]
-        private string number;
+        //[ObservableProperty]
+        //private string name;
 
-        [ObservableProperty]
-        private string dayOfWeek;
+        //[ObservableProperty]
+        //private string number;
 
-        [ObservableProperty]    
-        private string startAndEndTime;
+        //[ObservableProperty]
+        //private string dayOfWeek;
+
+        //[ObservableProperty]    
+        //private string startAndEndTime;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(DeleteTeamCommand))]
@@ -41,6 +45,9 @@ namespace SimoneMaui.ViewModels
             return false;
         }
 
+        public event Action<string> TeamDeleted;
+
+        
         public async Task DeleteTeamAsync() 
         {
             if(teamToDelete != null) 
@@ -65,12 +72,19 @@ namespace SimoneMaui.ViewModels
             {
                 await Application.Current.MainPage.DisplayAlert("Fejl", "Der er ikke valgt et hold", "OK");
             }
+
+            TeamDeleted?.Invoke("Hold slettet");
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            throw new NotImplementedException();
-        }       
+            if (query.ContainsKey("teamDto") && query["teamDto"] is TeamDto teamDto)
+            {
+                TeamToDelete = teamDto;
+                TeamDetailsString = TeamToDelete.TeamDetailsString;
+
+            }
+        }
     }       
     
 }

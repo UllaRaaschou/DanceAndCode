@@ -122,21 +122,21 @@ namespace SimoneAPI.Migrations
                     b.HasData(
                         new
                         {
-                            TeamDancerRelationId = new Guid("adda491f-305e-4d5f-b76c-e6a07a6000c4"),
+                            TeamDancerRelationId = new Guid("825d6913-a9c8-427f-97fa-eb73976f6e3c"),
                             DancerId = new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("dc876bae-2645-4839-9bf4-fab33b9d3b36"),
+                            TeamDancerRelationId = new Guid("1c18938b-fa94-416d-bb02-ce2f201f4861"),
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("d9be05e2-2740-4022-bd43-3f2aa67c250b"),
+                            TeamDancerRelationId = new Guid("48bedce6-f56e-4abb-8749-b9973e471d5e"),
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")

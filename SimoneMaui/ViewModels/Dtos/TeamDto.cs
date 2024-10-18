@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace SimoneMaui.ViewModels.Dtos
 {
     public class TeamDto
     {
         public Guid TeamId { get; set; } = Guid.Empty;
-        public int Number { get; set; } = 0;
+        public string Number { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string SceduledTime { get; set; } = string.Empty;
         public string TeamDetailsString => $"Hold {Number} '{Name}' - {SceduledTime}";

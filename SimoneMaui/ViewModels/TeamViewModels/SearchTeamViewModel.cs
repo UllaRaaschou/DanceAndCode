@@ -13,38 +13,27 @@ namespace SimoneMaui.ViewModels
     {
         public INavigationService NavigationService { get; set; }
 
+        [NotifyPropertyChangedFor(nameof(IsTeamNameEntryEnabled))]
+        [NotifyPropertyChangedFor(nameof(IsTeamNumberEntryEnabled))]
+        [NotifyCanExecuteChangedFor(nameof(SearchTeamCommand))]
+        [ObservableProperty]
+        private string? teamNumberEntry;
+
+        [NotifyPropertyChangedFor(nameof(IsTeamNumberEntryEnabled))]
+        [NotifyPropertyChangedFor(nameof(IsTeamNameEntryEnabled))]
+        [NotifyCanExecuteChangedFor(nameof(SearchTeamCommand))]
+        [ObservableProperty]
+        private string? teamNameEntry;
+
+
+
         [ObservableProperty]
         private DancerDto? selectedDancer;
 
-        
-        private TeamDto selectedTeam;
-        public TeamDto SelectedTeam
-        {
-            get => selectedTeam;
-            set
-            {
-                SetProperty(ref selectedTeam, value);
-                if (value != null)
-                {
-                    
-                }
-            }
-        }
-
-        private void OnSelectedTeamChanged()
-        {
-            if (selectedTeam != null)
-            {
-                SelectedTeam = selectedTeam;
-                TeamNameEntry = selectedTeam.Name;
-                TeamNumberEntry = selectedTeam.Number.ToString();
-                SceduledTime = selectedTeam.SceduledTime;
-                IsUpdateButtonVisible = true;
-                IsDeleteButtonVisible = true;
-                SearchResultVisible = false;
-                IsSearchHeaderVisible = false;
-            }
-        }
+        [NotifyCanExecuteChangedFor(nameof(WannaUpdateTeamCommand))]
+        [NotifyCanExecuteChangedFor(nameof(WannaDeleteTeamCommand))]
+        [ObservableProperty]
+        private TeamDto? selectedTeam;        
 
         [ObservableProperty]
         private ObservableCollection<TeamDto> teamDtoCollection = new();
@@ -72,92 +61,93 @@ namespace SimoneMaui.ViewModels
 
         [ObservableProperty]
         private bool isDeleteButtonVisible = false;
-      
-        private bool searchResultVisible = true;
-        public bool SearchResultVisible
-        {
-            get => searchResultVisible;
-            set => SetProperty(ref searchResultVisible, value);
-        }
 
         [ObservableProperty]
-        private bool searchHasRun = false;
+        private bool searchResultVisible = true;        
 
+        
 
-        public AsyncRelayCommand NavigateToUpdateDancerCommand { get; }
+        public RelayCommand TeamSelectedCommand { get; }
         public AsyncRelayCommand WannaUpdateTeamCommand { get; }
-
-        public AsyncRelayCommand WannaDeleteTeamCommand { get; }
+        public AsyncRelayCommand WannaDeleteTeamCommand { get; }        
         public AsyncRelayCommand SearchTeamCommand { get; }
-
-        public AsyncRelayCommand TeamSelectedCommand{ get; }
-
-
-        [NotifyPropertyChangedFor(nameof(IsTeamNameEntryEnabled))]
-        [NotifyPropertyChangedFor(nameof(IsTeamNumberEntryEnabled))]
-        [NotifyCanExecuteChangedFor(nameof(SearchTeamCommand))]
-        [ObservableProperty]
-        private string? teamNumberEntry;
-
-        [NotifyPropertyChangedFor(nameof(IsTeamNumberEntryEnabled))]
-        [NotifyPropertyChangedFor(nameof(IsTeamNameEntryEnabled))]
-        [NotifyCanExecuteChangedFor(nameof(SearchTeamCommand))]
-        [ObservableProperty]
-        private string? teamNameEntry;
+       
+                
 
 
         public SearchTeamViewModel(INavigationService navigationService)
         {
             NavigationService = navigationService;
             SearchTeamCommand = new AsyncRelayCommand(SearchTeam, CanSearchTeam);
-            NavigateToUpdateDancerCommand = new AsyncRelayCommand(NavigateToUpdateDancer, CanNavigateToUpdateDancer);
             WannaUpdateTeamCommand = new AsyncRelayCommand(WannaUpdateTeam, CanWannaUpdateTeam);
-            TeamSelectedCommand = new AsyncRelayCommand(TeamSelected);
+            WannaDeleteTeamCommand = new AsyncRelayCommand(WannaDeleteTeam, CanWannaDeleteTeam);
+            TeamSelectedCommand = new RelayCommand(TeamSelected);
         }
 
-        private async Task TeamSelected()
+
+        private void TeamSelected()
         {
-            if (selectedTeam != null)
-            {
-                OnSelectedTeamChanged();
-            }
+            OnSelectedTeamChanged();            
+        }
+        private void OnSelectedTeamChanged()
+        {
+            TeamNameEntry = SelectedTeam.Name;
+            TeamNumberEntry = SelectedTeam.Number.ToString();
+            SceduledTime = SelectedTeam.SceduledTime;
+            IsUpdateButtonVisible = true;
+            IsDeleteButtonVisible = true;
+            SearchResultVisible = false;
+            IsSearchHeaderVisible = false;
         }
 
-        private bool CanNavigateToUpdateDancer()
+        private bool CanWannaUpdateTeam()
         {
-            return (selectedTeam != null && selectedDancer != null);
-        }       
-        private async Task NavigateToUpdateDancer()
-        {            
-            await NavigationService.GoToUpdateDancer(selectedDancer, selectedTeam);
+            return SelectedTeam != null;
         }
-
-        private bool CanWannaUpdateTeam() 
-        {
-            return SearchHasRun;
-        }        
-        private async Task WannaUpdateTeam() 
+        private async Task WannaUpdateTeam()
         {
             await NavigationService.GoToUpdateTeam(SelectedTeam);
         }
 
-
-        private bool CanWannaDeleteteam()
+        private bool CanNavigateToUpdateTeam()
         {
-            return SearchHasRun;
+            return (SelectedTeam != null);
+        }       
+        private async Task NavigateToUpdateTeam()
+        {            
+            await NavigationService.GoToUpdateTeam(SelectedTeam);
+        }
+
+
+        
+
+
+        private bool CanWannaDeleteTeam()
+        {
+            return SelectedTeam != null;
         }
         private async Task WannaDeleteTeam()
         {
             await NavigationService.GoToDeleteTeam(SelectedTeam);
         }
 
+        private bool CanNavigateToDeleteTeam()
+        {
+            return (SelectedTeam != null);
+        }
+        private async Task NavigateToDeleteTeam()
+        {
+            await NavigationService.GoToDeleteTeam(SelectedTeam);
+        }
 
+       
 
         private bool CanSearchTeam()
         {
-            return (!string.IsNullOrEmpty(TeamNameEntry) || !string.IsNullOrEmpty(TeamNumberEntry)) ;
-           
-        }        
+            return (!string.IsNullOrEmpty(TeamNameEntry) || !string.IsNullOrEmpty(TeamNumberEntry));           
+        }
+
+        public event Action<string> TeamNotFound;
 
         private async Task SearchTeam()
         {
@@ -183,7 +173,12 @@ namespace SimoneMaui.ViewModels
                 JsonSerializerOptions _options = new();
                 _options.PropertyNameCaseInsensitive = true;
 
-                ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedCollection.Content ?? "{}", _options)!;
+                //ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedCollection.Content ?? "{}", _options)!;
+
+                TeamNotFound?.Invoke("Ingen hold i databasen matcher denne søgning");
+                ReloadSearchPage();
+                return;
+
 
             }
 
@@ -192,22 +187,58 @@ namespace SimoneMaui.ViewModels
 
             var teamCollection = new ObservableCollection<TeamDto>(returnedCollection.Data);
 
+            if (teamCollection.Count == 0)
+            {
+                // Ingen hold fundet i databasen
+                TeamNotFound?.Invoke("Ingen hold i databasen matcher denne søgning");
+                ReloadSearchPage(); // Genindlæs søgesiden
+                return;
+            }
+
             if (teamCollection.Count > 0)
             {
                 TeamDtoCollection.Clear();
                 foreach (var item in teamCollection)
                 {
                     TeamDtoCollection.Add(item);
-
                 }
-            }
-           
-            SearchHasRun = true;
+            }         
             IsSearchHeaderVisible = true;
+        }
 
+        private void ReloadSearchPage()
+        {
+            
+            TeamNameEntry = string.Empty;
+            TeamNumberEntry = string.Empty;
+
+            
+            IsSearchHeaderVisible = false;
+            IsUpdateButtonVisible = false;
+            IsDeleteButtonVisible = false;
+            SearchResultVisible = true; // Gør søge-resultater synlige igen
         }
 
 
+        partial void OnTeamNameEntryChanged(string? newValue)
+        {
+            TeamNameEntry = ToTitleCase(newValue);
+        }
+        public void UpdateTeamNameEntry(string? newValue)
+        {
+            TeamNameEntry = ToTitleCase(newValue); // Anvend Title Case konvertering
+        }
+        private string ToTitleCase(string? input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return string.Empty;
+            }
+            var cultureInfo = System.Globalization.CultureInfo.CurrentCulture;
+            var textInfo = cultureInfo.TextInfo;
+
+            return textInfo.ToTitleCase(input.ToLower());
+        }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {

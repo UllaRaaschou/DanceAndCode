@@ -7,5 +7,11 @@ public partial class SearchTeamPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-	}
+		viewModel.TeamNotFound += OnTeamNotFound;        
+    }
+
+    private void OnTeamNotFound(string message)
+    {
+        DisplayAlert("Besked", message, "OK"); // Vis besked
+    }
 }

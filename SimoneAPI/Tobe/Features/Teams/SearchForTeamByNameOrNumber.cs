@@ -31,7 +31,7 @@ namespace SimoneAPI.Tobe.Features
                 return TypedResults.NotFound();
             }
 
-            var responce = mapper.Map<IEnumerable<GetTeamResponceDto>>(models);
+            var responce = mapper.Map<IEnumerable<GetTeamResponceDto>>(res);
             return TypedResults.Ok(responce);
         }
 

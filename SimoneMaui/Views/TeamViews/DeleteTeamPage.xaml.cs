@@ -8,5 +8,11 @@ public partial class DeleteTeamPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = vm;
-	}
+		vm.TeamDeleted += OnTeamDeleted;
+	}    
+    private void OnTeamDeleted(string message)
+    {
+        DisplayAlert("Besked", message, "OK"); // Vis besked
+    }
+
 }

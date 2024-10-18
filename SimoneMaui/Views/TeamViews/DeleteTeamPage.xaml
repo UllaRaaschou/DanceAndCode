@@ -15,24 +15,13 @@
         <Label
         VerticalOptions="Center" 
         HorizontalOptions="Center"
-        Text="{Binding Number}" />
-        <Label      
-        VerticalOptions="Center" 
-        HorizontalOptions="Center" 
-        Text="{Binding Name}" />
-        <Label      
-        VerticalOptions="Center" 
-        HorizontalOptions="Center" 
-        Text="{Binding DayOfWeek}" />
-        <Label     
-        VerticalOptions="Center" 
-        HorizontalOptions="Center" 
-        Text="{Binding StartAndEndTime}"/>
+        Text="{Binding TeamDetailsString}" />
+       
         <Button
         Text="Slet hold"
         Command="{Binding DeleteTeamCommand}"
         HorizontalOptions="Center"/>
-
+ 
     </VerticalStackLayout>
    
     

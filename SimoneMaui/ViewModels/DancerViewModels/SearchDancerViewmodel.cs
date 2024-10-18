@@ -11,6 +11,8 @@ namespace SimoneMaui.ViewModels
 {
     public partial class SearchDancerViewmodel: ObservableObject, IQueryAttributable
     {
+        public INavigationService NavigationService { get; set; }
+
         [ObservableProperty]
         private ObservableCollection<DancerDto> dancerDtoList;
 
@@ -36,7 +38,7 @@ namespace SimoneMaui.ViewModels
 
         public RelayCommand ChooseNavigationCommand { get; }
 
-        public INavigationService NavigationService { get; set; }
+        
 
 
         private DancerDto? selectedDancer = null;
@@ -154,7 +156,27 @@ namespace SimoneMaui.ViewModels
             }
             return dancerCollection;
         }
-                  
+
+        partial void OnNameEntryChanged(string? newValue)
+        {
+            NameEntry = ToTitleCase(newValue);
+        }
+        public void UpdateNameEntry(string? newValue)
+        {
+            NameEntry = ToTitleCase(newValue); // Anvend Title Case konvertering
+        }
+        private string ToTitleCase(string? input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return string.Empty;
+            }
+            var cultureInfo = System.Globalization.CultureInfo.CurrentCulture;
+            var textInfo = cultureInfo.TextInfo;
+
+            return textInfo.ToTitleCase(input.ToLower());
+        }
+
     }
 
         

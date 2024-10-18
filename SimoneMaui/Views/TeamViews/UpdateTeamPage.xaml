@@ -28,12 +28,8 @@
         Margin="10,10, 10, 10"    
         VerticalOptions="Center" 
         HorizontalOptions="Center" 
-        Text="{Binding DayOfWeek}" />
-        <Entry     
-        VerticalOptions="Center" 
-        HorizontalOptions="Center" 
-        Text="{Binding StartAndEndTime}"/>
-
+        Text="{Binding SceduledTime}" />
+      
         <CollectionView ItemsSource="{Binding DancersOnTeam}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>

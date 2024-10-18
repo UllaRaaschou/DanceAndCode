@@ -21,10 +21,7 @@ namespace SimoneMaui.ViewModels
         private string? number;
 
         [ObservableProperty]
-        private string? dayOfWeek;
-
-        [ObservableProperty]
-        private string? startAndEndTime;
+        private string? sceduledTime;
 
         [ObservableProperty]
         private TeamDto? selectedTeam;
@@ -155,6 +152,10 @@ namespace SimoneMaui.ViewModels
             if (query.ContainsKey("teamDto") && query["teamDto"] is TeamDto teamDto)
             {
                 SelectedTeam = teamDto;
+                Name = teamDto.Name;
+                Number = teamDto.Number;
+                SceduledTime = teamDto.SceduledTime;
+                DancersOnTeam = teamDto.DancersOnTeam;
             }
         }
     }
