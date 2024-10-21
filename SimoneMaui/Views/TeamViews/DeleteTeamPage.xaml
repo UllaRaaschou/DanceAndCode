@@ -12,6 +12,7 @@
         Text="Hold, der skal slettes"
         VerticalOptions="Center" 
         HorizontalOptions="Center" />
+        
         <Label
         VerticalOptions="Center" 
         HorizontalOptions="Center"

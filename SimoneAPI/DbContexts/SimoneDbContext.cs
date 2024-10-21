@@ -70,8 +70,8 @@ namespace SimoneAPI.DbContexts
             );
 
             modelBuilder.Entity<DancerDataModel>().HasData(
-                new DancerDataModel { DancerId = Guid.Parse("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), Name = "Petra" },
-                new DancerDataModel { DancerId = Guid.Parse("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), Name = "Silje" }
+                new DancerDataModel { DancerId = Guid.Parse("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), Name = "Petra", TimeOfBirth = new DateOnly(2013, 1, 1) },
+                new DancerDataModel { DancerId = Guid.Parse("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), Name = "Silje", TimeOfBirth = new DateOnly(2014, 1, 1) }
             );
 
             modelBuilder.Entity<TeamDancerRelation>().HasData(

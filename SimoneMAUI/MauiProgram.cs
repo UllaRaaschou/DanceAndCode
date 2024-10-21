@@ -30,6 +30,9 @@ namespace SimoneMaui
             builder.Services.AddTransient<UpdateDancerViewModel>(); 
             builder.Services.AddTransient<UpdateDancerPage>();
 
+            builder.Services.AddTransient<DeleteDancerViewModel>();
+            builder.Services.AddTransient<DeleteDancerPage>();
+
             builder.Services.AddTransient<SearchTeamViewModel>();
             builder.Services.AddTransient<SearchTeamPage>();
 

@@ -38,6 +38,8 @@ namespace SimoneMaui.ViewModels
         [ObservableProperty]
         private string? teamDetailsString;
 
+        public bool PuttingDancerOnTeam { get; set; } = false;
+
         public AsyncRelayCommand WannaAddDancerCommand { get; }
         public AsyncRelayCommand WannaDeleteDancerCommand { get; }
 
@@ -128,7 +130,8 @@ namespace SimoneMaui.ViewModels
 
         public async Task WannaAddDancer()
         {
-            await NavigationService.GoToSearchDancer(SelectedTeam);
+            PuttingDancerOnTeam = true;
+            await NavigationService.GoToSearchDancer(SelectedTeam, PuttingDancerOnTeam);
         }
 
         private bool CanWannaDeleteDancer()
@@ -138,7 +141,7 @@ namespace SimoneMaui.ViewModels
 
         public async Task WannaDeleteDancer()
         {
-            await NavigationService.GoToSearchDancer(SelectedTeam);
+            await NavigationService.GoToSearchDancer(SelectedTeam, PuttingDancerOnTeam);
         }
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {

@@ -65,13 +65,13 @@ namespace SimoneAPI.Migrations
                         {
                             DancerId = new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             Name = "Petra",
-                            TimeOfBirth = new DateOnly(1, 1, 1)
+                            TimeOfBirth = new DateOnly(2013, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             Name = "Silje",
-                            TimeOfBirth = new DateOnly(1, 1, 1)
+                            TimeOfBirth = new DateOnly(2014, 1, 1)
                         });
                 });
 
@@ -122,21 +122,21 @@ namespace SimoneAPI.Migrations
                     b.HasData(
                         new
                         {
-                            TeamDancerRelationId = new Guid("825d6913-a9c8-427f-97fa-eb73976f6e3c"),
+                            TeamDancerRelationId = new Guid("36b66eb1-41e6-430d-9750-e251c764ce60"),
                             DancerId = new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("1c18938b-fa94-416d-bb02-ce2f201f4861"),
+                            TeamDancerRelationId = new Guid("06e58b50-c32b-4a29-b6d3-0d0691c52c3a"),
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("48bedce6-f56e-4abb-8749-b9973e471d5e"),
+                            TeamDancerRelationId = new Guid("c73693a0-78d8-4def-9866-9fbab844f016"),
                             DancerId = new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"),
                             IsTrialLesson = false,
                             TeamId = new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48")

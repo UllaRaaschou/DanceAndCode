@@ -34,6 +34,8 @@ namespace SimoneMaui.ViewModels
 
         [ObservableProperty]
         private string teamDetailsString= string.Empty;
+
+        public bool PuttingDancerOnTeam { get; set; } = false;
         public AsyncRelayCommand SearchDancerCommand { get; }
 
         public RelayCommand ChooseNavigationCommand { get; }
@@ -86,7 +88,7 @@ namespace SimoneMaui.ViewModels
 
         private void ChooseNavigation()
         {
-            if (SelectedTeam is not null && SelectedDancer != null)
+            if (SelectedTeam is not null && SelectedDancer != null && PuttingDancerOnTeam==true)
             {
                 NavigateToUpdateTeam();
 
@@ -105,15 +107,6 @@ namespace SimoneMaui.ViewModels
                 return true;
             }
             return false;
-        }
-
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            if (query.ContainsKey("teamDto") && query["teamDto"] is TeamDto teamDto)
-
-            {
-                SelectedTeam = teamDto;
-            }
         }
 
         private async Task<ObservableCollection<DancerDto>> SearchAsyncDancer()
@@ -177,11 +170,20 @@ namespace SimoneMaui.ViewModels
             return textInfo.ToTitleCase(input.ToLower());
         }
 
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.ContainsKey("TeamDto") && query["teamDto"] is TeamDto teamDto)
+
+            {
+                SelectedTeam = teamDto;
+
+            }
+            if (query.ContainsKey("PuttingDancerOnTeam") && query["PuttingDancerOnTeam"] is bool PuttingDancerOnTeam)
+
+            {
+                PuttingDancerOnTeam = true;
+
+            }
+        }
     }
-
-        
-        
-
-    
-
 }

@@ -4,12 +4,9 @@
              xmlns:vm="clr-namespace:SimoneMaui.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="SimoneMaui.Views.DeleteDancerPage"
-             x:DataType="vm:SearchAndDeleteDancerViewmodel"
+             x:DataType="vm:DeleteDancerViewModel"
              Title="DeleteDancerPage">
-    <ContentPage.BindingContext>
-        <vm:SearchAndDeleteDancerViewmodel/>
-    </ContentPage.BindingContext>
-
+   
 
     <Grid>
         <ScrollView>
@@ -23,26 +20,18 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
 
-                        <Entry
+                        <Label
                         Grid.Row="0"
-                        Placeholder="Navn"
                         Text="{Binding Name, Mode=TwoWay}"/>
 
-                        <Entry
+                        <Label
                         Grid.Row="1"
-                        Placeholder="Fødselsdato dd-MM-åååå"
                         Text="{Binding TimeOfBirth, Mode=TwoWay}"/>
-
-                        <Button
-                        Grid.Row="2" 
-                        Text="Søg"
-                         Command="{Binding SearchDancerCommand}"/>
 
                         <Button
                         Grid.Row="3"
                         Text="Slet elev"
                         Command="{Binding DeleteDancerCommand}"/>
-
 
                         <CollectionView
                         Grid.Row="4"

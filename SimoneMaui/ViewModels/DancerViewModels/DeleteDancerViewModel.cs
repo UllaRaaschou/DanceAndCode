@@ -6,10 +6,9 @@ using System.Collections.ObjectModel;
 using System.Text.Json;
 using SimoneMaui.ViewModels.Dtos;
 
-
 namespace SimoneMaui.ViewModels
 {
-    public partial class SearchAndDeleteDancerViewmodel : ObservableObject
+    public partial class DeleteDancerViewModel : ObservableObject, IQueryAttributable
     {
         [ObservableProperty]
         private ObservableCollection<DancerDto> dancerDtoList;
@@ -22,12 +21,10 @@ namespace SimoneMaui.ViewModels
 
         partial void OnNameChanged(string value)
         {
-            SearchDancerCommand.NotifyCanExecuteChanged();
             DeleteDancerCommand.NotifyCanExecuteChanged();
         }
         partial void OnTimeOfBirthChanged(string value)
         {
-            SearchDancerCommand.NotifyCanExecuteChanged();
             DeleteDancerCommand.NotifyCanExecuteChanged();
         }
         
@@ -54,12 +51,10 @@ namespace SimoneMaui.ViewModels
         }
 
 
-        public RelayCommand SearchDancerCommand { get; }
-        public RelayCommand DeleteDancerCommand { get; }
+       public RelayCommand DeleteDancerCommand { get; }
 
-        public SearchAndDeleteDancerViewmodel()
+        public DeleteDancerViewModel()
         {
-            SearchDancerCommand = new RelayCommand(async () => await SearchDancer(), CanSearch);
             DeleteDancerCommand = new RelayCommand(async () => await DeleteDancer(), CanDelete);
             DancerDtoList = new ObservableCollection<DancerDto>()
             {
@@ -67,16 +62,6 @@ namespace SimoneMaui.ViewModels
             };
 
 
-        }
-
-        private bool CanSearch()
-        {
-            var dataWritten = !string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(TimeOfBirth);
-            if (dataWritten == true && SelectedDancer == null)
-            {
-                return true;
-            }
-            return false;
         }
 
         private bool CanDelete()
@@ -87,56 +72,6 @@ namespace SimoneMaui.ViewModels
                 return true;
             }
             return false;
-        }
-
-
-        private async Task<ObservableCollection<DancerDto>> SearchDancer()
-        {
-            var options = new RestClientOptions("https://localhost:7163");
-            var client = new RestClient(options);
-            var request = new RestRequest("/dancers/SearchForDancerFromNameOrBirthday", Method.Get);
-
-            if (!string.IsNullOrEmpty(TimeOfBirth))
-            {
-                DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate);
-                request.AddOrUpdateParameter("TimeOfBirth", parsedDate); //.AddJsonBody(new { Name, TimeOfBirth = parsedDate });
-            }
-            if (Name != null)
-            {
-                request.AddOrUpdateParameter("name", Name);
-                // request.AddJsonBody(new { Name, TimeOfBirth });
-            }
-
-            // The cancellation token comes from the caller. You can still make a call without it.
-
-            var returnedCollection = await client.ExecuteGetAsync<List<DancerDto>>(request, CancellationToken.None);
-
-            if (!returnedCollection.IsSuccessStatusCode)
-            {
-                JsonSerializerOptions _options = new();
-                _options.PropertyNameCaseInsensitive = true;
-
-                ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedCollection.Content ?? "{}", _options)!;
-
-            }
-
-            Name = string.Empty;
-            TimeOfBirth = string.Empty;
-
-            if (!returnedCollection.Data.Any() || returnedCollection.Data == null)
-            {
-                return null;
-            }
-
-            var dancerCollection = new ObservableCollection<DancerDto>(returnedCollection.Data);
-
-            DancerDtoList.Clear();
-            foreach (var item in dancerCollection)
-            {
-                DancerDtoList.Add(item);
-
-            }
-            return dancerCollection;
         }
 
         public async Task DeleteDancer()
@@ -170,9 +105,9 @@ namespace SimoneMaui.ViewModels
             }
         }
 
-
-
-    }
-
-   
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            throw new NotImplementedException();
+        }
+    }  
 }

@@ -40,9 +40,9 @@ public class NavigationService : INavigationService
     {
         await Shell.Current.GoToAsync(SEARCH_DANCER_PAGE_ROUTE);
     }
-    public async Task GoToSearchDancer(TeamDto teamDto)
+    public async Task GoToSearchDancer(TeamDto teamDto, bool puttingDancerOnTeam)
     {
-        var paramters = new Dictionary<string, object> { { "teamDto", teamDto } };
+        var paramters = new Dictionary<string, object> { { "teamDto", teamDto }, { "puttingDancerOnTeam", puttingDancerOnTeam } };
         await Shell.Current.GoToAsync(SEARCH_DANCER_PAGE_ROUTE);
     }
 
@@ -51,7 +51,7 @@ public class NavigationService : INavigationService
         await Shell.Current.GoToAsync(SEARCH_TEAM_PAGE_ROUTE);
     }
     public async Task GoToSearchTeam(DancerDto dancerDto)
-    {
+    {   
         var parameters = new Dictionary<string, object> { { "dancerDto", dancerDto } };
         await Shell.Current.GoToAsync(SEARCH_TEAM_PAGE_ROUTE, parameters);
     }
@@ -71,4 +71,6 @@ public class NavigationService : INavigationService
         var parameters = new Dictionary<string, object> { { "teamDto", selectedTeam } };
         return Shell.Current.GoToAsync(DELETE_TEAM_PAGE_ROUTE, parameters);
     }
+
+   
 }

@@ -23,9 +23,9 @@
         </ShellSection>
         <ShellSection Title="Search Dancer">
             <ShellContent
-         Title="Search Dancer"
-         ContentTemplate="{DataTemplate views:SearchDancerPage}"
-         Route="searchdancer" />
+                Title="Search Dancer"
+                ContentTemplate="{DataTemplate views:SearchDancerPage}"
+                Route="searchDancerPage" />
         </ShellSection>
         <ShellSection Title="Update Dancer">
             <ShellContent
@@ -33,7 +33,13 @@
                 ContentTemplate="{DataTemplate views:UpdateDancerPage}"
                 Route="UpdateDancerPage" />
         </ShellSection>
-       
+        <ShellSection Title="Delete Dancer">
+            <ShellContent
+                Title="Delete Dancer"
+                ContentTemplate="{DataTemplate views:DeleteDancerPage}"
+                Route="deleteDancerPage" />
+        </ShellSection>
+
         <ShellSection Title="Post Team">
             <ShellContent
          Title="Post Team"

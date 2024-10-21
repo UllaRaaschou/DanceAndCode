@@ -126,8 +126,8 @@ namespace SimoneAPI.Migrations
                 columns: new[] { "DancerId", "Name", "TimeOfBirth" },
                 values: new object[,]
                 {
-                    { new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), "Petra", new DateOnly(1, 1, 1) },
-                    { new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), "Silje", new DateOnly(1, 1, 1) }
+                    { new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), "Petra", new DateOnly(2013, 1, 1) },
+                    { new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), "Silje", new DateOnly(2014, 1, 1) }
                 });
 
             migrationBuilder.InsertData(
@@ -144,9 +144,9 @@ namespace SimoneAPI.Migrations
                 columns: new[] { "TeamDancerRelationId", "DancerId", "IsTrialLesson", "TeamId" },
                 values: new object[,]
                 {
-                    { new Guid("1c18938b-fa94-416d-bb02-ce2f201f4861"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
-                    { new Guid("48bedce6-f56e-4abb-8749-b9973e471d5e"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
-                    { new Guid("825d6913-a9c8-427f-97fa-eb73976f6e3c"), new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") }
+                    { new Guid("06e58b50-c32b-4a29-b6d3-0d0691c52c3a"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("b5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
+                    { new Guid("36b66eb1-41e6-430d-9750-e251c764ce60"), new Guid("c5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") },
+                    { new Guid("c73693a0-78d8-4def-9866-9fbab844f016"), new Guid("d5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48"), false, new Guid("a5f15d2a-8f60-4d1b-b7b5-c0aeb10a4e48") }
                 });
 
             migrationBuilder.CreateIndex(

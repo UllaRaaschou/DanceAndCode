@@ -166,28 +166,14 @@ namespace SimoneMaui.ViewModels
                 request.AddOrUpdateParameter("number", TeamNumberEntry);
             }
 
-            var returnedCollection = await client.ExecuteGetAsync<List<TeamDto>>(request, CancellationToken.None);
-
-            if (!returnedCollection.IsSuccessStatusCode)
-            {
-                JsonSerializerOptions _options = new();
-                _options.PropertyNameCaseInsensitive = true;
-
-                //ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedCollection.Content ?? "{}", _options)!;
-
-                TeamNotFound?.Invoke("Ingen hold i databasen matcher denne søgning");
-                ReloadSearchPage();
-                return;
-
-
-            }
+            var teamCollection = await client.GetAsync<ObservableCollection<TeamDto>>(request, CancellationToken.None);
 
             TeamNameEntry = string.Empty;
             TeamNumberEntry = string.Empty;
 
-            var teamCollection = new ObservableCollection<TeamDto>(returnedCollection.Data);
+            //var teamCollection = new ObservableCollection<TeamDto>(returnedCollection);
 
-            if (teamCollection.Count == 0)
+            if (teamCollection?.Count == 0)
             {
                 // Ingen hold fundet i databasen
                 TeamNotFound?.Invoke("Ingen hold i databasen matcher denne søgning");
@@ -195,7 +181,7 @@ namespace SimoneMaui.ViewModels
                 return;
             }
 
-            if (teamCollection.Count > 0)
+            if (teamCollection?.Count > 0)
             {
                 TeamDtoCollection.Clear();
                 foreach (var item in teamCollection)

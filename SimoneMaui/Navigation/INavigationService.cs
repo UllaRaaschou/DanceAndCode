@@ -1,12 +1,10 @@
-﻿using SimoneMaui.ViewModels;
-using static SimoneMaui.ViewModels.SearchDancerViewmodel;
-using SimoneMaui.ViewModels.Dtos;
+﻿using SimoneMaui.ViewModels.Dtos;
 
 namespace SimoneMaui.Navigation;
 public interface INavigationService
 {
     Task GoToSearchDancer();
-    Task GoToSearchDancer(TeamDto teamDto);
+    Task GoToSearchDancer(TeamDto teamDto, bool puttingDancerOnTeam);
     Task GoToUpdateDancer(DancerDto dancerDto);
     Task GoToUpdateDancer(DancerDto dancerDto, TeamDto teamDto);
     Task GoToSearchTeam(DancerDto dancerDto);

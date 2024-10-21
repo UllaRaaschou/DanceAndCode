@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
+using System.Collections.ObjectModel;
 
 namespace SimoneAPI.Tobe.Features
 {
@@ -10,9 +10,9 @@ namespace SimoneAPI.Tobe.Features
 
     {
         public static async Task<IResult> Get(SimoneDbContext dbContext,
-            IMapper mapper, [FromQuery] String? name, [FromQuery] int? number)
+            [FromQuery] String? name, [FromQuery] int? number)
         {
-            var models =  dbContext.TeamDataModels.Include(t => t.TeamDancerRelations).AsQueryable();
+            var models = dbContext.TeamDataModels.Include(t => t.TeamDancerRelations).AsQueryable();
 
             if (!string.IsNullOrEmpty(name))
             {
@@ -24,40 +24,53 @@ namespace SimoneAPI.Tobe.Features
                 models = models.Where(t => t.Number == number);
             }
 
-            var res = await models.ToListAsync();
-               
+            List<TeamDataModel> res = await models.ToListAsync();
+
             if (res.Count == 0)
             {
                 return TypedResults.NotFound();
             }
 
-            var responce = mapper.Map<IEnumerable<GetTeamResponceDto>>(res);
-            return TypedResults.Ok(responce);
+            Collection<TeamDto> teamDtos = new Collection<TeamDto>();
+            foreach (var teamDataModel in res)
+            {
+                var teamDto = new TeamDto();
+                teamDto.TeamId = teamDataModel.TeamId;
+                teamDto.Name = teamDataModel.Name;
+                teamDto.Number = teamDataModel.Number.ToString();
+                teamDto.SceduledTime = teamDataModel.SceduledTime.ToString();
+                var dancerIdsOnTeam = new List<Guid>();
+                var dancersOnTeam = new List<DancerDto>();
+                if(teamDataModel.TeamDancerRelations!= null) 
+                {                    
+                    dancerIdsOnTeam.AddRange(teamDataModel.TeamDancerRelations.Select(tdr => tdr.DancerId));
+                    dancersOnTeam.AddRange(await dbContext.DancerDataModels
+                        .Where(ddm => dancerIdsOnTeam.Contains(ddm.DancerId))
+                        .Select(ddm => new DancerDto { DancerId = ddm.DancerId, Name = ddm.Name, TimeOfBirth = ddm.TimeOfBirth }).ToListAsync());
+                }      
+                teamDto.DancersOnTeam.AddRange(dancersOnTeam);
+                teamDtos.Add(teamDto);
+            }
+            return TypedResults.Ok(teamDtos);
         }
-
-        public class GetTeamDto
-        {
-            public string Name { get; set; }
-            public int Number {  get; set; }
-        }
-
-        public class GetTeamResponceDto
-        {
-            public Guid TeamId { get; set; }
-            public string Name { get; set; } = string.Empty;
-            public int Number { get; set; } = 0;     
-            public string SceduledTime { get; set; } = string.Empty;
-            public IEnumerable<DancerDto> DancersOnTeam { get; set; } = Enumerable.Empty<DancerDto>();
-        }
-
-        public class DancerDto
-        {
-            public Guid DancerId { get; set; }
-            public string Name { get; set; } = string.Empty;
-            public DateTime TimeOfBirth { get; set; }
-           
-        }
-
-
     }
+
+    public class TeamDto
+    {
+        public Guid TeamId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Number { get; set; } = string.Empty;     
+        public string SceduledTime { get; set; } = string.Empty;
+        public List<DancerDto> DancersOnTeam { get; set; } = [];
+    }
+
+    public class DancerDto
+    {
+        public Guid DancerId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public DateOnly TimeOfBirth { get; set; }
+           
+    }
+
+
 }
