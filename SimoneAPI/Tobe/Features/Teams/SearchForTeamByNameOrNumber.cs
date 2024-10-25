@@ -38,7 +38,7 @@ namespace SimoneAPI.Tobe.Features
                 teamDto.TeamId = teamDataModel.TeamId;
                 teamDto.Name = teamDataModel.Name;
                 teamDto.Number = teamDataModel.Number.ToString();
-                teamDto.SceduledTime = teamDataModel.SceduledTime.ToString();
+                teamDto.SceduledTime = teamDataModel.ScheduledTime.ToString();
                 var dancerIdsOnTeam = new List<Guid>();
                 var dancersOnTeam = new List<DancerDto>();
                 if(teamDataModel.TeamDancerRelations!= null) 

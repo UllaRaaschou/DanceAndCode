@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SimoneMaui.ViewModels.TeamViewModels"
+             x:Class="SimoneMaui.Views.TeamViews.DeleteDancerFromTeamPage"
+             x:DataType="vm:DeleteDancerFromTeamViewModel"
+             Title="DeleteDancerFromTeamPage"> 
+    
+    
+    
+    <VerticalStackLayout
+        HorizontalOptions="Center"
+        >
+        <Label
+            HorizontalOptions="Center"
+            Text="{Binding SelectedTeam.TeamDetailsString}">
+            
+        </Label>
+
+        <CollectionView 
+            HorizontalOptions="FillAndExpand"
+            ItemsSource="{Binding DancersOnTeam}"
+            SelectedItem="{Binding DancerToDelete}"
+            SelectionMode="Single">
+            <CollectionView.ItemTemplate
+                HorizontalOptions="Center">
+                <DataTemplate>
+                    <StackLayout
+                     HorizontalOptions="Center">
+                    <Label 
+                        Text="{Binding Name }" 
+                        HorizontalTextAlignment="Center"
+                        Margin="10, 10, 10, 10"/>
+                    <Label 
+                        Text="{Binding TimeOfBirth}" 
+                        HorizontalTextAlignment="Center"
+                        Margin="10, 10, 10, 10"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            
+        </CollectionView>
+
+        <VerticalStackLayout
+            HorizontalOptions="FillAndExpand">           
+       
+        <Label 
+            Text="{Binding DancerToDelete.Name}"           
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            IsVisible="{Binding DancerToDeleteIsSelected}"
+            />
+        <Label
+            Text="bliver slettet fra dette hold:"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" 
+             IsVisible="{Binding DancerToDeleteIsSelected}"
+            />
+        <Label
+            Text="{Binding SelectedTeam.TeamDetailsString}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" 
+            IsVisible="{Binding DancerToDeleteIsSelected}"/>
+        <Button
+            Text="Slet elev"
+            Command="{Binding DeleteDancerFromTeamCommand}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" 
+            IsVisible="{Binding DancerToDeleteIsSelected}"/>
+
+        <Label
+            Text="Opdateret hold"
+             IsVisible="{Binding DancerIsdeleted}">            
+        </Label>
+
+        
+
+        <CollectionView 
+            ItemsSource="{Binding SelectedTeam.DancersOnTeam}"
+            IsVisible="{Binding DancerIsdeleted}">
+            <CollectionView.ItemTemplate
+             HorizontalOptions="Center">
+                <DataTemplate>
+                    <Label Text="{Binding Name }" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        </VerticalStackLayout>
+        
+    </VerticalStackLayout>
+    
+    
+    
+    
+    
+</ContentPage>

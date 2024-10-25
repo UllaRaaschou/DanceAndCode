@@ -5,8 +5,12 @@ public interface INavigationService
 {
     Task GoToSearchDancer();
     Task GoToSearchDancer(TeamDto teamDto, bool puttingDancerOnTeam);
+
     Task GoToUpdateDancer(DancerDto dancerDto);
     Task GoToUpdateDancer(DancerDto dancerDto, TeamDto teamDto);
+
+    Task GoToDeleteDancerFromTeam(TeamDto selectedTeam, DancerDto dancerToDelete);
+
     Task GoToSearchTeam(DancerDto dancerDto);
     Task GoToUpdateTeam(TeamDto selectedTeam);
     Task GoToUpdateTeam(TeamDto selectedTeam, DancerDto selectedDancer);

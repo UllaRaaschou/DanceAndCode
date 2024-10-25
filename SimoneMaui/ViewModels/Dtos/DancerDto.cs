@@ -13,5 +13,6 @@ namespace SimoneMaui.ViewModels.Dtos
         public string Name { get; set; } = string.Empty;
         public string TimeOfBirth { get; set; } = string.Empty;
         public ObservableCollection<TeamDto> Teams { get; set; } = new ObservableCollection<TeamDto>();
+        public bool IsHighlighted { get; set; } = false;
     }
 }

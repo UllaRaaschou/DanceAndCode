@@ -6,9 +6,33 @@
              x:DataType="vm:UpdateTeamViewModel"
              Title="UpdateTeamPage">
 
-    <VerticalStackLayout>
-        
-        
+    <VerticalStackLayout
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+
+        <HorizontalStackLayout
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+
+            <Button 
+            Margin="20,20,10,20"
+            Text="Føj elev til hold"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Command="{Binding WannaAddDancerCommand}" 
+            IsVisible="{Binding IsStartOfProcedure}"/>
+
+            <Button 
+            Margin="20,20,10,20"
+            Text="Slet elev fra hold"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Command="{Binding WannaDeleteDancerCommand}"
+            IsVisible="{Binding IsStartOfProcedure}"/>
+            
+        </HorizontalStackLayout>
+
+
         <Label        
         Margin="10,10, 10, 10"
         Text="Hold, der skal opdateres"
@@ -28,35 +52,80 @@
         Margin="10,10, 10, 10"    
         VerticalOptions="Center" 
         HorizontalOptions="Center" 
-        Text="{Binding SceduledTime}" />
-      
-        <CollectionView ItemsSource="{Binding DancersOnTeam}">
+        Text="{Binding SceduledTime}"         
+        />
+
+
+        <HorizontalStackLayout
+            HorizontalOptions="Center">
+            <Label
+                HorizontalOptions="Center"
+                Text="Antal elever på holdet:  ">
+            </Label>
+            <Label
+                HorizontalOptions="Center"
+                Text="{Binding Count}">
+            </Label>
+        </HorizontalStackLayout>
+        
+        <CollectionView 
+            ItemsSource="{Binding DancersOnTeam}"            
+            SelectionMode="Single"            
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Label Text="{Binding Name}" />
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">                        
+                    <Label Text="{Binding Name}"
+                           HorizontalOptions="Center">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="FontAttributes" Value="None"/>
+                                    <Style.Triggers>
+                                         <DataTrigger TargetType="Label" Binding="{Binding IsHighlighted}" Value="True">
+                                                <Setter Property="FontAttributes" Value="Bold"/>
+                                          </DataTrigger>
+                                    </Style.Triggers>
+                                
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                        <Label Text="{Binding TimeOfBirth}"
+                               HorizontalOptions="Center">
+                            <Label.Style>
+                                <Style TargetType="Label">
+                                    <Setter Property="FontAttributes" Value="None"/>
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsHighlighted}" Value="True">
+                                            <Setter Property="FontAttributes" Value="Bold"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                    </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button 
-        Text="Tilføj elev til hold"
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        Command="{Binding WannaAddDancerCommand}" />
-
-        <Button 
-        Text="Tilføj elev til hold"
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        Command="{Binding WannaDeleteDancerCommand}" />
+       
 
 
 
-        <Label Text="Valgt elev:" />
+        <Label 
+            Text="Valgt elev:" 
+            HorizontalOptions="Center"
+            IsVisible="{Binding DancerIsSelected}"/>
 
-        <HorizontalStackLayout>
-            <Label Text="{Binding SelectedDancer.Name}" />
-            <Label Text="{Binding SelectedDancer.TimeOfBirth}" />
+        <HorizontalStackLayout
+             HorizontalOptions="Center">
+            <Label 
+                Text="{Binding SelectedDancer.Name}"
+                IsVisible="{Binding DancerIsSelected}"/>
+            <Label Text="{Binding SelectedDancer.TimeOfBirth}"
+                   IsVisible="{Binding DancerIsSelected}"/>
 
             <CollectionView ItemsSource="{Binding Teams}">
                 <CollectionView.ItemTemplate>
@@ -67,12 +136,14 @@
             </CollectionView>
         </HorizontalStackLayout>
         
-        <Button Text="Tilføj elev til holdet" Command="{Binding AddDancerToTeamCommand}" />
-        <Button Text="Fjern elev fra hold" Command="{Binding DeleteDancerFromTeamCommand}" />
+        <Button 
+            HorizontalOptions="Center"
+            Text="Føj valgte elev til holdet" 
+            Command="{Binding AddDancerToTeamCommand}" 
+            IsVisible="{Binding DancerIsSelected}"/>
         
         
-        
-
+       
 
     </VerticalStackLayout>
 

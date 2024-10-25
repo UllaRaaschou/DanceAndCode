@@ -20,22 +20,22 @@ namespace SimoneAPI.Profiles
             CreateMap<PostDancer.PostDancerDto, DancerDataModel>()
                 .ForMember(dest => dest.DancerId, opt => opt.Ignore())
                 .ForMember(dest => dest.TeamDancerRelations, opt => opt.Ignore());
-               
 
-            CreateMap<DancerDataModel, SearchDancerFromNameOrTimeOfBirth.ResponceDto>()
-                .ForMember(dest => dest.Teams, opt =>
-                opt.MapFrom(src => src.TeamDancerRelations != null
-                ? src.TeamDancerRelations.Select(tdr
-                => new SearchDancerFromNameOrTimeOfBirth.TeamDto
-                {
-                    TeamId = tdr.TeamDataModel.TeamId,
-                    Number = tdr.TeamDataModel.Number,
-                    Name = tdr.TeamDataModel.Name,
-                    SceduledTime = tdr.TeamDataModel.SceduledTime
-                })
-                : Enumerable.Empty<SearchDancerFromNameOrTimeOfBirth.TeamDto>()));
 
-          
+            //CreateMap<DancerDataModel, SearchDancerFromNameOnly.TeamResponceDto>()
+            //    .ForMember(dest => dest.Teams, opt =>
+            //    opt.MapFrom(src => src.TeamDancerRelations != null
+            //    ? src.TeamDancerRelations.Select(tdr
+            //    => new SearchDancerFromNameOnly.TeamDto
+            //    {
+            //        TeamId = tdr.TeamDataModel.TeamId,
+            //        Number = tdr.TeamDataModel.Number.ToString(),
+            //        Name = tdr.TeamDataModel.Name,
+            //        SceduledTime = tdr.TeamDataModel.SceduledTime
+            //    })
+            //    : Enumerable.Empty<SearchDancerFromNameOnly.TeamDto>()));
+
+
 
             CreateMap<SearchForDancerByName.DancerDataModel, SearchForDancerByName.SearchDancerResponceDto>()
                 .ForMember(dest => dest.Teams, opt =>

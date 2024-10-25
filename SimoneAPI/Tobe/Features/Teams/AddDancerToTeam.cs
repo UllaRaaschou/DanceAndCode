@@ -1,54 +1,79 @@
-﻿using AutoMapper;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DbContexts;
 
+
 namespace SimoneAPI.Tobe.Features.Teams
 {
+    public class DeleteFromListOfDancersRequest 
+    {
+        public Guid DancerId { get; set; }
+    }
     public static class AddDancerToTeam
     {
-        public static async Task<IResult> Put(SimoneDbContext dbContext, IMapper mapper, Guid teamId, Guid dancerId) 
+        public static async Task<IResult> Put(SimoneDbContext dbContext, Guid teamId, [FromBody] DeleteFromListOfDancersRequest request)
         {
             var teamDataModel = await dbContext.TeamDataModels
                 .Include(t => t.TeamDancerRelations)
                 .FirstOrDefaultAsync(t => t.TeamId == teamId);
 
-            if(teamDataModel == null) 
+            if (teamDataModel == null)
             {
                 return TypedResults.NotFound();
             }
 
-            var dancerDataModel = await dbContext.DancerDataModels.FirstOrDefaultAsync(d => d.DancerId == dancerId);
-            if(dancerDataModel == null) 
+            var dancerDataModel = await dbContext.DancerDataModels.FirstOrDefaultAsync(d => d.DancerId == request.DancerId);
+            if (dancerDataModel == null)
             {
-                return TypedResults.NotFound(); 
+                return TypedResults.NotFound();
             }
 
-            teamDataModel.TeamDancerRelations.Add(new DataModels.TeamDancerRelation 
-                { 
-                    DancerId = dancerDataModel.DancerId, 
-                    TeamId = teamDataModel.TeamId
-                });
+            teamDataModel.TeamDancerRelations.Add(new DataModels.TeamDancerRelation
+            {
+                DancerId = dancerDataModel.DancerId,
+                TeamId = teamDataModel.TeamId
+            });
             await dbContext.SaveChangesAsync();
 
-            var responce = mapper.Map<ResponceDto>(teamDataModel);
+            var result = new TeamResponceDto
+            {
+                TeamId = teamDataModel.TeamId,
+                Number = teamDataModel.Number.ToString(),
+                Name = teamDataModel.Name,
+                ScheduledTime = teamDataModel.ScheduledTime,
+                DancersOnTeam = teamDataModel.TeamDancerRelations.Select(tdr =>
+                {
+                    var dancer = dbContext.DancerDataModels.FirstOrDefault(d => d.DancerId == tdr.DancerId);
+                    return new DansersOnTeamDto
+                    {
+                        DancerId = tdr.DancerId,
+                        Name = dancer.Name,
+                        TimeOfBirth = dancer.TimeOfBirth
+                    };
+                }).ToList()
+            };
 
-            return TypedResults.Ok(responce);           
+            return TypedResults.Ok(result);
         }
+    }        
 
-        public class DansersOnTeamDto 
-        {
-            public Guid DancerId { get; set; }
-            public string Name {  get; set; } = string.Empty;
-            public DateTime TimeOfBirth { get; set; }
-        }
+        
 
-        public class ResponceDto 
-        {
-            public Guid? TeamId { get; set; }
-            public int Number { get; set; } = 0;
-            public string Name { get; set; } = string.Empty;
-            public string SceduledTime { get; set; } = string.Empty;
-            public ICollection<DansersOnTeamDto> DancersOnTeam { get; set; } = new HashSet<DansersOnTeamDto>();
-        }
+    public class DansersOnTeamDto 
+    {
+        public Guid DancerId { get; set; }
+        public string Name {  get; set; } = string.Empty;
+        public DateOnly TimeOfBirth { get; set; }
     }
+
+    public class TeamResponceDto 
+    {
+        public Guid? TeamId { get; set; }
+        public string Number { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string ScheduledTime { get; set; } = string.Empty;
+        public ICollection<DansersOnTeamDto> DancersOnTeam { get; set; } = new HashSet<DansersOnTeamDto>();
+    }
+    
 }

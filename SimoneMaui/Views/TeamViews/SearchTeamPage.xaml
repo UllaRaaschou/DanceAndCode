@@ -11,7 +11,9 @@
               Padding="20" >
             <Label Text="Fremsøg hold" FontSize="24" HorizontalOptions="Center"></Label>
 
-            <HorizontalStackLayout>
+            <HorizontalStackLayout
+                VerticalOptions="Center"
+                HorizontalOptions="Center">
                 <Button 
                     Margin="20,10,20,10"
                     Text="Opdater" 

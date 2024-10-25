@@ -56,23 +56,23 @@ namespace SimoneMaui.ViewModels
             }
         }
 
-        [RelayCommand]
-        private async Task NavigateToUpdateDancer()
-        {
-            if (SelectedDancer is not null)
-            {
-                await NavigationService.GoToUpdateDancer(SelectedDancer);
-            }
-        }
+        //[RelayCommand]
+        //private async Task NavigateToUpdateDancer()
+        //{
+        //    if (SelectedDancer is not null)
+        //    {
+        //        await NavigationService.GoToUpdateDancer(SelectedDancer);
+        //    }
+        //}
 
-        [RelayCommand]
-        private async Task NavigateToUpdateTeam() 
-        {
-            if (SelectedTeam is not null && SelectedDancer is not null) 
-            {
-                await NavigationService.GoToUpdateTeam(SelectedTeam, SelectedDancer);
-            }
-        }
+        //[RelayCommand]
+        //private async Task NavigateToUpdateTeam() 
+        //{
+        //    if (SelectedTeam is not null && SelectedDancer is not null) 
+        //    {
+        //        await NavigationService.GoToUpdateTeam(SelectedTeam, SelectedDancer);
+        //    }
+        //}
 
 
         public SearchDancerViewmodel(INavigationService navigationService)
@@ -86,16 +86,16 @@ namespace SimoneMaui.ViewModels
             };
         }
 
-        private void ChooseNavigation()
+        private async void ChooseNavigation()
         {
             if (SelectedTeam is not null && SelectedDancer != null && PuttingDancerOnTeam==true)
             {
-                NavigateToUpdateTeam();
-
+                await NavigationService.GoToUpdateTeam(SelectedTeam, SelectedDancer);
             }
+
             if (SelectedTeam == null && SelectedDancer != null)
             {
-                NavigateToUpdateDancer();
+                await NavigationService.GoToUpdateDancer(SelectedDancer);
             }
         }
 
@@ -113,7 +113,7 @@ namespace SimoneMaui.ViewModels
         {
             var options = new RestClientOptions("https://localhost:7163");
             var client = new RestClient(options);
-            var request = new RestRequest("/dancers/SearchForDancerFromNameOrBirthday", Method.Get);
+            var request = new RestRequest("/dancers/SearchDancerFromNameOnly", Method.Get);
 
             if (NameEntry != null)
             {
@@ -172,13 +172,13 @@ namespace SimoneMaui.ViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if (query.ContainsKey("TeamDto") && query["teamDto"] is TeamDto teamDto)
+            if (query.ContainsKey("teamDto") && query["teamDto"] is TeamDto selectedTeam)
 
             {
-                SelectedTeam = teamDto;
+                SelectedTeam = selectedTeam;
 
             }
-            if (query.ContainsKey("PuttingDancerOnTeam") && query["PuttingDancerOnTeam"] is bool PuttingDancerOnTeam)
+            if (query.ContainsKey("puttingDancerOnTeam") && query["puttingDancerOnTeam"] is bool puttingDancerOnTeam)
 
             {
                 PuttingDancerOnTeam = true;

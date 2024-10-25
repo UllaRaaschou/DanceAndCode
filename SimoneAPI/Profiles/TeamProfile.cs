@@ -21,17 +21,17 @@ namespace SimoneAPI.Profiles
             CreateMap<TeamDataModel, PostTeam.PostTeamResponceDto>();
 
 
-            CreateMap<TeamDataModel, AddDancerToTeam.ResponceDto>()
-                .ForMember(dest => dest.DancersOnTeam, opt =>
-                opt.MapFrom(scr => scr.TeamDancerRelations != null
-                ? scr.TeamDancerRelations.Select(tdr => tdr.DancerDataModel.Name)
-                : null));
+            //CreateMap<TeamDataModel, AddDancerToTeam.TeamResponceDto>()
+            //    .ForMember(dest => dest.DancersOnTeam, opt =>
+            //    opt.MapFrom(scr => scr.TeamDancerRelations != null
+            //    ? scr.TeamDancerRelations.Select(tdr => tdr.DancerDataModel.Name)
+            //    : null));
 
             CreateMap<TeamDataModel, AddTeamToDancersListOfTeams.TeamDto>()
             .ForMember(dest => dest.TeamId, opt => opt.MapFrom(src => src.TeamId))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.Number))
-            .ForMember(dest => dest.SceduledTime, opt => opt.MapFrom(src => src.SceduledTime));
+            .ForMember(dest => dest.SceduledTime, opt => opt.MapFrom(src => src.ScheduledTime));
 
 
             //CreateMap<TeamDataModel, SearchForTeamByNameOrNumber.GetTeamResponceDto>()

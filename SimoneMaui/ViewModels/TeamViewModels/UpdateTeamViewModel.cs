@@ -6,7 +6,7 @@ using SimoneMaui.Navigation;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using SimoneMaui.ViewModels.Dtos;
-
+using CommunityToolkit.Maui;
 
 namespace SimoneMaui.ViewModels
 {
@@ -16,6 +16,9 @@ namespace SimoneMaui.ViewModels
 
         [ObservableProperty]
         private string? name;
+
+        [ObservableProperty]
+        private string? timeOfBirth;
 
         [ObservableProperty]
         private string? number;
@@ -30,13 +33,30 @@ namespace SimoneMaui.ViewModels
         private DancerDto? selectedDancer;
 
         [ObservableProperty]
-        private ObservableCollection<DancerDto> dancersOnTeam;
+        [NotifyPropertyChangedFor(nameof(Count))]
+        private ObservableCollection<DancerDto> dancersOnTeam = new ObservableCollection<DancerDto>();
 
         [ObservableProperty]
         private ObservableCollection<TeamDto> teams;
 
         [ObservableProperty]
         private string? teamDetailsString;
+
+        [ObservableProperty]
+        private bool isHighlighted;
+
+        [ObservableProperty]
+        private DancerDto dancerToDelete;
+
+        [ObservableProperty]
+        private bool dancerIsSelected = false;
+
+        [ObservableProperty]
+        private bool isStartOfProcedure = true;
+
+        public int Count => DancersOnTeam.Count;
+        
+
 
         public bool PuttingDancerOnTeam { get; set; } = false;
 
@@ -53,10 +73,16 @@ namespace SimoneMaui.ViewModels
             WannaAddDancerCommand = new AsyncRelayCommand(WannaAddDancer, CanWannaAddDancer);
             WannaDeleteDancerCommand = new AsyncRelayCommand(WannaDeleteDancer, CanWannaDeleteDancer);
             AddDancerToTeamCommand = new AsyncRelayCommand(AddDancerToTeam, CanAddDancerToTeam);
-            DeleteDancerFromTeamCommand = new AsyncRelayCommand(DeleteDancerFromTeam, CanDeleteDancerFromTeam);
-
         }
 
+        partial void OnSelectedDancerChanged(DancerDto value) 
+        {
+            if(value != null) 
+            {
+                DancerIsSelected = true;
+                IsStartOfProcedure = false;
+            }
+        }
 
         private bool CanAddDancerToTeam()
         {
@@ -76,73 +102,63 @@ namespace SimoneMaui.ViewModels
 
             request.AddJsonBody(new { dancerId = SelectedDancer.DancerId });
 
-            var returnedStatus = await client.ExecutePutAsync<TeamDto>(request, CancellationToken.None);
+            var returnedStatus = await client.ExecutePutAsync(request, CancellationToken.None);
 
+            JsonSerializerOptions _options = new();
+            _options.PropertyNameCaseInsensitive = true;
             if (!returnedStatus.IsSuccessStatusCode)
-            {
-                JsonSerializerOptions _options = new();
-                _options.PropertyNameCaseInsensitive = true;
-
+            {            
                 ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedStatus.Content ?? "{}", _options)!;
             }
-            TeamDto returnedDto = returnedStatus.Data!;
-            DancersOnTeam = returnedDto.DancersOnTeam;
+
+            var mauiTeamDto = JsonSerializer.Deserialize<TeamDto>(returnedStatus.Content ?? "{}", _options);
+            DancersOnTeam.Clear();
+            foreach(var dancerDto in mauiTeamDto.DancersOnTeam)
+            {
+                dancerDto.IsHighlighted = dancerDto.DancerId == SelectedDancer.DancerId;
+                DancersOnTeam.Add(dancerDto);
+            }
+            DancersOnTeam = mauiTeamDto.DancersOnTeam;
+            SelectedDancer = null;
+            DancerIsSelected = false;
 
         }
 
         public bool CanDeleteDancerFromTeam()
         {
-            if (selectedDancer != null && selectedTeam != null)
+            if (DancerToDelete != null && selectedTeam != null)
             {
                 return true;
             }
             return false;
         }
 
-        public async Task DeleteDancerFromTeam()
-        {
-            var options = new RestClientOptions("https://localhost:7163");
-            var client = new RestClient(options);
-
-            var request = new RestRequest($"/Teams/{SelectedTeam.TeamId}/DeleteFromListOfDancers", Method.Delete);
-            request.AddJsonBody(new { dancerId = SelectedDancer.DancerId, teamId = SelectedTeam.TeamId });
-
-            var returnedStatus = await client.ExecuteDeleteAsync<TeamDto>(request, CancellationToken.None);
-            if (returnedStatus.IsSuccessStatusCode)
-            {
-                TeamDto returnedDto = returnedStatus.Data!;
-                DancersOnTeam = returnedDto.DancersOnTeam;
-
-                if (!returnedStatus.IsSuccessStatusCode)
-                {
-                    JsonSerializerOptions _options = new();
-                    _options.PropertyNameCaseInsensitive = true;
-
-                    ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedStatus.Content ?? "{}", _options)!;
-                }
-            }
-        }
-
         private bool CanWannaAddDancer()
         {
             return true;
         }
-
         public async Task WannaAddDancer()
         {
             PuttingDancerOnTeam = true;
             await NavigationService.GoToSearchDancer(SelectedTeam, PuttingDancerOnTeam);
         }
 
+
+
         private bool CanWannaDeleteDancer()
         {
-            return true;
+            if(SelectedTeam != null && DancerIsSelected==false)
+            {
+                return true;
+            }
+            return false;
         }
-
         public async Task WannaDeleteDancer()
         {
-            await NavigationService.GoToSearchDancer(SelectedTeam, PuttingDancerOnTeam);
+            await NavigationService.GoToDeleteDancerFromTeam(SelectedTeam, DancerToDelete);
         }
+
+
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (query.ContainsKey("dancerDto") && query["dancerDto"] is DancerDto dancerDto)
@@ -158,7 +174,8 @@ namespace SimoneMaui.ViewModels
                 Name = teamDto.Name;
                 Number = teamDto.Number;
                 SceduledTime = teamDto.SceduledTime;
-                DancersOnTeam = teamDto.DancersOnTeam;
+                DancersOnTeam = new ObservableCollection<DancerDto>(teamDto.DancersOnTeam);
+
             }
         }
     }

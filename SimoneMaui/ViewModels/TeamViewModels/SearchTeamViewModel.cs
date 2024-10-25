@@ -109,14 +109,14 @@ namespace SimoneMaui.ViewModels
             await NavigationService.GoToUpdateTeam(SelectedTeam);
         }
 
-        private bool CanNavigateToUpdateTeam()
-        {
-            return (SelectedTeam != null);
-        }       
-        private async Task NavigateToUpdateTeam()
-        {            
-            await NavigationService.GoToUpdateTeam(SelectedTeam);
-        }
+        //private bool CanNavigateToUpdateTeam()
+        //{
+        //    return (SelectedTeam != null);
+        //}       
+        //private async Task NavigateToUpdateTeam()
+        //{            
+        //    await NavigationService.GoToUpdateTeam(SelectedTeam);
+        //}
 
 
         
@@ -131,14 +131,14 @@ namespace SimoneMaui.ViewModels
             await NavigationService.GoToDeleteTeam(SelectedTeam);
         }
 
-        private bool CanNavigateToDeleteTeam()
-        {
-            return (SelectedTeam != null);
-        }
-        private async Task NavigateToDeleteTeam()
-        {
-            await NavigationService.GoToDeleteTeam(SelectedTeam);
-        }
+        //private bool CanNavigateToDeleteTeam()
+        //{
+        //    return (SelectedTeam != null);
+        //}
+        //private async Task NavigateToDeleteTeam()
+        //{
+        //    await NavigationService.GoToDeleteTeam(SelectedTeam);
+        //}
 
        
 
