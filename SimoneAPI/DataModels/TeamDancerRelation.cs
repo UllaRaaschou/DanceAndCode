@@ -5,8 +5,8 @@ namespace SimoneAPI.DataModels
 {
     public class TeamDancerRelation
     {
-        [Key]
-        public Guid? TeamDancerRelationId { get; set; }
+        //[Key]
+        //public Guid? TeamDancerRelationId { get; set; }
         public Guid TeamId { get; set; }
         public Guid DancerId { get; set; }
         public TeamDataModel TeamDataModel { get; set; } = null!;

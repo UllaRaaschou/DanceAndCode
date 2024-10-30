@@ -8,5 +8,11 @@ public partial class UpdateDancerPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewmodel;
+		viewmodel.TellUserToChoseTeam += OnTellUserToChoseTeamChosen;
+	}
+
+	public void OnTellUserToChoseTeamChosen(string message) 
+	{
+		DisplayAlert("Besked", message, "OK");
 	}
 }

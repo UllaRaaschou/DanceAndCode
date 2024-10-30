@@ -9,12 +9,7 @@
     Title="SimoneMaui">
 
     <ShellItem Title="Home">
-        <ShellSection Title="Main">
-            <ShellContent
-                Title="Home"
-                ContentTemplate="{DataTemplate local:MainPage}"
-                Route="MainPage" />
-        </ShellSection>
+        
         <ShellSection Title="First Page">
             <ShellContent
                 Title="First page"

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
 using SimoneAPI.Dtos.Dancer;
+using System.Collections.ObjectModel;
 using static SimoneAPI.Tobe.Features.Dancer.SearchForDancerByName;
 
 namespace SimoneAPI.Tobe.Features.Dancer
@@ -48,8 +49,23 @@ namespace SimoneAPI.Tobe.Features.Dancer
                 });
              await dbContext.SaveChangesAsync();    
 
-            var updatedDto = mapper.Map<DancerDto>(dancerDataModel);
-            
+           var updatedDto = new DancerDto
+            {
+                DancerId = dancerDataModel.DancerId,
+                Name = dancerDataModel.Name,
+                TimeOfBirth = dancerDataModel.TimeOfBirth,
+                Teams = new Collection<TeamDto>(dancerDataModel.TeamDancerRelations
+                        .Select(tdr =>
+                        new TeamDto
+                        {
+                            TeamId = tdr.TeamDataModel.TeamId,
+                            Number = tdr.TeamDataModel.Number.ToString(),
+                            Name = tdr.TeamDataModel.Name,
+                            SceduledTime = tdr.TeamDataModel.ScheduledTime
+                        }
+                        ).ToList())
+            };
+
             return TypedResults.Ok(updatedDto);
 
         }
@@ -65,7 +81,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
         public class TeamDto 
         {
             public Guid TeamId { get; set; }
-            public int Number { get; set; } = 0;
+            public string Number { get; set; } = string.Empty;
             public string Name { get; set; } = string.Empty;
             public string SceduledTime { get; set; } = string.Empty;
             

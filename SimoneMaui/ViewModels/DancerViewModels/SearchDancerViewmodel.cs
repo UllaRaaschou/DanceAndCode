@@ -14,7 +14,7 @@ namespace SimoneMaui.ViewModels
         public INavigationService NavigationService { get; set; }
 
         [ObservableProperty]
-        private ObservableCollection<DancerDto> dancerDtoList;
+        private ObservableCollection<DancerDto> dancerDtoList = new ObservableCollection<DancerDto>();
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SearchDancerCommand))]
@@ -36,68 +36,81 @@ namespace SimoneMaui.ViewModels
         private string teamDetailsString= string.Empty;
 
         public bool PuttingDancerOnTeam { get; set; } = false;
+
+
+        public RelayCommand DancerSelectedCommand { get; }
+        public AsyncRelayCommand WannaUpdateDancerCommand { get;}        
+        public AsyncRelayCommand WannaDeleteDancerCommand { get; }
         public AsyncRelayCommand SearchDancerCommand { get; }
+       
 
         public RelayCommand ChooseNavigationCommand { get; }
 
-        
+        [ObservableProperty]
+        private bool searchResultVisible = true;
 
+        [NotifyCanExecuteChangedFor(nameof(WannaUpdateDancerCommand))]
+        [NotifyCanExecuteChangedFor(nameof(WannaDeleteDancerCommand))]
+        [ObservableProperty]
+        private DancerDto? selectedDancer;
 
-        private DancerDto? selectedDancer = null;
-        public DancerDto? SelectedDancer
-        {
-            get => selectedDancer;
-            set
-            {
-                if (SetProperty(ref selectedDancer, value))
-                {
-                    NameEntry = string.Empty;                    
-                }
-            }
-        }
+        [ObservableProperty]
+        private bool isUpdateButtonVisible;
 
-        //[RelayCommand]
-        //private async Task NavigateToUpdateDancer()
-        //{
-        //    if (SelectedDancer is not null)
-        //    {
-        //        await NavigationService.GoToUpdateDancer(SelectedDancer);
-        //    }
-        //}
+        [ObservableProperty]
+        private bool isDeleteButtonVisible;
 
-        //[RelayCommand]
-        //private async Task NavigateToUpdateTeam() 
-        //{
-        //    if (SelectedTeam is not null && SelectedDancer is not null) 
-        //    {
-        //        await NavigationService.GoToUpdateTeam(SelectedTeam, SelectedDancer);
-        //    }
-        //}
+        [ObservableProperty]
+        private bool isSearchHeaderVisible;
+
+        public event Action<string> NoDancerFoundInDb;
+
 
 
         public SearchDancerViewmodel(INavigationService navigationService)
         {
             NavigationService = navigationService;
-            ChooseNavigationCommand = new RelayCommand(ChooseNavigation);
             SearchDancerCommand = new AsyncRelayCommand(SearchAsyncDancer, CanSearchAsync);
-            dancerDtoList = new ObservableCollection<DancerDto>()
-            {
-                new DancerDto{Name="Test", TimeOfBirth="01-01-2001" }
-            };
+            WannaUpdateDancerCommand = new AsyncRelayCommand(WannaUpdateDancer, CanWannaUpdateDancer);
+            WannaDeleteDancerCommand = new AsyncRelayCommand(WannaDeleteDancer, CanWannaDeleteDancer);
+            DancerSelectedCommand = new RelayCommand(DancerSelected);
         }
 
-        private async void ChooseNavigation()
+        private void DancerSelected()
         {
-            if (SelectedTeam is not null && SelectedDancer != null && PuttingDancerOnTeam==true)
-            {
-                await NavigationService.GoToUpdateTeam(SelectedTeam, SelectedDancer);
-            }
-
-            if (SelectedTeam == null && SelectedDancer != null)
-            {
-                await NavigationService.GoToUpdateDancer(SelectedDancer);
-            }
+            OnSelectedDancerChanged();
         }
+        private void OnSelectedDancerChanged()
+        {
+            NameEntry = SelectedDancer.Name;
+            IsUpdateButtonVisible = true;
+            IsDeleteButtonVisible = true;
+            SearchResultVisible = false;
+            IsSearchHeaderVisible = false;
+        }
+
+
+        private bool CanWannaDeleteDancer()
+        {
+            return selectedDancer != null;
+        }
+        private async Task WannaDeleteDancer()
+        {
+            await NavigationService.GoToDeleteDancer(SelectedDancer);
+        }
+
+
+
+        private bool CanWannaUpdateDancer()
+        {
+            return selectedDancer != null; ;
+        }
+        private async Task WannaUpdateDancer()
+        {
+            await NavigationService.GoToUpdateDancer(SelectedDancer);
+        }
+
+        
 
         private bool CanSearchAsync()
         {
@@ -129,14 +142,13 @@ namespace SimoneMaui.ViewModels
                 _options.PropertyNameCaseInsensitive = true;
 
                 ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedCollection.Content ?? "{}", _options)!;
-
             }
 
             NameEntry = string.Empty;
             
             if (!returnedCollection.Data.Any() || returnedCollection.Data == null)
             {
-                return null;
+                NoDancerFoundInDb.Invoke("Ingen danser i databasen matcher søgekritetriet");
             }
 
             var dancerCollection = new ObservableCollection<DancerDto>(returnedCollection.Data);
@@ -147,8 +159,11 @@ namespace SimoneMaui.ViewModels
                 DancerDtoList.Add(item);
 
             }
+            
             return dancerCollection;
         }
+
+
 
         partial void OnNameEntryChanged(string? newValue)
         {
@@ -169,6 +184,8 @@ namespace SimoneMaui.ViewModels
 
             return textInfo.ToTitleCase(input.ToLower());
         }
+
+
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {

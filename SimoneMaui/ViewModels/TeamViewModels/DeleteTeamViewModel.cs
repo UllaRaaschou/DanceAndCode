@@ -5,6 +5,7 @@ using RestSharp;
 using System.Text.Json;
 using SimoneMaui.ViewModels.Dtos;
 using CommunityToolkit.Maui.Alerts;
+using System.Collections.ObjectModel;
 
 namespace SimoneMaui.ViewModels
 {
@@ -14,18 +15,6 @@ namespace SimoneMaui.ViewModels
 
         [ObservableProperty]
         private string teamDetailsString;
-
-        //[ObservableProperty]
-        //private string name;
-
-        //[ObservableProperty]
-        //private string number;
-
-        //[ObservableProperty]
-        //private string dayOfWeek;
-
-        //[ObservableProperty]    
-        //private string startAndEndTime;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(DeleteTeamCommand))]

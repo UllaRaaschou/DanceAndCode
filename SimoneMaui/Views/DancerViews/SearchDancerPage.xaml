@@ -17,9 +17,25 @@
                 <VerticalStackLayout 
                      Padding="20" >
                     <Label Text="Fremsøg elev" FontSize="24" HorizontalOptions="Center"></Label>
-                   
+
+                <HorizontalStackLayout
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center">
+                     <Button 
+                            Margin="20,10,20,10"
+                            Text="Opdater" 
+                            Command="{Binding WannaUpdateDancerCommand}" 
+                            IsVisible="{Binding IsUpdateButtonVisible}"/>
+                     <Button 
+                            Margin="20,10,20,10"
+                            Text="Slet" 
+                            Command="{Binding WannaDeleteDancerCommand}"
+                            IsVisible="{Binding IsDeleteButtonVisible}"/>
+                 </HorizontalStackLayout>
+
 
                         <Entry
+                            HorizontalOptions="Center"
                             Placeholder="Navn"
                             Text="{Binding NameEntry, Mode=TwoWay}"/>
 
@@ -28,36 +44,32 @@
                              Text="Søg"
                              Command="{Binding SearchDancerCommand}"/>
 
-                        <Label Text="Elevliste" FontSize="24" HorizontalOptions="Center" Margin=" 40,20,10,20"></Label>
+                       
                         <CollectionView                    
                             ItemsSource="{Binding DancerDtoList}"
                             SelectedItem="{Binding SelectedDancer, Mode=TwoWay}"
-                            SelectionChangedCommand="{Binding ChooseNavigationCommand}"
-                            SelectionMode="Single">
-                            <CollectionView.ItemTemplate>
+                            SelectionMode="Single"
+                            IsVisible="{Binding SearchResultVisible}"
+                            SelectionChangedCommand="{Binding DancerSelectedCommand}">
+                            <CollectionView.ItemTemplate>                               
                                 <DataTemplate>
-                                    <Grid Margin="10,5,10,5" Padding="10,10,10,10" BackgroundColor="White">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="2*" />
-                                        </Grid.ColumnDefinitions>
-                                             <Label Grid.Column="0" Text="{Binding Name}"/>
-                                             <Label Grid.Column="1" Text="{Binding TimeOfBirth}"/>
-                                                 <CollectionView
-                                                    Grid.Column="2"
-                                                    ItemsSource="{Binding Teams}"
-                                                    >
-                                                     <CollectionView.ItemTemplate>
-                                                         <DataTemplate>
-                                                             <Label Text="{Binding TeamDetailsString}"/>                                                            
-                                                         </DataTemplate>
-                                                     </CollectionView.ItemTemplate>
-                                                 </CollectionView>
-                                    </Grid>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
+                        <HorizontalStackLayout>
+                            <Label HorizontalOptions="Center" Text="{Binding Name}"/>
+                            <Label HorizontalOptions="Center" Text="{Binding TimeOfBirth}"/>
+                            <CollectionView
+                             ItemsSource="{Binding Teams}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding TeamDetailsString}"/>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </HorizontalStackLayout>
+                              </DataTemplate>
+                           </CollectionView.ItemTemplate>
                         </CollectionView>
+
+                   
                     
                         
                     

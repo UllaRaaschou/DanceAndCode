@@ -33,12 +33,18 @@ namespace SimoneAPI.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("TeamDancerRelationDancerId")
+                        .HasColumnType("TEXT");
+
                     b.Property<Guid>("TeamDancerRelationId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("TeamDancerRelationTeamId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("AttendanceId");
 
-                    b.HasIndex("TeamDancerRelationId");
+                    b.HasIndex("TeamDancerRelationDancerId", "TeamDancerRelationTeamId");
 
                     b.ToTable("Attendances");
                 });
@@ -266,22 +272,16 @@ namespace SimoneAPI.Migrations
 
             modelBuilder.Entity("SimoneAPI.DataModels.TeamDancerRelation", b =>
                 {
-                    b.Property<Guid?>("TeamDancerRelationId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("DancerId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("DancerId")
+                    b.Property<Guid>("TeamId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsTrialLesson")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("TeamId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("TeamDancerRelationId");
-
-                    b.HasIndex("DancerId");
+                    b.HasKey("DancerId", "TeamId");
 
                     b.HasIndex("TeamId");
 
@@ -290,402 +290,315 @@ namespace SimoneAPI.Migrations
                     b.HasData(
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111100"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000003"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("11111111-1111-1111-1111-111111111111")
+                            TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111101"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000004"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("11111111-1111-1111-1111-111111111111")
+                            TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111102"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000005"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("11111111-1111-1111-1111-111111111111")
+                            TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111103"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000006"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("11111111-1111-1111-1111-111111111111")
+                            TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111104"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000007"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("11111111-1111-1111-1111-111111111111")
+                            TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111105"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000008"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("22222222-2222-2222-2222-222222222222")
+                            TeamId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111106"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000009"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("22222222-2222-2222-2222-222222222222")
+                            TeamId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111107"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000010"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("22222222-2222-2222-2222-222222222222")
+                            TeamId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111108"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000011"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("33333333-3333-3333-3333-333333333333")
+                            TeamId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111109"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000012"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("33333333-3333-3333-3333-333333333333")
+                            TeamId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111110"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000013"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("33333333-3333-3333-3333-333333333333")
+                            TeamId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111111"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000014"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("44444444-4444-4444-4444-444444444444")
+                            TeamId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111112"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000015"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("44444444-4444-4444-4444-444444444444")
+                            TeamId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111113"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000016"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("44444444-4444-4444-4444-444444444444")
+                            TeamId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111114"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000017"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("55555555-5555-5555-5555-555555555555")
+                            TeamId = new Guid("55555555-5555-5555-5555-555555555555"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111115"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000018"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("55555555-5555-5555-5555-555555555555")
+                            TeamId = new Guid("55555555-5555-5555-5555-555555555555"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111116"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000019"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("55555555-5555-5555-5555-555555555555")
+                            TeamId = new Guid("55555555-5555-5555-5555-555555555555"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111117"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000020"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("66666666-6666-6666-6666-666666666666")
+                            TeamId = new Guid("66666666-6666-6666-6666-666666666666"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111118"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000021"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("66666666-6666-6666-6666-666666666666")
+                            TeamId = new Guid("66666666-6666-6666-6666-666666666666"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111119"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000022"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("66666666-6666-6666-6666-666666666666")
+                            TeamId = new Guid("66666666-6666-6666-6666-666666666666"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111120"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000023"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("77777777-7777-7777-7777-777777777777")
+                            TeamId = new Guid("77777777-7777-7777-7777-777777777777"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111121"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000024"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("77777777-7777-7777-7777-777777777777")
+                            TeamId = new Guid("77777777-7777-7777-7777-777777777777"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111122"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000025"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("77777777-7777-7777-7777-777777777777")
+                            TeamId = new Guid("77777777-7777-7777-7777-777777777777"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111123"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000026"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("88888888-8888-8888-8888-888888888888")
+                            TeamId = new Guid("88888888-8888-8888-8888-888888888888"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111124"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000027"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("88888888-8888-8888-8888-888888888888")
+                            TeamId = new Guid("88888888-8888-8888-8888-888888888888"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111125"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000028"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("88888888-8888-8888-8888-888888888888")
+                            TeamId = new Guid("88888888-8888-8888-8888-888888888888"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111126"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000029"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("99999999-9999-9999-9999-999999999999")
+                            TeamId = new Guid("99999999-9999-9999-9999-999999999999"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111127"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000030"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("99999999-9999-9999-9999-999999999999")
+                            TeamId = new Guid("99999999-9999-9999-9999-999999999999"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-111111111128"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000031"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("99999999-9999-9999-9999-999999999999")
+                            TeamId = new Guid("99999999-9999-9999-9999-999999999999"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("11111111-1111-1111-1111-711111111101"),
-                            DancerId = new Guid("00000000-0000-0000-0000-000000000007"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("11111111-1111-1111-1111-111111111111")
-                        },
-                        new
-                        {
-                            TeamDancerRelationId = new Guid("21111111-1111-1111-1111-111111111102"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000009"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("11111111-1111-1111-1111-111111111111")
+                            TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("31111111-1111-1111-1111-111111111103"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000022"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("11111111-1111-1111-1111-111111111111")
+                            TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("41111111-1111-1111-1111-111111111104"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000011"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("11111111-1111-1111-1111-111111111111")
+                            TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("51111111-1111-1111-1111-111111111105"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000016"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("22222222-2222-2222-2222-222222222222")
+                            TeamId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("61111111-1111-1111-1111-111111111106"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000022"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("22222222-2222-2222-2222-222222222222")
+                            TeamId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("71111111-1111-1111-1111-111111111107"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000015"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("22222222-2222-2222-2222-222222222222")
+                            TeamId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("81111111-1111-1111-1111-111111111108"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000018"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("33333333-3333-3333-3333-333333333333")
+                            TeamId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("91111111-1111-1111-1111-111111111109"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000017"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("33333333-3333-3333-3333-333333333333")
+                            TeamId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("10111111-1111-1111-1111-111111111110"),
-                            DancerId = new Guid("00000000-0000-0000-0000-000000000018"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("33333333-3333-3333-3333-333333333333")
-                        },
-                        new
-                        {
-                            TeamDancerRelationId = new Guid("13111111-1111-1111-1111-111111111111"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000025"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("44444444-4444-4444-4444-444444444444")
+                            TeamId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("14111111-1111-1111-1111-111111111112"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000030"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("44444444-4444-4444-4444-444444444444")
+                            TeamId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("15111111-1111-1111-1111-111111111113"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000028"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("44444444-4444-4444-4444-444444444444")
+                            TeamId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("16111111-1111-1111-1111-111111111114"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000029"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("55555555-5555-5555-5555-555555555555")
+                            TeamId = new Guid("55555555-5555-5555-5555-555555555555"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("17111111-1111-1111-1111-111111111115"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000023"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("55555555-5555-5555-5555-555555555555")
+                            TeamId = new Guid("55555555-5555-5555-5555-555555555555"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("18111111-1111-1111-1111-111111111116"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000014"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("55555555-5555-5555-5555-555555555555")
+                            TeamId = new Guid("55555555-5555-5555-5555-555555555555"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("19111111-1111-1111-1111-111111111117"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000027"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("66666666-6666-6666-6666-666666666666")
+                            TeamId = new Guid("66666666-6666-6666-6666-666666666666"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("20111111-1111-1111-1111-111111111118"),
-                            DancerId = new Guid("00000000-0000-0000-0000-000000000027"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("66666666-6666-6666-6666-666666666666")
-                        },
-                        new
-                        {
-                            TeamDancerRelationId = new Guid("21111111-1111-1111-1111-111111111119"),
-                            DancerId = new Guid("00000000-0000-0000-0000-000000000021"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("66666666-6666-6666-6666-666666666666")
-                        },
-                        new
-                        {
-                            TeamDancerRelationId = new Guid("21111111-1111-1111-1111-111111111120"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000029"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("77777777-7777-7777-7777-777777777777")
+                            TeamId = new Guid("77777777-7777-7777-7777-777777777777"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("21111111-1111-1111-1111-111111111121"),
-                            DancerId = new Guid("00000000-0000-0000-0000-000000000023"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("77777777-7777-7777-7777-777777777777")
-                        },
-                        new
-                        {
-                            TeamDancerRelationId = new Guid("21111111-1111-1111-1111-111111111122"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000014"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("77777777-7777-7777-7777-777777777777")
+                            TeamId = new Guid("77777777-7777-7777-7777-777777777777"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("21111111-1111-1111-1111-111111111123"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000009"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("88888888-8888-8888-8888-888888888888")
+                            TeamId = new Guid("88888888-8888-8888-8888-888888888888"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("21111111-1111-1111-1111-111111111124"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000008"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("88888888-8888-8888-8888-888888888888")
+                            TeamId = new Guid("88888888-8888-8888-8888-888888888888"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("21111111-1111-1111-1111-111111111125"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000004"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("88888888-8888-8888-8888-888888888888")
+                            TeamId = new Guid("88888888-8888-8888-8888-888888888888"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("21111111-1111-1111-1111-111111111126"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000006"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("99999999-9999-9999-9999-999999999999")
+                            TeamId = new Guid("99999999-9999-9999-9999-999999999999"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("21111111-1111-1111-1111-111111111127"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000025"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("99999999-9999-9999-9999-999999999999")
+                            TeamId = new Guid("99999999-9999-9999-9999-999999999999"),
+                            IsTrialLesson = false
                         },
                         new
                         {
-                            TeamDancerRelationId = new Guid("21111111-1111-1111-1111-111111111128"),
                             DancerId = new Guid("00000000-0000-0000-0000-000000000018"),
-                            IsTrialLesson = false,
-                            TeamId = new Guid("99999999-9999-9999-9999-999999999999")
+                            TeamId = new Guid("99999999-9999-9999-9999-999999999999"),
+                            IsTrialLesson = false
                         });
                 });
 
@@ -809,7 +722,7 @@ namespace SimoneAPI.Migrations
                 {
                     b.HasOne("SimoneAPI.DataModels.TeamDancerRelation", "TeamDancerRelation")
                         .WithMany("Attendances")
-                        .HasForeignKey("TeamDancerRelationId")
+                        .HasForeignKey("TeamDancerRelationDancerId", "TeamDancerRelationTeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

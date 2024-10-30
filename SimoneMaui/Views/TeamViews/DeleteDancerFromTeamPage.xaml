@@ -17,6 +17,18 @@
             
         </Label>
 
+        <HorizontalStackLayout
+         HorizontalOptions="Center">
+            <Label
+                HorizontalOptions="Center"
+                Text="Antal elever på holdet:  ">
+            </Label>
+            <Label
+                 HorizontalOptions="Center"
+                 Text="{Binding Count}">
+            </Label>
+        </HorizontalStackLayout>
+
         <CollectionView 
             HorizontalOptions="FillAndExpand"
             ItemsSource="{Binding DancersOnTeam}"
@@ -68,23 +80,7 @@
             HorizontalOptions="Center" 
             IsVisible="{Binding DancerToDeleteIsSelected}"/>
 
-        <Label
-            Text="Opdateret hold"
-             IsVisible="{Binding DancerIsdeleted}">            
-        </Label>
-
-        
-
-        <CollectionView 
-            ItemsSource="{Binding SelectedTeam.DancersOnTeam}"
-            IsVisible="{Binding DancerIsdeleted}">
-            <CollectionView.ItemTemplate
-             HorizontalOptions="Center">
-                <DataTemplate>
-                    <Label Text="{Binding Name }" />
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+      
 
         </VerticalStackLayout>
         

@@ -51,6 +51,9 @@ namespace SimoneMaui
             builder.Services.AddTransient<DeleteDancerFromTeamViewModel>();
             builder.Services.AddTransient<DeleteDancerFromTeamPage>();
 
+            builder.Services.AddTransient<FirstViewModel>();
+            builder.Services.AddTransient<FirstPage>();
+
 
 #if DEBUG
             builder.Logging.AddDebug();

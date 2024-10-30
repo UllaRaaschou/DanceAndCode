@@ -112,12 +112,9 @@ namespace SimoneMaui.ViewModels
             }
 
             var mauiTeamDto = JsonSerializer.Deserialize<TeamDto>(returnedStatus.Content ?? "{}", _options);
-            DancersOnTeam.Clear();
-            foreach(var dancerDto in mauiTeamDto.DancersOnTeam)
-            {
-                dancerDto.IsHighlighted = dancerDto.DancerId == SelectedDancer.DancerId;
-                DancersOnTeam.Add(dancerDto);
-            }
+            //DancersOnTeam.Clear();
+
+            mauiTeamDto.DancersOnTeam.First(d => d.DancerId == SelectedDancer.DancerId).IsHighlighted = true;
             DancersOnTeam = mauiTeamDto.DancersOnTeam;
             SelectedDancer = null;
             DancerIsSelected = false;

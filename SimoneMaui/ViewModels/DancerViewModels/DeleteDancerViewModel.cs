@@ -10,14 +10,17 @@ namespace SimoneMaui.ViewModels
 {
     public partial class DeleteDancerViewModel : ObservableObject, IQueryAttributable
     {
-        [ObservableProperty]
-        private ObservableCollection<DancerDto> dancerDtoList;
+        //[ObservableProperty]
+        //private ObservableCollection<DancerDto> dancerDtoList;
 
         [ObservableProperty]
         private string? name = string.Empty;
 
         [ObservableProperty]
         private string? timeOfBirth = string.Empty;
+
+        [ObservableProperty]
+        private bool buttonIsVisible = true;
 
         partial void OnNameChanged(string value)
         {
@@ -27,7 +30,11 @@ namespace SimoneMaui.ViewModels
         {
             DeleteDancerCommand.NotifyCanExecuteChanged();
         }
-        
+
+        public RelayCommand DeleteDancerCommand { get; }
+
+        public event Action<string> DancerDeleted;
+       
 
         private DancerDto? selectedDancer = null;
         public DancerDto? SelectedDancer
@@ -51,15 +58,15 @@ namespace SimoneMaui.ViewModels
         }
 
 
-       public RelayCommand DeleteDancerCommand { get; }
+       
 
         public DeleteDancerViewModel()
         {
             DeleteDancerCommand = new RelayCommand(async () => await DeleteDancer(), CanDelete);
-            DancerDtoList = new ObservableCollection<DancerDto>()
-            {
-                new DancerDto{Name="Test", TimeOfBirth="01-01-2001" }
-            };
+            ////DancerDtoList = new ObservableCollection<DancerDto>()
+            ////{
+            ////    new DancerDto{Name="Test", TimeOfBirth="01-01-2001" }
+            ////};
 
 
         }
@@ -95,9 +102,8 @@ namespace SimoneMaui.ViewModels
                 }
 
                 SelectedDancer = null;
-                DancerDtoList.Clear();
-
-
+                ButtonIsVisible = false;
+                DancerDeleted.Invoke("Eleven er slettet i databasen");
             }
             else
             {
@@ -107,7 +113,10 @@ namespace SimoneMaui.ViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            throw new NotImplementedException();
+            if (query.ContainsKey("dancerDto") && query["dancerDto"] is DancerDto dancerDto)
+            {
+                SelectedDancer = dancerDto;
+            }
         }
     }  
 }

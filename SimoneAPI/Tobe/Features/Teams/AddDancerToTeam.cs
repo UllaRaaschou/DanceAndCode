@@ -16,6 +16,7 @@ namespace SimoneAPI.Tobe.Features.Teams
         {
             var teamDataModel = await dbContext.TeamDataModels
                 .Include(t => t.TeamDancerRelations)
+                .ThenInclude(tdr => tdr.DancerDataModel)
                 .FirstOrDefaultAsync(t => t.TeamId == teamId);
 
             if (teamDataModel == null)
@@ -44,12 +45,11 @@ namespace SimoneAPI.Tobe.Features.Teams
                 ScheduledTime = teamDataModel.ScheduledTime,
                 DancersOnTeam = teamDataModel.TeamDancerRelations.Select(tdr =>
                 {
-                    var dancer = dbContext.DancerDataModels.FirstOrDefault(d => d.DancerId == tdr.DancerId);
                     return new DansersOnTeamDto
                     {
-                        DancerId = tdr.DancerId,
-                        Name = dancer.Name,
-                        TimeOfBirth = dancer.TimeOfBirth
+                        DancerId = tdr.DancerDataModel.DancerId,
+                        Name = tdr.DancerDataModel.Name,
+                        TimeOfBirth = tdr.DancerDataModel.TimeOfBirth
                     };
                 }).ToList()
             };

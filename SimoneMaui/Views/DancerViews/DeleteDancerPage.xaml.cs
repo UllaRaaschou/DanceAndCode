@@ -8,5 +8,13 @@ public partial class DeleteDancerPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = vm;
+		vm.DancerDeleted += OnDancerDeleted;
 	}
+
+
+	public void OnDancerDeleted(string message) 
+	{
+		DisplayAlert("Besked", message, "OK");
+	}
+	
 }

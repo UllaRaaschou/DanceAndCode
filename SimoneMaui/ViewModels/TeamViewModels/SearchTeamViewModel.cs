@@ -63,9 +63,14 @@ namespace SimoneMaui.ViewModels
         private bool isDeleteButtonVisible = false;
 
         [ObservableProperty]
-        private bool searchResultVisible = true;        
+        private bool searchResultVisible = true;
 
-        
+        [ObservableProperty]
+        private bool wannaAddTeamToADancer = false;
+
+
+
+
 
         public RelayCommand TeamSelectedCommand { get; }
         public AsyncRelayCommand WannaUpdateTeamCommand { get; }
@@ -89,7 +94,7 @@ namespace SimoneMaui.ViewModels
         {
             OnSelectedTeamChanged();            
         }
-        private void OnSelectedTeamChanged()
+        private async void OnSelectedTeamChanged()
         {
             TeamNameEntry = SelectedTeam.Name;
             TeamNumberEntry = SelectedTeam.Number.ToString();
@@ -98,6 +103,10 @@ namespace SimoneMaui.ViewModels
             IsDeleteButtonVisible = true;
             SearchResultVisible = false;
             IsSearchHeaderVisible = false;
+            if(WannaAddTeamToADancer == true) 
+            {
+                await NavigationService.GoToUpdateDancer(SelectedDancer, SelectedTeam);
+            }
         }
 
         private bool CanWannaUpdateTeam()
@@ -108,18 +117,7 @@ namespace SimoneMaui.ViewModels
         {
             await NavigationService.GoToUpdateTeam(SelectedTeam);
         }
-
-        //private bool CanNavigateToUpdateTeam()
-        //{
-        //    return (SelectedTeam != null);
-        //}       
-        //private async Task NavigateToUpdateTeam()
-        //{            
-        //    await NavigationService.GoToUpdateTeam(SelectedTeam);
-        //}
-
-
-        
+              
 
 
         private bool CanWannaDeleteTeam()
@@ -226,11 +224,17 @@ namespace SimoneMaui.ViewModels
             return textInfo.ToTitleCase(input.ToLower());
         }
 
+
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (query.ContainsKey("dancerDto") && query["dancerDto"] is DancerDto dancerDto)
             {
                 SelectedDancer = dancerDto;
+            }
+
+            if (query.ContainsKey("WannaAddTeamToADancer") && query["WannaAddTeamToADancer"] is bool wannaAddTeamToADancer)
+            {
+                WannaAddTeamToADancer = wannaAddTeamToADancer;
             }
         }
 

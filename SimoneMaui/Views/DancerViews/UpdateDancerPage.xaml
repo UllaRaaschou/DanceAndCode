@@ -10,32 +10,83 @@
     <ScrollView>
         <VerticalStackLayout  
             Padding="20" >
-            <Label Text="Rediger elev" FontSize="24" HorizontalOptions="Center"></Label> 
+            <Label Text="Elev, der skal opdateres:" HorizontalOptions="Center"></Label>
+
+            <HorizontalStackLayout
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+                <Button 
+                 Margin="20,20,10,20"
+                 Text="Sæt eleven på et dansehold"
+                 VerticalOptions="Center"
+                 HorizontalOptions="Center"
+                 Command="{Binding WannaPutDancerOnATeamCommand}" 
+                 IsVisible="{Binding IsStartOfProcedure}"/>
+
+                <Button 
+                Margin="20,20,10,20"
+                Text="Slet eleven fra et dansehold"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Command="{Binding WannaDeleteDancerFromTeamCommand}"
+                IsVisible="{Binding IsStartOfProcedure}"/>
+
+            </HorizontalStackLayout>
+
+
+
+
+
+
             <Entry
+                HorizontalOptions="Center"
                 Text="{Binding SelectedDancer.Name, Mode=TwoWay}"></Entry>
             <Entry
+                HorizontalOptions="Center"
                 Text="{Binding SelectedDancer.TimeOfBirth, Mode=TwoWay}"></Entry>
-            <Label Text="Elevens dansehold" Margin="10, 10, 10, 10" FontSize="24" HorizontalOptions="Center"></Label>
+
+
             <CollectionView
                 ItemsSource ="{Binding Teams}"
                 SelectedItem="{Binding SelectedTeam, Mode=TwoWay}"
                 SelectionMode="Single">
+                <CollectionView.EmptyView>
+                    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                        <Label 
+                        Text="Eleven er ikke tilmeldt nogen dansehold endnu" 
+                        HorizontalOptions="Center" 
+                        VerticalOptions="Center"/>
+                    </Grid>
+                </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>                   
                     <DataTemplate>
-                        <Label Text="{Binding TeamDetailsString, Mode=TwoWay}"></Label>                        
+                        <Label 
+                         HorizontalOptions="Center"
+                         Text="{Binding TeamDetailsString, Mode=OneWay}"></Label>                        
                     </DataTemplate>                   
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Button Text="Fjern eleven fra dette hold"  Margin="10, 10, 10, 10" Command="{Binding RemoveTeamCommand}" />
-            <Button Text="Sæt eleven på et nyt dansehold"  Margin="10, 10, 10, 10" Command="{Binding WannaSearchCommand}" />
 
-            <Label Text="Valgt dansehold" Margin="10, 10, 10, 10" FontSize="24" HorizontalOptions="Center"></Label>
+
+            <Button Text="Fjern eleven fra dette hold"  IsVisible="{Binding DancerIsSignedInToMinimumOneTeam}" Margin="10, 10, 10, 10" Command="{Binding RemoveTeamCommand}" />
+           
+            <Label 
+                Text="Valgt dansehold" 
+                Margin="10, 10, 10, 10" 
+                FontSize="24" 
+                HorizontalOptions="Center"
+                IsVisible="{Binding TeamToAddIsSelected}"></Label>
+            
             <HorizontalStackLayout
                 HorizontalOptions="Center">               
                 <Label Text="{Binding TeamToAdd.TeamDetailsString, Mode=TwoWay}" FontSize="18" HorizontalOptions="Center"></Label>                
             </HorizontalStackLayout>
 
-            <Button Text="Tilføj eleven til valgte hold"  Margin="10, 10, 10, 10" Command="{Binding AddTeamCommand}" ></Button>
+            <Button 
+             Text="Tilføj eleven til valgte hold"  
+             Margin="10, 10, 10, 10" 
+             Command="{Binding AddTeamCommand}"
+             IsVisible="{Binding TeamToAddIsSelected}"></Button>
             
             
         </VerticalStackLayout>

@@ -8,56 +8,32 @@
              Title="DeleteDancerPage">
    
 
-    <Grid>
+  
         <ScrollView>
-            <Grid>
-                <VerticalStackLayout 
+            <VerticalStackLayout 
                  Padding="20" >
-                    <Label Text="Rediger stamdata på elev" FontSize="24" HorizontalOptions="Center"></Label>
-                    <Grid 
-                    RowDefinitions="Auto, Auto, Auto, Auto, Auto"
-                    RowSpacing="10"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center">
+                <Label            
+                    Text="Elev, der skal slettes"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" />
 
-                        <Label
-                        Grid.Row="0"
-                        Text="{Binding Name, Mode=TwoWay}"/>
+                <Label
+                    Grid.Row="0"
+                    HorizontalOptions="Center" 
+                    Text="{Binding Name, Mode=TwoWay}"/>
 
-                        <Label
-                        Grid.Row="1"
-                        Text="{Binding TimeOfBirth, Mode=TwoWay}"/>
+                <Label
+                     Grid.Row="1"
+                    HorizontalOptions="Center" 
+                     Text="{Binding TimeOfBirth, Mode=TwoWay}"/>
 
-                        <Button
-                        Grid.Row="3"
-                        Text="Slet elev"
-                        Command="{Binding DeleteDancerCommand}"/>
+                <Button
+                     Text="Slet elev fra databasen"
+                     Command="{Binding DeleteDancerCommand}"
+                     HorizontalOptions="Center"
+                     IsVisible="{Binding ButtonIsVisible}"/>
 
-                        <CollectionView
-                        Grid.Row="4"
-                        ItemsSource="{Binding DancerDtoList}"
-                        SelectedItem="{Binding SelectedDancer, Mode=TwoWay}"
-                        SelectionMode="Single">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid
-                                    ColumnDefinitions="Auto, Auto">
-                                        <Label
-                                        Grid.Column="0"
-                                        Text="{Binding Name}">
-                                        </Label>
-                                        <Label
-                                        Grid.Column="1"
-                                        Text="{Binding TimeOfBirth}">
-                                        </Label>
-                                    </Grid>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-
-                    </Grid>
-                </VerticalStackLayout>
-            </Grid>
+            </VerticalStackLayout>         
         </ScrollView>
-    </Grid>
+
 </ContentPage>

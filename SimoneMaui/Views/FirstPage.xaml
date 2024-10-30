@@ -12,14 +12,14 @@
     <VerticalStackLayout>
         <Button
             Margin="20, 20, 20, 20"
-            Text="Danser"
+            Text="Elev"
             VerticalOptions="Center" 
             HorizontalOptions="Center" 
             Command="{Binding WorkWithDancerCommand}"/>
 
         <Button
             Margin="20, 20, 20, 20"
-            Text="Danser"
+            Text="DanseHold"
             VerticalOptions="Center" 
             HorizontalOptions="Center" 
             Command="{Binding WorkWithTeamCommand}"/>

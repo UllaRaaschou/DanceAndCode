@@ -11,6 +11,7 @@ public class NavigationService : INavigationService
 {
     public const string UPDATE_DANCER_PAGE_ROUTE = "updateDancer";
     public const string SEARCH_DANCER_PAGE_ROUTE = "searchDancer";
+    public const string DELETE_DANCER_PAGE_ROUTE = "deleteDancer";
    
 
     public const string SEARCH_TEAM_PAGE_ROUTE = "searchTeam";
@@ -22,6 +23,7 @@ public class NavigationService : INavigationService
     {
         Routing.RegisterRoute(UPDATE_DANCER_PAGE_ROUTE, type: typeof(UpdateDancerPage));
         Routing.RegisterRoute(SEARCH_DANCER_PAGE_ROUTE, type: typeof(SearchDancerPage));
+        Routing.RegisterRoute(DELETE_DANCER_PAGE_ROUTE, type: typeof (DeleteDancerPage));
         Routing.RegisterRoute(DELETE_DANCER_FROM_TEAM_PAGE_ROUTE, type: typeof(DeleteDancerFromTeamPage));
 
         Routing.RegisterRoute(SEARCH_TEAM_PAGE_ROUTE, type: typeof(SearchTeamPage));
@@ -39,6 +41,12 @@ public class NavigationService : INavigationService
     {
         var parameters = new Dictionary<string, object> { { "dancerDto", dancerDto }, { "teamDto", teamDto } };
         await Shell.Current.GoToAsync(UPDATE_DANCER_PAGE_ROUTE, parameters);
+    }
+
+    public async Task GoToDeleteDancer(DancerDto dancerDto)
+    {
+        var parameters = new Dictionary<string, object> { { "dancerDto", dancerDto } };
+        await Shell.Current.GoToAsync(DELETE_DANCER_PAGE_ROUTE, parameters);
     }
 
 
@@ -62,6 +70,11 @@ public class NavigationService : INavigationService
     public async Task GoToSearchTeam(DancerDto dancerDto)
     {   
         var parameters = new Dictionary<string, object> { { "dancerDto", dancerDto } };
+        await Shell.Current.GoToAsync(SEARCH_TEAM_PAGE_ROUTE, parameters);
+    }
+    public async Task GoToSearchTeam(DancerDto dancerDto, bool wannaAddTeamToADancer)
+    {
+        var parameters = new Dictionary<string, object> { { "dancerDto", dancerDto }, { "WannaAddTeamToADancer", wannaAddTeamToADancer } };
         await Shell.Current.GoToAsync(SEARCH_TEAM_PAGE_ROUTE, parameters);
     }
 

@@ -1,11 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SimoneMaui.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SimoneMaui.ViewModels
 {
@@ -19,9 +14,10 @@ namespace SimoneMaui.ViewModels
         [ObservableProperty]
         new AsyncRelayCommand workWithTeamCommand;
 
-
-        public FirstViewModel()
+       
+        public FirstViewModel(INavigationService navigationService)
         {
+            NavigationService = navigationService;
             WorkWithDancerCommand = new AsyncRelayCommand(WorkWithDancer);
             WorkWithTeamCommand = new AsyncRelayCommand(WorkWithTeam);
         }

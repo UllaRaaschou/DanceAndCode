@@ -17,7 +17,9 @@ namespace SimoneMaui.ViewModels.TeamViewModels
         private DancerDto dancerToDelete;
 
         [ObservableProperty]
-        private ObservableCollection<DancerDto> dancersOnTeam;
+        [NotifyPropertyChangedFor(nameof(Count))]
+        private ObservableCollection<DancerDto> dancersOnTeam = new ObservableCollection<DancerDto>();
+        public int Count => DancersOnTeam.Count;
 
         [ObservableProperty]
         private string name;
@@ -72,11 +74,12 @@ namespace SimoneMaui.ViewModels.TeamViewModels
             {
                 TeamDto returnedDto = returnedStatus.Data!;
                 SelectedTeam = returnedDto;
-                SelectedTeam.DancersOnTeam.Clear();
-                foreach (var dancer in returnedDto.DancersOnTeam)
-                {
-                    SelectedTeam.DancersOnTeam.Add(dancer);
-                }
+                DancersOnTeam = returnedDto.DancersOnTeam;
+                //DancersOnTeam.Clear();
+                //foreach (var dancerDto in returnedDto.DancersOnTeam)
+                //{
+                //    DancersOnTeam.Add(dancerDto);
+                //}
 
                 if (!returnedStatus.IsSuccessStatusCode)
                 {

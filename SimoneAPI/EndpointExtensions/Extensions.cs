@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
-using SimoneAPI.EndpointHandlers;
-using SimoneAPI.Tobe.Features;
+﻿using SimoneAPI.Tobe.Features;
 using SimoneAPI.Tobe.Features.Attendances;
 using SimoneAPI.Tobe.Features.Dancer;
 using SimoneAPI.Tobe.Features.Dancers;
 using SimoneAPI.Tobe.Features.StaffMembers;
 using SimoneAPI.Tobe.Features.Teams;
-using System.Runtime.CompilerServices;
 
 namespace SimoneAPI.EndpointExtensions
 {
