@@ -164,6 +164,7 @@ namespace SimoneMaui.ViewModels
             var returnedStatus = await client.ExecuteAsync<DancerDto>(request, CancellationToken.None);
             SelectedDancer = returnedStatus.Data;
             Teams = SelectedDancer.Teams;
+            TeamToAdd = null;
         }
 
         private bool CanUpdate()

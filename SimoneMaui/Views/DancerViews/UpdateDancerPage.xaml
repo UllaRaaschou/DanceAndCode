@@ -49,7 +49,8 @@
             <CollectionView
                 ItemsSource ="{Binding Teams}"
                 SelectedItem="{Binding SelectedTeam, Mode=TwoWay}"
-                SelectionMode="Single">
+                SelectionMode="Single"
+                HorizontalOptions="FillAndExpand">
                 <CollectionView.EmptyView>
                     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                         <Label 
@@ -58,12 +59,15 @@
                         VerticalOptions="Center"/>
                     </Grid>
                 </CollectionView.EmptyView>
-                <CollectionView.ItemTemplate>                   
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Label 
-                         HorizontalOptions="Center"
-                         Text="{Binding TeamDetailsString, Mode=OneWay}"></Label>                        
-                    </DataTemplate>                   
+                        <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label 
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Text="{Binding TeamDetailsString, Mode=OneWay}"/>
+                        </Grid>
+                    </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 

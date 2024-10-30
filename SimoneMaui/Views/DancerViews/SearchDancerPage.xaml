@@ -53,7 +53,8 @@
                             SelectionChangedCommand="{Binding DancerSelectedCommand}">
                             <CollectionView.ItemTemplate>                               
                                 <DataTemplate>
-                        <HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            HorizontalOptions="Center" Spacing="10">
                             <Label HorizontalOptions="Center" Text="{Binding Name}"/>
                             <Label HorizontalOptions="Center" Text="{Binding TimeOfBirth}"/>
                             <CollectionView
