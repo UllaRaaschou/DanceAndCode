@@ -8,11 +8,34 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SimoneAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Firstone : Migration
+    public partial class FirstOne : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "CalendarDataModels",
+                columns: table => new
+                {
+                    CalendarId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    SummerHolidayStart = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    SummerHolidayEnd = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    AutumnHolidayStart = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    AutumnHolidayEnd = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    ChristmasHolidayStart = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    ChristmasHolidayEnd = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    WintherHolidayStart = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    WintherHolidayEnd = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    EasterHolidayStart = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    EasterHolidayEnd = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    ChristmasShow = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    RecitalShow = table.Column<DateOnly>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CalendarDataModels", x => x.CalendarId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "DancerDataModels",
                 columns: table => new
@@ -121,6 +144,11 @@ namespace SimoneAPI.Migrations
                         principalColumns: new[] { "DancerId", "TeamId" },
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "CalendarDataModels",
+                columns: new[] { "CalendarId", "AutumnHolidayEnd", "AutumnHolidayStart", "ChristmasHolidayEnd", "ChristmasHolidayStart", "ChristmasShow", "EasterHolidayEnd", "EasterHolidayStart", "RecitalShow", "SummerHolidayEnd", "SummerHolidayStart", "WintherHolidayEnd", "WintherHolidayStart" },
+                values: new object[] { new Guid("00000000-1111-0000-0000-000000000000"), new DateOnly(2022, 10, 21), new DateOnly(2022, 10, 17), new DateOnly(2023, 1, 2), new DateOnly(2022, 12, 23), new DateOnly(2022, 12, 10), new DateOnly(2023, 4, 17), new DateOnly(2023, 4, 10), new DateOnly(2023, 6, 10), new DateOnly(2022, 8, 7), new DateOnly(2022, 6, 27), new DateOnly(2023, 2, 17), new DateOnly(2023, 2, 13) });
 
             migrationBuilder.InsertData(
                 table: "DancerDataModels",
@@ -256,6 +284,9 @@ namespace SimoneAPI.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Attendances");
+
+            migrationBuilder.DropTable(
+                name: "CalendarDataModels");
 
             migrationBuilder.DropTable(
                 name: "WorkingHours");

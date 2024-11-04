@@ -107,7 +107,7 @@
 	  <MauiXaml Update="Views\FirstPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\TeamViews\CalendarPage.xaml">
+	  <MauiXaml Update="Views\CalendarPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\TeamViews\DeleteDancerFromTeamPage.xaml">

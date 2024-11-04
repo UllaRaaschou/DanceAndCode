@@ -11,8 +11,8 @@ using SimoneAPI.DbContexts;
 namespace SimoneAPI.Migrations
 {
     [DbContext(typeof(SimoneDbContext))]
-    [Migration("20241028080145_First-one")]
-    partial class Firstone
+    [Migration("20241104113746_FirstOne")]
+    partial class FirstOne
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,71 @@ namespace SimoneAPI.Migrations
                     b.HasIndex("TeamDancerRelationDancerId", "TeamDancerRelationTeamId");
 
                     b.ToTable("Attendances");
+                });
+
+            modelBuilder.Entity("SimoneAPI.DataModels.CalendarDataModel", b =>
+                {
+                    b.Property<Guid>("CalendarId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("AutumnHolidayEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("AutumnHolidayStart")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("ChristmasHolidayEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("ChristmasHolidayStart")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("ChristmasShow")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("EasterHolidayEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("EasterHolidayStart")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("RecitalShow")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("SummerHolidayEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("SummerHolidayStart")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("WintherHolidayEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("WintherHolidayStart")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CalendarId");
+
+                    b.ToTable("CalendarDataModels");
+
+                    b.HasData(
+                        new
+                        {
+                            CalendarId = new Guid("00000000-1111-0000-0000-000000000000"),
+                            AutumnHolidayEnd = new DateOnly(2022, 10, 21),
+                            AutumnHolidayStart = new DateOnly(2022, 10, 17),
+                            ChristmasHolidayEnd = new DateOnly(2023, 1, 2),
+                            ChristmasHolidayStart = new DateOnly(2022, 12, 23),
+                            ChristmasShow = new DateOnly(2022, 12, 10),
+                            EasterHolidayEnd = new DateOnly(2023, 4, 17),
+                            EasterHolidayStart = new DateOnly(2023, 4, 10),
+                            RecitalShow = new DateOnly(2023, 6, 10),
+                            SummerHolidayEnd = new DateOnly(2022, 8, 7),
+                            SummerHolidayStart = new DateOnly(2022, 6, 27),
+                            WintherHolidayEnd = new DateOnly(2023, 2, 17),
+                            WintherHolidayStart = new DateOnly(2023, 2, 13)
+                        });
                 });
 
             modelBuilder.Entity("SimoneAPI.DataModels.DancerDataModel", b =>

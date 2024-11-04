@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimoneMaui.ViewModels
+﻿namespace SimoneAPI.DataModels
 {
-    public class CalendarViewModel
+    public class CalendarDataModel
     {
+        public Guid CalendarId { get; set; }
         public DateOnly SummerHolidayStart { get; set; }
         public DateOnly SummerHolidayEnd { get; set; }
 
@@ -26,21 +21,6 @@ namespace SimoneMaui.ViewModels
         public DateOnly ChristmasShow { get; set; }
 
         public DateOnly RecitalShow { get; set; }
-
-        public List<(DateOnly Start, DateOnly End)> Holidays => new List<(DateOnly, DateOnly)>
-    {
-        (SummerHolidayStart, SummerHolidayEnd),
-        (AutumnHolidayStart, AutumnHolidayEnd),
-        (ChristmasHolidayStart, ChristmasHolidayEnd),
-        (WintherHolidayStart, WintherHolidayEnd),
-        (EasterHolidayStart, EasterHolidayEnd)
-    };
-
-        public List<DateOnly> Shows => new List<DateOnly>
-    {
-        ChristmasShow,
-        RecitalShow
-    };
 
 
     }

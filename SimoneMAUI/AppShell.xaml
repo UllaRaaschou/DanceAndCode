@@ -16,6 +16,17 @@
                 ContentTemplate="{DataTemplate views:FirstPage}"
                 Route="firstPage" />
         </ShellSection>
+
+        <ShellSection Title="Calendar">
+            <ShellContent
+        Title="Calendar"
+        ContentTemplate="{DataTemplate views:CalendarPage}"
+        Route="calendarPage" />
+        </ShellSection>
+
+
+
+
         <ShellSection Title="Search Dancer">
             <ShellContent
                 Title="Search Dancer"

@@ -1,7 +1,8 @@
 ﻿namespace SimoneMaui.Behaviors
 {
-    public class TimeOfBirthEntryBehavior : Behavior<Entry>
+    public class DateEntryBehavior : Behavior<Entry>
     {
+        private const int MaxLength = 10;
         protected override void OnAttachedTo(Entry bindable)
         {
             base.OnAttachedTo(bindable);
@@ -22,6 +23,13 @@
 
                 var cursorPosition = entry.CursorPosition;
                 var text = entry.Text;
+
+                if (text.Length > MaxLength)
+                {
+                    text = text.Substring(0, MaxLength);
+                    entry.Text = text;
+                }
+
                 if (text.Length == 2 && !text.Contains('-'))
                 {
                     entry.Text += "-";

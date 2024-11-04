@@ -12,6 +12,7 @@ namespace SimoneAPI.DbContexts
         public DbSet<TeamDataModel> TeamDataModels { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Staff> Staffs { get; set; }    
+        public DbSet<CalendarDataModel> CalendarDataModels { get; set; }
 
         public DbSet<WorkingHours> WorkingHours { get; set; }
        
@@ -63,8 +64,29 @@ namespace SimoneAPI.DbContexts
                 .WithOne(tdr => tdr.DancerDataModel)
                 .HasForeignKey(tdr => tdr.DancerId);
 
+            modelBuilder.Entity<CalendarDataModel>()
+                .HasKey(c => c.CalendarId);
 
-            modelBuilder.Entity<TeamDataModel>().HasData(
+            modelBuilder.Entity<CalendarDataModel>().HasData(
+                new CalendarDataModel
+                {
+                    CalendarId = new Guid("00000000-1111-0000-0000-000000000000"),
+                    SummerHolidayStart = new DateOnly(2022, 6, 27),
+                    SummerHolidayEnd = new DateOnly(2022, 8, 7),
+                    AutumnHolidayStart = new DateOnly(2022, 10, 17),
+                    AutumnHolidayEnd = new DateOnly(2022, 10, 21),
+                    ChristmasHolidayStart = new DateOnly(2022, 12, 23),
+                    ChristmasHolidayEnd = new DateOnly(2023, 1, 2),
+                    WintherHolidayStart = new DateOnly(2023, 2, 13),
+                    WintherHolidayEnd = new DateOnly(2023, 2, 17),
+                    EasterHolidayStart = new DateOnly(2023, 4, 10),
+                    EasterHolidayEnd = new DateOnly(2023, 4, 17),
+                    ChristmasShow = new DateOnly(2022, 12, 10),
+                    RecitalShow = new DateOnly(2023, 6, 10)
+                });
+
+
+        modelBuilder.Entity<TeamDataModel>().HasData(
             new TeamDataModel { TeamId = new Guid("11111111-1111-1111-1111-111111111111"), Number = 1, Name = "Hiphop1", ScheduledTime = "Mandag 16:00 - 16:45" },
             new TeamDataModel { TeamId = new Guid("22222222-2222-2222-2222-222222222222"), Number = 2, Name = "MGP", ScheduledTime = "Tirsdag 15:15 - 16:00" },
             new TeamDataModel { TeamId = new Guid("33333333-3333-3333-3333-333333333333"), Number = 3, Name = "Ballet", ScheduledTime = "Onsdag 17:00 - 17:45" },

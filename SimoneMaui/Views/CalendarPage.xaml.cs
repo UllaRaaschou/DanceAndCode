@@ -1,6 +1,6 @@
 using SimoneMaui.ViewModels;
 
-namespace SimoneMaui.Views.TeamViews;
+namespace SimoneMaui.Views;
 
 public partial class CalendarPage : ContentPage
 {

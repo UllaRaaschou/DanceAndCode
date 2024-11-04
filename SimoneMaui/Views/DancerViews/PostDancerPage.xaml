@@ -38,7 +38,7 @@
                                 Placeholder="Fødselsdag, format: dd-mm-yyyy" 
                                 Text="{Binding TimeOfBirth, Mode=TwoWay}">
                                 <Entry.Behaviors>
-                                    <behaviors:TimeOfBirthEntryBehavior />
+                                    <behaviors:DateEntryBehavior />
                                 </Entry.Behaviors>
                             </Entry>
 
