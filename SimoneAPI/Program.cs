@@ -44,6 +44,9 @@ builder.Services.AddAuthentication().AddJwtBearer();
 builder.Services.AddAuthorization();
 
 
+builder.Services.AddSingleton<CalendarDataModel>();
+builder.Services.AddTransient<DanceDatesCalculator>();
+
 //Har profiler som parametre, som scannes for mapping-konfigurationer
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

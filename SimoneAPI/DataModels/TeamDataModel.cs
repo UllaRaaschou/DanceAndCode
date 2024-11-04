@@ -10,7 +10,7 @@ namespace SimoneAPI.DataModels
         public string Name { get; set; } = string.Empty;
         public string ScheduledTime { get; set; } = string.Empty;
 
-        public 
+        public DayOfWeek DayOfWeek { get; set; } = DayOfWeek.Monday;
 
         public ICollection<TeamDancerRelation> TeamDancerRelations { get; set; } = new HashSet<TeamDancerRelation>();
         
