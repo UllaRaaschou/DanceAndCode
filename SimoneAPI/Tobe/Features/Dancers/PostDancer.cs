@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
 using SimoneAPI.Entities;
@@ -10,13 +9,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
 {
     public static class PostDancer
     {
-        public static void RegisterDancerEndpoint(this WebApplication endpointRouteBuilder)
-        {
-            endpointRouteBuilder.MapPost("/Dancers", Post);
-
-        }
-
-        public static async Task<IResult> Post(SimoneDbContext dbContext, IMapper mapper, PostDancerDto dto)
+        public static async Task<IResult> Post(SimoneDbContext dbContext, PostDancerDto dto)
         {         
             var dancer = await dbContext.DancerDataModels
                  .FirstOrDefaultAsync(d =>
@@ -27,13 +20,20 @@ namespace SimoneAPI.Tobe.Features.Dancer
                 return TypedResults.Problem(title: "Already registered", detail:"some detail");
             }
 
-            var dataModel = mapper.Map<DancerDataModel>(dto);
+            var dataModel = new DancerDataModel
+            {
+                Name = dto.Name,
+                TimeOfBirth = dto.TimeOfBirth
+            };
             dbContext.DancerDataModels.Add(dataModel);
             await dbContext.SaveChangesAsync();
 
-            var postDancerResponseDto = mapper.Map<PostDancerResponseDto>(dataModel);
-
-            
+            var postDancerResponseDto = new PostDancerResponseDto
+            {
+                DancerId = dataModel.DancerId,
+                Name = dataModel.Name,
+                TimeOfBirth = dataModel.TimeOfBirth
+            };
 
             return TypedResults.Created("/dancers", postDancerResponseDto);
 

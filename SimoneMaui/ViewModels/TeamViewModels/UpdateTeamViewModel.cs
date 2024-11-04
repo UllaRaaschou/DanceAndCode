@@ -97,7 +97,7 @@ namespace SimoneMaui.ViewModels
         {
             var options = new RestClientOptions("https://localhost:7163");
             var client = new RestClient(options);
-            // The cancellation token comes from the caller. You can still make a call without it.
+            
             var request = new RestRequest($"/Teams/{SelectedTeam.TeamId}/AddToListOfDancers", Method.Put);
 
             request.AddJsonBody(new { dancerId = SelectedDancer.DancerId });
@@ -112,8 +112,7 @@ namespace SimoneMaui.ViewModels
             }
 
             var mauiTeamDto = JsonSerializer.Deserialize<TeamDto>(returnedStatus.Content ?? "{}", _options);
-            //DancersOnTeam.Clear();
-
+           
             mauiTeamDto.DancersOnTeam.First(d => d.DancerId == SelectedDancer.DancerId).IsHighlighted = true;
             DancersOnTeam = mauiTeamDto.DancersOnTeam;
             SelectedDancer = null;

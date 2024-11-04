@@ -12,17 +12,55 @@
     <VerticalStackLayout>
         <Button
             Margin="20, 20, 20, 20"
-            Text="Elev"
+            Text="Arbejd med Elev"
             VerticalOptions="Center" 
             HorizontalOptions="Center" 
-            Command="{Binding WorkWithDancerCommand}"/>
+            Command="{Binding WorkWithDancerCommand}"
+            IsVisible="{Binding WorkingThemeIsToBeDecided}"/>
 
         <Button
             Margin="20, 20, 20, 20"
-            Text="DanseHold"
+            Text="Arbejd med DanseHold"
             VerticalOptions="Center" 
             HorizontalOptions="Center" 
-            Command="{Binding WorkWithTeamCommand}"/>
+            Command="{Binding WorkWithTeamCommand}"
+            IsVisible="{Binding WorkingThemeIsToBeDecided}"/>
+
+
+        <Button
+            Margin="20, 20, 20, 20"
+            Text="Opret ny elev"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            Command="{Binding PostDancerThemeCommand}"
+            IsVisible="{Binding WorkingWithDancer}"/>
+
+        <Button
+             Margin="20, 20, 20, 20"
+             Text="Opdater/slet elev"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            Command="{Binding UpdateOrDeleteDancerCommand}"
+            IsVisible="{Binding WorkingWithDancer}"/>
+
+        <Button
+            Margin="20, 20, 20, 20"
+            Text="Opret nyt hold"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            Command="{Binding PostTeamThemeCommand}"
+            IsVisible="{Binding WorkingWithTeam}"/>
+
+        <Button
+             Margin="20, 20, 20, 20"
+             Text="Opdater/slet hold"
+             VerticalOptions="Center" 
+             HorizontalOptions="Center" 
+            Command="{Binding UpdateOrDeleteTeamCommand}"
+            IsVisible="{Binding WorkingWithTeam}"/>
+
+
+
     </VerticalStackLayout>
     
     

@@ -1,9 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.AspNetCore.Mvc;
 using RestSharp;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using SimoneMaui.ViewModels.Dtos;
 
 
 namespace SimoneMaui.ViewModels
@@ -21,12 +19,14 @@ namespace SimoneMaui.ViewModels
         partial void OnTimeOfBirthChanged(string value) => PostDancerCommand.NotifyCanExecuteChanged();
        
 
-        public IRelayCommand PostDancerCommand { get; }
+        public AsyncRelayCommand PostDancerCommand { get; }
                  
         public PostDancerViewModel()
         {
-            PostDancerCommand = new RelayCommand(async () => await PostDancer(), CanPost);
+            PostDancerCommand = new AsyncRelayCommand(PostDancer, CanPost);
         }
+
+        public event Action<string> DancerPosted;
 
         private async Task PostDancer()
         {
@@ -38,19 +38,15 @@ namespace SimoneMaui.ViewModels
                 var request = new RestRequest("/dancers", Method.Post);
                 request.AddJsonBody(new { Name, TimeOfBirth = parsedDate });
 
-                var response = await client.ExecutePostAsync(request, CancellationToken.None);
-
-                if (!response.IsSuccessStatusCode) {
-                    JsonSerializerOptions _options = new();
-                    _options.PropertyNameCaseInsensitive = true;
-         
-                    ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(response.Content ?? "{}", _options)!;
-                                       
-                }
+                var response = await client.PostAsync<DancerDto>(request, CancellationToken.None);
 
                 Name = string.Empty;
                 TimeOfBirth = string.Empty;
 
+                if(response != null) 
+                {
+                    DancerPosted?.Invoke($"Følgende elev er oprettet: {response.Name}, {response.TimeOfBirth}");
+                }               
             }
 
             else 

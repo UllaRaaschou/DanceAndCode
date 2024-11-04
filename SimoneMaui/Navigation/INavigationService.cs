@@ -3,17 +3,21 @@
 namespace SimoneMaui.Navigation;
 public interface INavigationService
 {
+
+    Task GoToPostDancer();
+
     Task GoToSearchDancer();
     Task GoToSearchDancer(TeamDto teamDto, bool puttingDancerOnTeam);
 
     Task GoToUpdateDancer(DancerDto dancerDto);
     Task GoToUpdateDancer(DancerDto dancerDto, TeamDto teamDto);
+
     Task GoToDeleteDancer(DancerDto dancerDto);
 
 
 
-    Task GoToDeleteDancerFromTeam(TeamDto selectedTeam, DancerDto dancerToDelete);
 
+    Task GoToPostTeam();
     Task GoToSearchTeam(DancerDto dancerDto);
     Task GoToSearchTeam(DancerDto dancerDto, bool wannaAddTeamToADancer);
     Task GoToUpdateTeam(TeamDto selectedTeam);
@@ -21,6 +25,7 @@ public interface INavigationService
     Task GoToSearchTeam();
     Task GoToDeleteTeam(TeamDto selectedTeam);
 
+    Task GoToDeleteDancerFromTeam(TeamDto selectedTeam, DancerDto dancerToDelete);
 
 }
 

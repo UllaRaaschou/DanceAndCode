@@ -1,30 +1,37 @@
-﻿using AutoMapper;
-using SimoneAPI.DataModels;
+﻿using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
 
 namespace SimoneAPI.Tobe.Features.Teams
 {
     public static class PostTeam
     {
-        public static void RegisterTeamsEndpoint(this WebApplication endPointRouteBuilder)
+        public static async Task<IResult> Post(SimoneDbContext dbContext, PostTeamDto dto)
         {
-            endPointRouteBuilder.MapPost("", Post);
-        }
-
-        public static async Task<IResult> Post(SimoneDbContext dbContext, IMapper mapper, PostTeamDto dto)
-        {
-            var teamDataModel = mapper.Map<TeamDataModel>(dto);
+            var teamDataModel = new TeamDataModel
+            {
+                Number = int.Parse(dto.Number),
+                Name = dto.Name,
+                ScheduledTime = dto.SceduledTime
+            };
+            
             dbContext.TeamDataModels.Add(teamDataModel);
             await dbContext.SaveChangesAsync();
 
-            var teamResponceDto = mapper.Map<PostTeamResponceDto>(teamDataModel);
+            var teamResponceDto = new PostTeamResponceDto
+            {
+                TeamId = teamDataModel.TeamId,
+                Number = teamDataModel.Number.ToString(),
+                Name = teamDataModel.Name,
+                SceduledTime = teamDataModel.ScheduledTime
+            };                
+               
             return TypedResults.Created("/Teams", teamResponceDto);
 
         }
 
         public class PostTeamDto
         {
-            public int Number { get; set; } = 0;
+            public string Number { get; set; } = string.Empty;
             public string Name { get; set; } = string.Empty;
             public string SceduledTime { get; set; } = string.Empty;
             
@@ -33,10 +40,9 @@ namespace SimoneAPI.Tobe.Features.Teams
         public class PostTeamResponceDto 
         {
             public Guid TeamId { get; set; }
-            public int Number { get; set; } = 0;
+            public string Number { get; set; } = string.Empty;
             public string Name { get; set; } = string.Empty;
             public string SceduledTime { get; set; } = string.Empty;
         }
     }
-
 }

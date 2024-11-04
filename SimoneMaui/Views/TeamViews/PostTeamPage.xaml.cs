@@ -8,5 +8,11 @@ public partial class PostTeamPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = vm;
+		vm.NewTeamPosted += OnNewTeamPosted;
+    }
+
+	public void OnNewTeamPosted(string message) 
+	{
+		DisplayAlert("Besked", message, "OK");
 	}
 }

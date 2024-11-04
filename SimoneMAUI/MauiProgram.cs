@@ -26,6 +26,9 @@ namespace SimoneMaui
 
             builder.Services.AddTransient<MainPage>();
 
+            builder.Services.AddTransient<PostDancerViewModel>();
+            builder.Services.AddTransient<PostDancerPage>();
+
             builder.Services.AddTransient<SearchDancerViewmodel>();            
             builder.Services.AddTransient<SearchDancerPage>();
 
@@ -53,6 +56,9 @@ namespace SimoneMaui
 
             builder.Services.AddTransient<FirstViewModel>();
             builder.Services.AddTransient<FirstPage>();
+
+            builder.Services.AddTransient<CalendarViewModel>();
+            builder.Services.AddTransient<CalendarPage>();
 
 
 #if DEBUG

@@ -1,9 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.AspNetCore.Mvc;
 using RestSharp;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 using SimoneMaui.ViewModels.Dtos;
 
 
@@ -45,35 +42,33 @@ namespace SimoneMaui.ViewModels
                 && !string.IsNullOrEmpty(StartAndEndTime);
         }
 
+        public event Action<string> NewTeamPosted;
+
         private async Task PostTeam()
         {
             var options = new RestClientOptions("https://localhost:7163");
             var client = new RestClient(options);
-            // The cancellation token comes from the caller. You can still make a call without it.
+           
             var request = new RestRequest("/teams", Method.Post);
             request.AddJsonBody(new { Number, Name, SceduledTime });
 
-            var response = await client.ExecutePostAsync(request, CancellationToken.None);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                JsonSerializerOptions _options = new();
-                _options.PropertyNameCaseInsensitive = true;
-
-                ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(response.Content ?? "{}", _options)!;
-
-            }
+            var teamDto = await client.PostAsync<TeamDto>(request, CancellationToken.None);
 
             Number = string.Empty;
             Name = string.Empty;
             DayOfWeek = string.Empty;
             StartAndEndTime = string.Empty;
 
+            NewTeamPosted?.Invoke($"Nyt dansehold oprettet: {teamDto?.TeamDetailsString}");
+
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            throw new NotImplementedException();
+            if (query == null || query.Count == 0)
+            {
+                return; // Ingen parametre, så der udføres intet
+            }
         }
     }
 }      

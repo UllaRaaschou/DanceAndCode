@@ -9,26 +9,36 @@ namespace SimoneMaui.Navigation;
 
 public class NavigationService : INavigationService
 {
+    public const string POST_DANCER_PAGE_ROUTE = "postDancer";
     public const string UPDATE_DANCER_PAGE_ROUTE = "updateDancer";
     public const string SEARCH_DANCER_PAGE_ROUTE = "searchDancer";
     public const string DELETE_DANCER_PAGE_ROUTE = "deleteDancer";
-   
 
+
+    public const string POST_TEAM_PAGE_ROUTE = "postTeam";
     public const string SEARCH_TEAM_PAGE_ROUTE = "searchTeam";
     public const string UPDATE_TEAM_PAGE_ROUTE = "updateTeam";
     public const string DELETE_TEAM_PAGE_ROUTE = "deleteTeam";
     public const string DELETE_DANCER_FROM_TEAM_PAGE_ROUTE = "deleteDancerFromTeam";
-
+    
     public static void ConfigureRouter()
     {
+        Routing.RegisterRoute(POST_DANCER_PAGE_ROUTE, type: typeof(PostDancerPage));
         Routing.RegisterRoute(UPDATE_DANCER_PAGE_ROUTE, type: typeof(UpdateDancerPage));
         Routing.RegisterRoute(SEARCH_DANCER_PAGE_ROUTE, type: typeof(SearchDancerPage));
         Routing.RegisterRoute(DELETE_DANCER_PAGE_ROUTE, type: typeof (DeleteDancerPage));
         Routing.RegisterRoute(DELETE_DANCER_FROM_TEAM_PAGE_ROUTE, type: typeof(DeleteDancerFromTeamPage));
 
+        Routing.RegisterRoute(POST_TEAM_PAGE_ROUTE, type: typeof(PostTeamPage));
         Routing.RegisterRoute(SEARCH_TEAM_PAGE_ROUTE, type: typeof(SearchTeamPage));
         Routing.RegisterRoute(UPDATE_TEAM_PAGE_ROUTE, type: typeof(UpdateTeamPage));
         Routing.RegisterRoute(DELETE_TEAM_PAGE_ROUTE, type: typeof(DeleteTeamPage));
+    }
+
+    
+    public async Task GoToPostDancer()
+    {
+        await Shell.Current.GoToAsync(POST_DANCER_PAGE_ROUTE);
     }
 
     public async Task GoToUpdateDancer(DancerDto dancerDto)
@@ -59,9 +69,14 @@ public class NavigationService : INavigationService
         var parameters = new Dictionary<string, object> { { "teamDto", teamDto }, { "puttingDancerOnTeam", puttingDancerOnTeam } };
         await Shell.Current.GoToAsync(SEARCH_DANCER_PAGE_ROUTE, parameters);
     }
-   
-   
-   
+
+
+
+
+    public async Task GoToPostTeam()
+    {
+        await Shell.Current.GoToAsync(POST_TEAM_PAGE_ROUTE);
+    }
 
     public async Task GoToSearchTeam()
     {
