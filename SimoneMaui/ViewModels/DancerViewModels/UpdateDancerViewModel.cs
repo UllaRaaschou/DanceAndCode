@@ -107,18 +107,6 @@ namespace SimoneMaui.ViewModels
             TellUserToChoseTeam.Invoke("Vælg hold, som eleven skal slettes på");
         }
 
-        
-
-        partial void OnNameChanged(string value)
-        {
-            UpdateDancerCommand.NotifyCanExecuteChanged();
-        }
-        partial void OnTimeOfBirthChanged(string value)
-        {
-            UpdateDancerCommand.NotifyCanExecuteChanged();
-        }
-
-
         private bool CanRemoveTeam()
         {
             if (SelectedDancer != null && SelectedTeam != null)
@@ -211,7 +199,36 @@ namespace SimoneMaui.ViewModels
             }
         }
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
+
+        partial void OnNameChanged(string? newValue)
+        {
+            Name = ToTitleCase(newValue);
+            UpdateDancerCommand.NotifyCanExecuteChanged();
+        }
+
+        partial void OnTimeOfBirthChanged(string? newValue)
+        {
+            TimeOfBirth = newValue;
+            UpdateDancerCommand.NotifyCanExecuteChanged();
+        }
+
+        private string ToTitleCase(string? input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return string.Empty;
+            }
+            var cultureInfo = System.Globalization.CultureInfo.CurrentCulture;
+            var textInfo = cultureInfo.TextInfo;
+
+            return textInfo.ToTitleCase(input.ToLower());
+        }
+
+
+
+
+
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
             if (query.ContainsKey("dancerDto") && query["dancerDto"] is DancerDto dancerDto) 
                

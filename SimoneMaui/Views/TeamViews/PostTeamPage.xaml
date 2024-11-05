@@ -27,7 +27,7 @@
             Placeholder="Ugedag"
             VerticalOptions="Center" 
             HorizontalOptions="Center" 
-            Text="{Binding DayOfWeek}" />
+            Text="{Binding DayOfWeekEntry}" />
         <Entry 
              Placeholder="Tidsrum"
              VerticalOptions="Center" 

@@ -15,10 +15,6 @@ namespace SimoneMaui.ViewModels
         [ObservableProperty]
         private string name = string.Empty;
 
-        partial void OnNameChanged(string value) => PostDancerCommand.NotifyCanExecuteChanged();
-        partial void OnTimeOfBirthChanged(string value) => PostDancerCommand.NotifyCanExecuteChanged();
-       
-
         public AsyncRelayCommand PostDancerCommand { get; }
                  
         public PostDancerViewModel()
@@ -58,6 +54,33 @@ namespace SimoneMaui.ViewModels
         public bool CanPost() 
         {
             return !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(TimeOfBirth);
+        }
+
+
+
+
+        partial void OnNameChanged(string? newValue)
+        {
+            Name = ToTitleCase(newValue);
+            PostDancerCommand.NotifyCanExecuteChanged();
+        }
+
+        partial void OnTimeOfBirthChanged(string? newValue)
+        {
+            TimeOfBirth = newValue;
+            PostDancerCommand.NotifyCanExecuteChanged();
+        }
+
+        private string ToTitleCase(string? input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return string.Empty;
+            }
+            var cultureInfo = System.Globalization.CultureInfo.CurrentCulture;
+            var textInfo = cultureInfo.TextInfo;
+
+            return textInfo.ToTitleCase(input.ToLower());
         }
 
     }

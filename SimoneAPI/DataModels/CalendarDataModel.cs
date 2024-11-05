@@ -23,5 +23,22 @@
         public DateOnly RecitalShow { get; set; }
 
 
+
+        public List<(DateOnly start, DateOnly end)> Holidays => new List<(DateOnly, DateOnly)>
+        {
+        (SummerHolidayStart, SummerHolidayEnd),
+        (AutumnHolidayStart, AutumnHolidayEnd),
+        (ChristmasHolidayStart, ChristmasHolidayEnd),
+        (WintherHolidayStart, WintherHolidayEnd),
+        (EasterHolidayStart, EasterHolidayEnd)
+        };
+
+        public List<DateOnly> Shows => new List<DateOnly>
+        {
+        ChristmasShow,
+        RecitalShow
+        };
+
+
     }
 }

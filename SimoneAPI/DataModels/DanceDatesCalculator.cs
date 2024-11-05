@@ -1,16 +1,44 @@
 ﻿namespace SimoneAPI.DataModels
 {
-    public class DanceDatesCalculator
+    public static class DanceDatesCalculator
     {
-        private readonly CalendarDataModel _calendarDataModel;
-        public DanceDatesCalculator(CalendarDataModel calendarDataModel)
+              
+        public static List<DateOnly> CalculateDanceDates(CalendarDataModel calendarDataModel, TeamDataModel team)
         {
-            _calendarDataModel = calendarDataModel;
-        }
+            var dayOfWeek = team.DayOfWeek;
+            DateOnly firstDancedate = default;
+            var seasonStart = calendarDataModel.SummerHolidayEnd.AddDays(1);
+            if (seasonStart.DayOfWeek == dayOfWeek)
+            {
+                firstDancedate = seasonStart;
+            }
+            for (int i = 1; i < 7; i++)
+            {
+                if (seasonStart.AddDays(i).DayOfWeek == dayOfWeek)
+                {
+                    firstDancedate = seasonStart.AddDays(i);
+                    break;
+                }
+            }
+            List<DateOnly> danceDates = new();
+            danceDates.Add(firstDancedate);
+            for (int i = 1; i < 45; i++)
+            {
+                var nextDanceDate = firstDancedate.AddDays(7);
+                foreach (var holiday in calendarDataModel.Holidays)
+                {
+                    if (nextDanceDate >= holiday.start || nextDanceDate < holiday.end ||
 
-        public List<DateOnly> CalculateDanceDates(TeamDataModel team) 
-        {
-            var DayOfWeek = team.DayOfWeek;
+                        nextDanceDate != calendarDataModel.ChristmasShow ||
+                        nextDanceDate != calendarDataModel.RecitalShow)
+                    {
+                        continue;
+                    }
+                }
+                danceDates.Add(nextDanceDate);
+            }
+            return danceDates;
+
         }
     }
 }

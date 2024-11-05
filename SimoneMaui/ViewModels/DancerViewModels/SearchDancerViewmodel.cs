@@ -169,10 +169,7 @@ namespace SimoneMaui.ViewModels
         {
             NameEntry = ToTitleCase(newValue);
         }
-        public void UpdateNameEntry(string? newValue)
-        {
-            NameEntry = ToTitleCase(newValue); // Anvend Title Case konvertering
-        }
+       
         private string ToTitleCase(string? input)
         {
             if (string.IsNullOrEmpty(input))

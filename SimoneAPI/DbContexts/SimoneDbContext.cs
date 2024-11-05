@@ -67,9 +67,8 @@ namespace SimoneAPI.DbContexts
             modelBuilder.Entity<CalendarDataModel>()
                 .HasKey(c => c.CalendarId);
 
-            modelBuilder.Entity<CalendarDataModel>().HasData(
-                new CalendarDataModel
-                {
+           var calendarDataModel = new CalendarDataModel
+               {
                     CalendarId = new Guid("00000000-1111-0000-0000-000000000000"),
                     SummerHolidayStart = new DateOnly(2022, 6, 27),
                     SummerHolidayEnd = new DateOnly(2022, 8, 7),
@@ -83,20 +82,21 @@ namespace SimoneAPI.DbContexts
                     EasterHolidayEnd = new DateOnly(2023, 4, 17),
                     ChristmasShow = new DateOnly(2022, 12, 10),
                     RecitalShow = new DateOnly(2023, 6, 10)
-                });
+           };
 
+            modelBuilder.Entity<CalendarDataModel>().HasData(calendarDataModel);
 
-        modelBuilder.Entity<TeamDataModel>().HasData(
-            new TeamDataModel { TeamId = new Guid("11111111-1111-1111-1111-111111111111"), Number = 1, Name = "Hiphop1", ScheduledTime = "Mandag 16:00 - 16:45" },
-            new TeamDataModel { TeamId = new Guid("22222222-2222-2222-2222-222222222222"), Number = 2, Name = "MGP", ScheduledTime = "Tirsdag 15:15 - 16:00" },
-            new TeamDataModel { TeamId = new Guid("33333333-3333-3333-3333-333333333333"), Number = 3, Name = "Ballet", ScheduledTime = "Onsdag 17:00 - 17:45" },
-            new TeamDataModel { TeamId = new Guid("44444444-4444-4444-4444-444444444444"), Number = 4, Name = "Hiphop2", ScheduledTime = "Torsdag 16:00 - 16:45" },
-            new TeamDataModel { TeamId = new Guid("55555555-5555-5555-5555-555555555555"), Number = 5, Name = "Streetdance", ScheduledTime = "Fredag 15:00 - 15:45" },
-            new TeamDataModel { TeamId = new Guid("66666666-6666-6666-6666-666666666666"), Number = 6, Name = "Argentinsk Tango", ScheduledTime = "Lørdag 11:00 - 11:45" },
-            new TeamDataModel { TeamId = new Guid("77777777-7777-7777-7777-777777777777"), Number = 7, Name = "Salsa", ScheduledTime = "Mandag 18:00 - 18:45" },
-            new TeamDataModel { TeamId = new Guid("88888888-8888-8888-8888-888888888888"), Number = 8, Name = "Showdance 1", ScheduledTime = "Tirsdag 17:00 - 17:45" },
-            new TeamDataModel { TeamId = new Guid("99999999-9999-9999-9999-999999999999"), Number = 9, Name = "Showdance 2", ScheduledTime = "Onsdag 18:00 - 18:45" },
-            new TeamDataModel { TeamId = new Guid("07000000-0000-0000-0000-000000000000"), Number = 10, Name = "Showdance 3", ScheduledTime = "Torsdag 17:15 - 18:00" }
+            modelBuilder.Entity<TeamDataModel>().HasData(
+            new TeamDataModel(calendarDataModel) { TeamId = new Guid("11111111-1111-1111-1111-111111111111"), Number = 1, Name = "Hiphop1", ScheduledTime = "Mandag 16:00 - 16:45" },
+            new TeamDataModel(calendarDataModel) { TeamId = new Guid("22222222-2222-2222-2222-222222222222"), Number = 2, Name = "MGP", ScheduledTime = "Tirsdag 15:15 - 16:00" },
+            new TeamDataModel(calendarDataModel) { TeamId = new Guid("33333333-3333-3333-3333-333333333333"), Number = 3, Name = "Ballet", ScheduledTime = "Onsdag 17:00 - 17:45" },
+            new TeamDataModel(calendarDataModel) { TeamId = new Guid("44444444-4444-4444-4444-444444444444"), Number = 4, Name = "Hiphop2", ScheduledTime = "Torsdag 16:00 - 16:45" },
+            new TeamDataModel(calendarDataModel) { TeamId = new Guid("55555555-5555-5555-5555-555555555555"), Number = 5, Name = "Streetdance", ScheduledTime = "Fredag 15:00 - 15:45" },
+            new TeamDataModel(calendarDataModel) { TeamId = new Guid("66666666-6666-6666-6666-666666666666"), Number = 6, Name = "Argentinsk Tango", ScheduledTime = "Lørdag 11:00 - 11:45" },
+            new TeamDataModel(calendarDataModel) { TeamId = new Guid("77777777-7777-7777-7777-777777777777"), Number = 7, Name = "Salsa", ScheduledTime = "Mandag 18:00 - 18:45" },
+            new TeamDataModel(calendarDataModel) { TeamId = new Guid("88888888-8888-8888-8888-888888888888"), Number = 8, Name = "Showdance 1", ScheduledTime = "Tirsdag 17:00 - 17:45" },
+            new TeamDataModel(calendarDataModel) { TeamId = new Guid("99999999-9999-9999-9999-999999999999"), Number = 9, Name = "Showdance 2", ScheduledTime = "Onsdag 18:00 - 18:45" },
+            new TeamDataModel(calendarDataModel) { TeamId = new Guid("07000000-0000-0000-0000-000000000000"), Number = 10, Name = "Showdance 3", ScheduledTime = "Torsdag 17:15 - 18:00" }
 );
 
             modelBuilder.Entity<DancerDataModel>().HasData(

@@ -55,7 +55,27 @@ namespace SimoneMaui.ViewModels
         private bool isStartOfProcedure = true;
 
         public int Count => DancersOnTeam.Count;
-        
+
+        [ObservableProperty]
+        private string? dayOfWeekEntry = string.Empty;
+
+        [ObservableProperty]
+        private DayOfWeek dayOfWeek = default;
+
+        public DayOfWeek ToDayOfWeekConverter(string dayOfWeekentry)
+        {
+            return dayOfWeekentry switch
+            {
+                "Mandag" => DayOfWeek.Monday,
+                "Tirsdag" => DayOfWeek.Tuesday,
+                "Onsdag" => DayOfWeek.Wednesday,
+                "Torsdag" => DayOfWeek.Thursday,
+                "Fredag" => DayOfWeek.Friday,
+                "Lørdag" => DayOfWeek.Saturday,
+                "Søndag" => DayOfWeek.Sunday
+            };
+        }
+
 
 
         public bool PuttingDancerOnTeam { get; set; } = false;
@@ -152,6 +172,30 @@ namespace SimoneMaui.ViewModels
         public async Task WannaDeleteDancer()
         {
             await NavigationService.GoToDeleteDancerFromTeam(SelectedTeam, DancerToDelete);
+        }
+
+
+
+        partial void OnDayOfWeekEntryChanged(string? newValue)
+        {
+            DayOfWeekEntry = ToTitleCase(newValue);
+        }
+
+        partial void OnNameChanged(string? newValue)
+        {
+            Name = ToTitleCase(newValue);
+        }
+
+        private string ToTitleCase(string? input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return string.Empty;
+            }
+            var cultureInfo = System.Globalization.CultureInfo.CurrentCulture;
+            var textInfo = cultureInfo.TextInfo;
+
+            return textInfo.ToTitleCase(input.ToLower());
         }
 
 

@@ -70,7 +70,8 @@ namespace SimoneAPI.Migrations
                     TeamId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Number = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    ScheduledTime = table.Column<string>(type: "TEXT", nullable: false)
+                    ScheduledTime = table.Column<string>(type: "TEXT", nullable: false),
+                    DayOfWeek = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -189,19 +190,19 @@ namespace SimoneAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "TeamDataModels",
-                columns: new[] { "TeamId", "Name", "Number", "ScheduledTime" },
+                columns: new[] { "TeamId", "DayOfWeek", "Name", "Number", "ScheduledTime" },
                 values: new object[,]
                 {
-                    { new Guid("07000000-0000-0000-0000-000000000000"), "Showdance 3", 10, "Torsdag 17:15 - 18:00" },
-                    { new Guid("11111111-1111-1111-1111-111111111111"), "Hiphop1", 1, "Mandag 16:00 - 16:45" },
-                    { new Guid("22222222-2222-2222-2222-222222222222"), "MGP", 2, "Tirsdag 15:15 - 16:00" },
-                    { new Guid("33333333-3333-3333-3333-333333333333"), "Ballet", 3, "Onsdag 17:00 - 17:45" },
-                    { new Guid("44444444-4444-4444-4444-444444444444"), "Hiphop2", 4, "Torsdag 16:00 - 16:45" },
-                    { new Guid("55555555-5555-5555-5555-555555555555"), "Streetdance", 5, "Fredag 15:00 - 15:45" },
-                    { new Guid("66666666-6666-6666-6666-666666666666"), "Argentinsk Tango", 6, "Lørdag 11:00 - 11:45" },
-                    { new Guid("77777777-7777-7777-7777-777777777777"), "Salsa", 7, "Mandag 18:00 - 18:45" },
-                    { new Guid("88888888-8888-8888-8888-888888888888"), "Showdance 1", 8, "Tirsdag 17:00 - 17:45" },
-                    { new Guid("99999999-9999-9999-9999-999999999999"), "Showdance 2", 9, "Onsdag 18:00 - 18:45" }
+                    { new Guid("07000000-0000-0000-0000-000000000000"), 0, "Showdance 3", 10, "Torsdag 17:15 - 18:00" },
+                    { new Guid("11111111-1111-1111-1111-111111111111"), 0, "Hiphop1", 1, "Mandag 16:00 - 16:45" },
+                    { new Guid("22222222-2222-2222-2222-222222222222"), 0, "MGP", 2, "Tirsdag 15:15 - 16:00" },
+                    { new Guid("33333333-3333-3333-3333-333333333333"), 0, "Ballet", 3, "Onsdag 17:00 - 17:45" },
+                    { new Guid("44444444-4444-4444-4444-444444444444"), 0, "Hiphop2", 4, "Torsdag 16:00 - 16:45" },
+                    { new Guid("55555555-5555-5555-5555-555555555555"), 0, "Streetdance", 5, "Fredag 15:00 - 15:45" },
+                    { new Guid("66666666-6666-6666-6666-666666666666"), 0, "Argentinsk Tango", 6, "Lørdag 11:00 - 11:45" },
+                    { new Guid("77777777-7777-7777-7777-777777777777"), 0, "Salsa", 7, "Mandag 18:00 - 18:45" },
+                    { new Guid("88888888-8888-8888-8888-888888888888"), 0, "Showdance 1", 8, "Tirsdag 17:00 - 17:45" },
+                    { new Guid("99999999-9999-9999-9999-999999999999"), 0, "Showdance 2", 9, "Onsdag 18:00 - 18:45" }
                 });
 
             migrationBuilder.InsertData(
