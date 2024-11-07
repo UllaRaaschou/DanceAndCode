@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using SimoneAPI.Authorization;
 using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
 using SimoneAPI.EndpointExtensions;
@@ -12,24 +14,26 @@ builder.Services.AddDbContext<SimoneDbContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.AddSecurityDefinition("TokenAuthNZ", new()
+    options.AddSecurityDefinition("basic", new OpenApiSecurityScheme
     {
         Name = "Authorization",
-        Description = "Token basen authentication and authorization",
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
-        Scheme = "Bearer",
-        In = Microsoft.OpenApi.Models.ParameterLocation.Header
+        Description = "Basic authentication and authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "basic",
+        In = ParameterLocation.Header
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
-            new OpenApiSecurityScheme(){
-                Reference = new OpenApiReference()
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
                 {
-                    Type  =ReferenceType.SecurityScheme,
-                    Id = "TokenAuthNZ"
-                } },
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "basic"
+                }
+            },
             new List<string>()
         }
     });
@@ -40,7 +44,8 @@ builder.Services.Configure<RouteOptions>(options =>
 });
 
 builder.Services.AddProblemDetails();
-builder.Services.AddAuthentication().AddJwtBearer();
+builder.Services.AddAuthentication("BasicAuthorization")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthorization", null);//.AddJwtBearer();
 builder.Services.AddAuthorization();
 
 
@@ -55,6 +60,8 @@ var app = builder.Build();
 
 //TODO: Register endpoints
 // NAMING IS IMPORTENT !!
+app.UseAuthentication();
+app.UseAuthorization();
 app.RegisterDancersEndpoints();
 app.RegisterTeamsEndpoints();
 app.RegisterAttendanceEndpoints();
