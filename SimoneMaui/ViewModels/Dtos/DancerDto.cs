@@ -14,5 +14,7 @@ namespace SimoneMaui.ViewModels.Dtos
         public string TimeOfBirth { get; set; } = string.Empty;
         public ObservableCollection<TeamDto> Teams { get; set; } = new ObservableCollection<TeamDto>();
         public bool IsHighlighted { get; set; } = false;
+        public bool IsTrialLesson { get; set; } = false;
+        public string IfTrialLessonIsTrue { get; set; } = string.Empty;
     }
 }

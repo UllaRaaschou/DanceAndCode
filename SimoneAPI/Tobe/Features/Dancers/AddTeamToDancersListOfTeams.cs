@@ -1,22 +1,20 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
-using SimoneAPI.Dtos.Dancer;
 using System.Collections.ObjectModel;
-using static SimoneAPI.Tobe.Features.Dancer.SearchForDancerByName;
 
 namespace SimoneAPI.Tobe.Features.Dancer
 {
     public static class AddTeamToDancersListOfTeams
     {
-        public static void RegisterDancerEndpoint(this WebApplication endpointRouteBuilder)
+        public class AddDancingTeamRequest
         {
-            endpointRouteBuilder.MapPut("/Dancers/{dancerId}/Teams/{teamsId}", AddItemToListOfTeams);
+            public bool IsTrialLesson { get; set; }
         }
 
-        public static async Task<IResult> AddItemToListOfTeams(SimoneDbContext dbContext, IMapper mapper, Guid dancerId, Guid teamId)
+        public static async Task<IResult> AddItemToListOfTeams(SimoneDbContext dbContext, IMapper mapper, Guid dancerId, 
+            Guid teamId, AddDancingTeamRequest request)
         {
             var teamDataModel = await dbContext.TeamDataModels.FirstOrDefaultAsync(t => t.TeamId == teamId);
             if (teamDataModel == null)
@@ -27,8 +25,6 @@ namespace SimoneAPI.Tobe.Features.Dancer
                .Include(d => d.TeamDancerRelations)
                .ThenInclude(tr => tr.TeamDataModel)
                .FirstOrDefaultAsync(d => d.DancerId == dancerId);
-
-
             if (dancerDataModel == null)
             {
                 return TypedResults.NotFound();
@@ -39,12 +35,21 @@ namespace SimoneAPI.Tobe.Features.Dancer
                 dancerDataModel.TeamDancerRelations = new List<TeamDancerRelation>();
             }
 
+            List<DateOnly> danceDates = DanceDatesCalculator.CalculateDanceDates(new CalendarDataModel(), teamDataModel);
+            var lastDanceDate = danceDates.LastOrDefault();
+            if (request.IsTrialLesson == true)
+            {
+               
+                lastDanceDate = danceDates.FirstOrDefault(d => d >= DateOnly.FromDateTime(DateTime.Now));
+            }
+
             dancerDataModel.TeamDancerRelations
                 .Add(new TeamDancerRelation
                 {
                     TeamId = teamId,
                     DancerId = dancerId,
-                    IsTrialLesson = false
+                    IsTrialLesson = request.IsTrialLesson,
+                    LastDanceDate = lastDanceDate
 
                 });
              await dbContext.SaveChangesAsync();    
@@ -61,7 +66,8 @@ namespace SimoneAPI.Tobe.Features.Dancer
                             TeamId = tdr.TeamDataModel.TeamId,
                             Number = tdr.TeamDataModel.Number.ToString(),
                             Name = tdr.TeamDataModel.Name,
-                            SceduledTime = tdr.TeamDataModel.ScheduledTime
+                            SceduledTime = tdr.TeamDataModel.ScheduledTime,
+                            IsTrialLesson = tdr.IsTrialLesson
                         }
                         ).ToList())
             };
@@ -84,7 +90,8 @@ namespace SimoneAPI.Tobe.Features.Dancer
             public string Number { get; set; } = string.Empty;
             public string Name { get; set; } = string.Empty;
             public string SceduledTime { get; set; } = string.Empty;
-            
+            public bool IsTrialLesson { get; set; }
+
         }
     }
 

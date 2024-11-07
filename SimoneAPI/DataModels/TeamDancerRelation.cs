@@ -12,6 +12,7 @@ namespace SimoneAPI.DataModels
         public TeamDataModel TeamDataModel { get; set; } = null!;
         public DancerDataModel DancerDataModel { get; set; } = null!;
         public bool IsTrialLesson { get; set; } = false;
+        public DateOnly LastDanceDate { get; set; } = DateOnly.MinValue;
         public ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
 
         public TeamDancerRelation() { }

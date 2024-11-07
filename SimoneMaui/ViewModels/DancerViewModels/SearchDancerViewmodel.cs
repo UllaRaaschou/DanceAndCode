@@ -36,9 +36,11 @@ namespace SimoneMaui.ViewModels
         private string teamDetailsString= string.Empty;
 
         public bool PuttingDancerOnTeam { get; set; } = false;
+       
+       
 
 
-        public RelayCommand DancerSelectedCommand { get; }
+        public AsyncRelayCommand DancerSelectedCommand { get; }
         public AsyncRelayCommand WannaUpdateDancerCommand { get;}        
         public AsyncRelayCommand WannaDeleteDancerCommand { get; }
         public AsyncRelayCommand SearchDancerCommand { get; }
@@ -50,7 +52,7 @@ namespace SimoneMaui.ViewModels
         private bool searchResultVisible = true;
 
         [NotifyCanExecuteChangedFor(nameof(WannaUpdateDancerCommand))]
-        [NotifyCanExecuteChangedFor(nameof(WannaDeleteDancerCommand))]
+        [NotifyCanExecuteChangedFor(nameof(WannaDeleteDancerCommand))]      
         [ObservableProperty]
         private DancerDto? selectedDancer;
 
@@ -73,20 +75,29 @@ namespace SimoneMaui.ViewModels
             SearchDancerCommand = new AsyncRelayCommand(SearchAsyncDancer, CanSearchAsync);
             WannaUpdateDancerCommand = new AsyncRelayCommand(WannaUpdateDancer, CanWannaUpdateDancer);
             WannaDeleteDancerCommand = new AsyncRelayCommand(WannaDeleteDancer, CanWannaDeleteDancer);
-            DancerSelectedCommand = new RelayCommand(DancerSelected);
+            DancerSelectedCommand = new AsyncRelayCommand(DancerSelected);
         }
 
-        private void DancerSelected()
+        private async Task DancerSelected()
         {
             OnSelectedDancerChanged();
         }
-        private void OnSelectedDancerChanged()
+        private async Task OnSelectedDancerChanged()
         {
             NameEntry = SelectedDancer.Name;
             IsUpdateButtonVisible = true;
             IsDeleteButtonVisible = true;
             SearchResultVisible = false;
             IsSearchHeaderVisible = false;
+            if(PuttingDancerOnTeam == false) 
+            {
+                await NavigationService.GoToUpdateDancer(SelectedDancer);
+            }
+            if(PuttingDancerOnTeam == true) 
+            {
+                await NavigationService.GoToUpdateTeam(SelectedTeam, SelectedDancer);
+            }
+            
         }
 
 
@@ -198,6 +209,7 @@ namespace SimoneMaui.ViewModels
                 PuttingDancerOnTeam = true;
 
             }
+            
         }
     }
 }

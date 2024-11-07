@@ -9,6 +9,10 @@ using static SimoneAPI.Tobe.Features.Dancer.SearchForDancerByName;
 
 namespace SimoneAPI.Tobe.Features.Teams
 {
+    public class DeleteFromListOfDancersRequest
+    {
+        public Guid DancerId { get; set; }
+    }
     public class DeleteDancerFromTeam
     {
         public static async Task<IResult> Delete(SimoneDbContext dbContext, Guid teamId, [FromBody] DeleteFromListOfDancersRequest request)

@@ -16,6 +16,14 @@
 
             <Button 
             Margin="20,20,10,20"
+            Text="Tildel elev prøvetime på holdet"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Command="{Binding WannaAddTrialDancerCommand}" 
+            IsVisible="{Binding IsStartOfProcedure}"/>
+
+            <Button 
+            Margin="20,20,10,20"
             Text="Føj elev til hold"
             VerticalOptions="Center"
             HorizontalOptions="Center"
@@ -79,32 +87,49 @@
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">                        
                     <Label Text="{Binding Name}"
                            HorizontalOptions="Center">
-                        <Label.Style>
-                            <Style TargetType="Label">
-                                <Setter Property="FontAttributes" Value="None"/>
-                                    <Style.Triggers>
-                                         <DataTrigger TargetType="Label" Binding="{Binding IsHighlighted}" Value="True">
-                                                <Setter Property="FontAttributes" Value="Bold"/>
-                                          </DataTrigger>
-                                    </Style.Triggers>
+                            <Label.Style>
+                                 <Style TargetType="Label">
+                                        <Setter Property="FontAttributes" Value="None"/>
+                                             <Style.Triggers>
+                                                     <DataTrigger TargetType="Label" Binding="{Binding IsHighlighted}" Value="True">
+                                                            <Setter Property="FontAttributes" Value="Bold"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
                                 
-                            </Style>
+                                  </Style>
                         </Label.Style>
                     </Label>
-                        <Label Text="{Binding TimeOfBirth}"
-                               HorizontalOptions="Center">
+                        
+                    <Label Text="{Binding TimeOfBirth}"
+                            HorizontalOptions="Center">
                             <Label.Style>
-                                <Style TargetType="Label">
-                                    <Setter Property="FontAttributes" Value="None"/>
-                                    <Style.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsHighlighted}" Value="True">
-                                            <Setter Property="FontAttributes" Value="Bold"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
+                                 <Style TargetType="Label">
+                                         <Setter Property="FontAttributes" Value="None"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsHighlighted}" Value="True">
+                                                         <Setter Property="FontAttributes" Value="Bold"/>
+                                                     </DataTrigger>
+                                                </Style.Triggers>
 
                                 </Style>
                             </Label.Style>
-                        </Label>
+                    </Label>
+                        
+                    <Label Text="{Binding IfTrialLessonIsTrue}"
+                            HorizontalOptions="Center">
+                            <Label.Style>
+                                 <Style TargetType="Label">
+                                        <Setter Property="FontAttributes" Value="None"/>
+                                                <Style.Triggers>
+                                                     <DataTrigger TargetType="Label" Binding="{Binding IsHighlighted}" Value="True">
+                                                             <Setter Property="FontAttributes" Value="Bold"/>
+                                                    </DataTrigger>
+                                                 </Style.Triggers>
+
+                                 </Style>
+                             </Label.Style>
+                    </Label>                        
+                        
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -141,9 +166,17 @@
             Text="Føj valgte elev til holdet" 
             Command="{Binding AddDancerToTeamCommand}" 
             IsVisible="{Binding DancerIsSelected}"/>
-        
-        
-       
+
+        <Button 
+            HorizontalOptions="Center"
+            Text="Tildel valgte elev en prøvetime på holdet" 
+            Command="{Binding AddTrialDancerCommand}" 
+            IsVisible="{Binding DancerIsSelected}"/>
+
+
+
+
+
 
     </VerticalStackLayout>
 

@@ -31,7 +31,7 @@ namespace SimoneAPI.Tobe.Features.Dancers
                 DancerId = d.DancerId,
                 Name = d.Name,
                 TimeOfBirth = d.TimeOfBirth.ToString(),
-                Teams = new Collection<TeamDto> (d.TeamDancerRelations
+                Teams = new Collection<TeamDto>(d.TeamDancerRelations
                         .Select(tdr =>
                         new TeamDto
                         {
@@ -39,7 +39,7 @@ namespace SimoneAPI.Tobe.Features.Dancers
                             Number = tdr.TeamDataModel.Number.ToString(),
                             Name = tdr.TeamDataModel.Name,
                             SceduledTime = tdr.TeamDataModel.ScheduledTime,
-                            TeamDetails = string.Empty
+                            IsTrialLesson = tdr.IsTrialLesson
                         }
                         ).ToList())
             }));
@@ -65,6 +65,7 @@ namespace SimoneAPI.Tobe.Features.Dancers
             public string Name { get; set; } = string.Empty;
             public string SceduledTime { get; set; } = string.Empty;
             public string TeamDetails { get; set; } = string.Empty;
+            public bool IsTrialLesson { get; set; } = false;
 
             public TeamDto()
             {

@@ -11,7 +11,7 @@ using SimoneAPI.DbContexts;
 namespace SimoneAPI.Migrations
 {
     [DbContext(typeof(SimoneDbContext))]
-    [Migration("20241105100122_FirstOne")]
+    [Migration("20241106095538_FirstOne")]
     partial class FirstOne
     {
         /// <inheritdoc />
@@ -349,6 +349,9 @@ namespace SimoneAPI.Migrations
                     b.Property<bool>("IsTrialLesson")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateOnly>("LastDanceDate")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("DancerId", "TeamId");
 
                     b.HasIndex("TeamId");
@@ -360,313 +363,365 @@ namespace SimoneAPI.Migrations
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000003"),
                             TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000004"),
                             TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000005"),
                             TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000006"),
                             TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000007"),
                             TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000008"),
                             TeamId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000009"),
                             TeamId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000010"),
                             TeamId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000011"),
                             TeamId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000012"),
                             TeamId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000013"),
                             TeamId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000014"),
                             TeamId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000015"),
                             TeamId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000016"),
                             TeamId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000017"),
                             TeamId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000018"),
                             TeamId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000019"),
                             TeamId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000020"),
                             TeamId = new Guid("66666666-6666-6666-6666-666666666666"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000021"),
                             TeamId = new Guid("66666666-6666-6666-6666-666666666666"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000022"),
                             TeamId = new Guid("66666666-6666-6666-6666-666666666666"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000023"),
                             TeamId = new Guid("77777777-7777-7777-7777-777777777777"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000024"),
                             TeamId = new Guid("77777777-7777-7777-7777-777777777777"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000025"),
                             TeamId = new Guid("77777777-7777-7777-7777-777777777777"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000026"),
                             TeamId = new Guid("88888888-8888-8888-8888-888888888888"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000027"),
                             TeamId = new Guid("88888888-8888-8888-8888-888888888888"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000028"),
                             TeamId = new Guid("88888888-8888-8888-8888-888888888888"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000029"),
                             TeamId = new Guid("99999999-9999-9999-9999-999999999999"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000030"),
                             TeamId = new Guid("99999999-9999-9999-9999-999999999999"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000031"),
                             TeamId = new Guid("99999999-9999-9999-9999-999999999999"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000009"),
                             TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000022"),
                             TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000011"),
                             TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000016"),
                             TeamId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000022"),
                             TeamId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000015"),
                             TeamId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000018"),
                             TeamId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000017"),
                             TeamId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000025"),
                             TeamId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000030"),
                             TeamId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000028"),
                             TeamId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000029"),
                             TeamId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000023"),
                             TeamId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000014"),
                             TeamId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000027"),
                             TeamId = new Guid("66666666-6666-6666-6666-666666666666"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000029"),
                             TeamId = new Guid("77777777-7777-7777-7777-777777777777"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000014"),
                             TeamId = new Guid("77777777-7777-7777-7777-777777777777"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000009"),
                             TeamId = new Guid("88888888-8888-8888-8888-888888888888"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000008"),
                             TeamId = new Guid("88888888-8888-8888-8888-888888888888"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000004"),
                             TeamId = new Guid("88888888-8888-8888-8888-888888888888"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000006"),
                             TeamId = new Guid("99999999-9999-9999-9999-999999999999"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000025"),
                             TeamId = new Guid("99999999-9999-9999-9999-999999999999"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         },
                         new
                         {
                             DancerId = new Guid("00000000-0000-0000-0000-000000000018"),
                             TeamId = new Guid("99999999-9999-9999-9999-999999999999"),
-                            IsTrialLesson = false
+                            IsTrialLesson = false,
+                            LastDanceDate = new DateOnly(1, 1, 1)
                         });
                 });
 

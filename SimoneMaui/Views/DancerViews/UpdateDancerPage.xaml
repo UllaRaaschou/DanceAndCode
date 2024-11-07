@@ -15,6 +15,15 @@
             <HorizontalStackLayout
             HorizontalOptions="Center"
             VerticalOptions="Center">
+
+                <Button 
+                Margin="20,20,10,20"
+                Text="Tildel eleven prøvetime på et dansehold"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Command="{Binding WannaAddTeamTrialLessonCommand}" 
+                IsVisible="{Binding IsStartOfProcedure}"/>
+
                 <Button 
                  Margin="20,20,10,20"
                  Text="Sæt eleven på et dansehold"
@@ -91,8 +100,14 @@
              Margin="10, 10, 10, 10" 
              Command="{Binding AddTeamCommand}"
              IsVisible="{Binding TeamToAddIsSelected}"></Button>
-            
-            
+
+            <Button 
+            Text="Tildel elev en prøvetime på valgte hold"  
+            Margin="10, 10, 10, 10" 
+            Command="{Binding AddTeamTrialLessonCommand}"
+            IsVisible="{Binding DancerToAddIsSelected}"></Button>
+
+
         </VerticalStackLayout>
     </ScrollView>
 

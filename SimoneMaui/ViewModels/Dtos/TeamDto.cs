@@ -9,9 +9,14 @@ namespace SimoneMaui.ViewModels.Dtos
         public string Name { get; set; } = string.Empty;
         public string SceduledTime { get; set; } = string.Empty;
         public DayOfWeek DayOfWeek { get; set; }=default;
-        public string TeamDetailsString => $"Hold {Number} '{Name}' - {SceduledTime}";
+
+        public bool IsTrialLesson { get; set; } = false;
+        public string IfTrialLessonIsTrue => IsTrialLesson == true ? " - PRØVETIME" : "";
+        public string TeamDetailsString => $"Hold {Number} '{Name}' - {SceduledTime} {IfTrialLessonIsTrue}";
         public ObservableCollection<DancerDto> DancersOnTeam { get; set; } = new();
         public int Count => DancersOnTeam?.Count ?? 0;
-        
+
+       
+
     }
 }

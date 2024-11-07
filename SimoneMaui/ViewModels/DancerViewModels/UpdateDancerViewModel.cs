@@ -46,7 +46,7 @@ namespace SimoneMaui.ViewModels
 
         public int? Count => Teams?.Count() ?? 0;
 
-        public bool DancerIsSignedInToMinimumOneTeam => Count > 0;
+        public bool DancerIsSignedInToMinimumOneTeam => (Count > 0 && SelectedTeam != null);
         public string TeamDetailsString => SelectedTeam?.TeamDetailsString ?? "";
 
         [ObservableProperty]
@@ -55,13 +55,18 @@ namespace SimoneMaui.ViewModels
         [ObservableProperty]
         private bool wannaAddTeamToADancer = false;
 
+       
+
 
         public bool TeamToAddIsSelected => teamToAdd != null;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(TeamToAddIsSelected))]
         private TeamDto? teamToAdd;
-       
+
+        [ObservableProperty]
+        private bool isTrialLesson = false;
+
 
         public RelayCommand RemoveTeamCommand { get; }
         //public RelayCommand WannaSearchCommand { get; }
@@ -69,6 +74,9 @@ namespace SimoneMaui.ViewModels
         public RelayCommand AddTeamCommand { get; }
         public AsyncRelayCommand WannaPutDancerOnATeamCommand { get; }
         public AsyncRelayCommand WannaDeleteDancerFromTeamCommand { get; }
+        public AsyncRelayCommand WannaAddTeamTrialLessonCommand { get; private set; }
+        public AsyncRelayCommand AddTeamTrialLessonCommand { get; }
+        public bool DancerToAddIsSelected { get; private set; } = false;
 
         public UpdateDancerViewModel(INavigationService navigationService)
         {
@@ -76,11 +84,36 @@ namespace SimoneMaui.ViewModels
 
             WannaPutDancerOnATeamCommand = new AsyncRelayCommand(WannaPutDancerOnATeam, CanWannaPutDancerOnATeam);
             WannaDeleteDancerFromTeamCommand = new AsyncRelayCommand(WannaDeleteDancerFromTeam, CanWannaDeleteDancerFromTeam);
+            WannaAddTeamTrialLessonCommand = new AsyncRelayCommand(WannaAddTeamTrialLesson, CanWannaAddTeamTrialLesson);
 
             RemoveTeamCommand = new RelayCommand(async() => await RemoveTeam(), CanRemoveTeam);
             AddTeamCommand = new RelayCommand(async () => await AddTeam(), CanAddTeam);            
            
             UpdateDancerCommand = new RelayCommand(async () => await UpdateDancer(), CanUpdate);
+
+            AddTeamTrialLessonCommand = new AsyncRelayCommand(AddTeamTrialLesson, CanAddTeamTrialLesson);
+        }
+
+        private bool CanWannaAddTeamTrialLesson()
+        {
+            return SelectedDancer != null;
+        }
+
+        private async Task WannaAddTeamTrialLesson()
+        {
+            WannaAddTeamToADancer = true;
+            await NavigationService.GoToSearchTeam(SelectedDancer, WannaAddTeamToADancer);
+        }
+
+        private bool CanAddTeamTrialLesson()
+        {
+            return (SelectedDancer != null && TeamToAdd != null);
+        }
+
+        private async Task AddTeamTrialLesson()
+        {
+            IsTrialLesson = true;
+            await AddTeam();
         }
 
         public event Action<string> TellUserToChoseTeam;
@@ -149,6 +182,7 @@ namespace SimoneMaui.ViewModels
             var options = new RestClientOptions("https://localhost:7163");
             var client = new RestClient(options);
             var request = new RestRequest($"/dancers/{SelectedDancer.DancerId}/teams/{teamToAdd.TeamId}", Method.Put);
+            request.AddJsonBody(new { isTrialLesson = IsTrialLesson });
             var returnedStatus = await client.ExecuteAsync<DancerDto>(request, CancellationToken.None);
             SelectedDancer = returnedStatus.Data;
             Teams = SelectedDancer.Teams;
@@ -234,12 +268,15 @@ namespace SimoneMaui.ViewModels
                
             {
                 SelectedDancer = dancerDto;
-                Teams = dancerDto.Teams;                               
+                Teams = dancerDto.Teams;
+                IsStartOfProcedure = false;
+                DancerToAddIsSelected = true;
             }
 
             if (query.ContainsKey("teamDto") && query["teamDto"] is TeamDto teamDto)
             {
                 TeamToAdd = teamDto;
+                IsStartOfProcedure = false;
             }
     }
 
