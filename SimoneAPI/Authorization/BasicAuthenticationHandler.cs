@@ -17,7 +17,6 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         : base(options, logger, encoder)
     {
         
-        //__
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
