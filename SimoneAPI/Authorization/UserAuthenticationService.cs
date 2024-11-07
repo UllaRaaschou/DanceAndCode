@@ -8,7 +8,7 @@ namespace SimoneAPI.Authorization
             new("Simone", "123456", UserPrivileges.Administrator)
         ];
 
-        public User AuthenticationUser(string username, string password)
+        public User Authentication(string username, string password)
         {
             var authenticationUser = users.FirstOrDefault(user => 
                 string.Equals(user.Username, username, StringComparison.CurrentCultureIgnoreCase) && 

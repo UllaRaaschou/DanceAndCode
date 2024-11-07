@@ -13,10 +13,9 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
 {
     private readonly UserAuthenticationService userAuthenticationService = new();
 
-    public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder)
+    public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder) 
         : base(options, logger, encoder)
     {
-        
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -26,34 +25,37 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
             return await Task.FromResult(AuthenticateResult.Fail("Missing Authorization header"));
         }
 
-        var (username, password) = GetNotAuthorizedUserInfo(header);
-        var userInfo = userAuthenticationService.AuthenticationUser(username, password);
+        var (username, password) = GetUsernameAndPasswordFromAuthHeader(header);
+        var user = userAuthenticationService.Authentication(username, password);
 
-        if (userInfo is NotAuthorizedUser)
-        {
-            return await Task.FromResult(AuthenticateResult.Fail("Authenticate failed"));
-        }
+        var authenticateResult = user is AuthorizedUser authorizedUser
+            ? AuthenticateResult.Success(CreateAuthenticationTicket(authorizedUser))
+            : AuthenticateResult.Fail("Authenticate failed");
 
-        var authUser = (AuthorizedUser)userInfo;
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.UserData, userInfo.Username),
-            new Claim(ClaimTypes.Expiration, DateTime.Now.AddHours(2).ToString(CultureInfo.InvariantCulture)),
-            new Claim(ClaimTypes.Role, authUser.Privileges.GetDisplayName())
-        };
-
-        var identity = new ClaimsIdentity(claims, Scheme.Name);
-        var principal = new ClaimsPrincipal(identity);
-        var ticket = new AuthenticationTicket(principal, Scheme.Name);
-        return await Task.FromResult(AuthenticateResult.Success(ticket));
+        return await Task.FromResult(authenticateResult);
     }
 
-    private static (string username, string password) GetNotAuthorizedUserInfo(AuthenticationHeaderValue header)
+    private static (string username, string password) GetUsernameAndPasswordFromAuthHeader(AuthenticationHeaderValue header)
     {
         var credentials = Encoding.UTF8.GetString(Convert.FromBase64String(header.Parameter!)).Split(':');
         var username = credentials.FirstOrDefault() ?? string.Empty;
         var password = credentials.LastOrDefault() ?? string.Empty;
 
         return (username, password);
+    }
+
+    private AuthenticationTicket CreateAuthenticationTicket(AuthorizedUser user)
+    {
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.UserData, user.Username),
+            new Claim(ClaimTypes.Role, user.Privileges.GetDisplayName()),
+            new Claim(ClaimTypes.Expiration, DateTime.Now.AddHours(2).ToString(CultureInfo.InvariantCulture))
+        };
+
+        var identity = new ClaimsIdentity(claims, Scheme.Name);
+        var principal = new ClaimsPrincipal(identity);
+        var ticket = new AuthenticationTicket(principal, Scheme.Name);
+        return ticket;
     }
 }
