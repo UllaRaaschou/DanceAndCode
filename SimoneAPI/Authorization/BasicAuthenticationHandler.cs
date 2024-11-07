@@ -16,6 +16,8 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
     public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder)
         : base(options, logger, encoder)
     {
+        
+        //__
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
