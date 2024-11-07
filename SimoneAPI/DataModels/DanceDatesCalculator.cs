@@ -36,6 +36,7 @@
                     }
                 }
                 danceDates.Add(nextDanceDate);
+                firstDancedate = nextDanceDate;
             }
             return danceDates;
 

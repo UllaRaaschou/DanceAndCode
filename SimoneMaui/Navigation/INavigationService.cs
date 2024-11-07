@@ -27,5 +27,9 @@ public interface INavigationService
 
     Task GoToDeleteDancerFromTeam(TeamDto selectedTeam, DancerDto dancerToDelete);
 
+
+    
+    Task GoToPostStaff();
+    Task GoToSearchStaff();
 }
 

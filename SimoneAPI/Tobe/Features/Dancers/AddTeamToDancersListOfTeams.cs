@@ -35,7 +35,15 @@ namespace SimoneAPI.Tobe.Features.Dancer
                 dancerDataModel.TeamDancerRelations = new List<TeamDancerRelation>();
             }
 
-            List<DateOnly> danceDates = DanceDatesCalculator.CalculateDanceDates(new CalendarDataModel(), teamDataModel);
+            var calendarDataModel = await dbContext.CalendarDataModels
+            .OrderByDescending(c => c.CreatedDate)
+            .FirstOrDefaultAsync();
+            if (calendarDataModel == null)
+            {
+                return TypedResults.NotFound();
+            }
+
+            List<DateOnly> danceDates = DanceDatesCalculator.CalculateDanceDates(calendarDataModel, teamDataModel);
             var lastDanceDate = danceDates.LastOrDefault();
             if (request.IsTrialLesson == true)
             {
@@ -67,7 +75,8 @@ namespace SimoneAPI.Tobe.Features.Dancer
                             Number = tdr.TeamDataModel.Number.ToString(),
                             Name = tdr.TeamDataModel.Name,
                             SceduledTime = tdr.TeamDataModel.ScheduledTime,
-                            IsTrialLesson = tdr.IsTrialLesson
+                            IsTrialLesson = tdr.IsTrialLesson,
+                            LastDancedate = tdr.LastDanceDate
                         }
                         ).ToList())
             };
@@ -91,6 +100,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
             public string Name { get; set; } = string.Empty;
             public string SceduledTime { get; set; } = string.Empty;
             public bool IsTrialLesson { get; set; }
+            public DateOnly LastDancedate { get; set; }
 
         }
     }

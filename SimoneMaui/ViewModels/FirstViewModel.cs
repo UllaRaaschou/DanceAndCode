@@ -15,6 +15,9 @@ namespace SimoneMaui.ViewModels
         new AsyncRelayCommand workWithTeamCommand;
 
         [ObservableProperty]
+        new AsyncRelayCommand workWithStaffCommand;
+
+        [ObservableProperty]
         new AsyncRelayCommand postDancerThemeCommand;
 
         [ObservableProperty]
@@ -27,24 +30,56 @@ namespace SimoneMaui.ViewModels
         new AsyncRelayCommand updateOrDeleteTeamCommand;
 
         [ObservableProperty]
+        new AsyncRelayCommand postStaffThemeCommand;
+
+        [ObservableProperty]
+        new AsyncRelayCommand updateOrDeleteStaffCommand;
+
+        [ObservableProperty]
         public bool workingWithDancer = false;
 
         [ObservableProperty]
         public bool workingWithTeam = false;
 
         [ObservableProperty]
-        public bool workingThemeIsToBeDecided = true;
+        private bool workingWithStaff = false;
 
+        [ObservableProperty]
+        public bool workingThemeIsToBeDecided = true;
+       
 
         public FirstViewModel(INavigationService navigationService)
         {
             NavigationService = navigationService;
             WorkWithDancerCommand = new AsyncRelayCommand(WorkWithDancer);
             WorkWithTeamCommand = new AsyncRelayCommand(WorkWithTeam);
+            WorkWithStaffCommand = new AsyncRelayCommand(WorkWithStaff);
             PostDancerThemeCommand = new AsyncRelayCommand(ToPostDancerTheme);
             UpdateOrDeleteDancerCommand = new AsyncRelayCommand(ToUpdateOrDeleteDancer);
             PostTeamThemeCommand = new AsyncRelayCommand(ToPostTeamTheme);
             UpdateOrDeleteTeamCommand = new AsyncRelayCommand(ToUpdateOrDeleteTeam);
+            PostStaffThemeCommand = new AsyncRelayCommand(ToPostStaffTheme);
+            UpdateOrDeleteStaffCommand = new AsyncRelayCommand(ToUpdateOrDeleteStaff);
+
+        }
+
+        private async Task ToUpdateOrDeleteStaff()
+        {
+            WorkingThemeIsToBeDecided = false;
+            await NavigationService.GoToSearchStaff();
+        }
+
+        private async Task ToPostStaffTheme()
+        {
+            WorkingThemeIsToBeDecided = false;
+            await NavigationService.GoToPostStaff();
+        }
+
+
+        private async Task WorkWithStaff()
+        {
+            WorkingThemeIsToBeDecided = false;
+            WorkingWithStaff = true;
         }
 
         private async Task ToUpdateOrDeleteTeam()

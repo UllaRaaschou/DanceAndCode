@@ -65,7 +65,11 @@ namespace SimoneMaui.ViewModels
         [ObservableProperty]
         private bool isTrialLesson = false;
 
-        public string IfTrialLessonIsTrue => IsTrialLesson? " - PRØVETIME": "";
+
+        public string DancerDetailsString => SelectedDancer?.DancerDetailsString ?? "";
+
+        [ObservableProperty]
+        private string ifTrialLessonIsTrue;
 
         public DayOfWeek ToDayOfWeekConverter(string dayOfWeekentry)
         {
@@ -211,34 +215,34 @@ namespace SimoneMaui.ViewModels
                 return textInfo.ToTitleCase(input.ToLower());
             }
 
-            private async Task AddDancerToTeam()
+        private async Task AddDancerToTeam()
+        {
+            var options = new RestClientOptions("https://localhost:7163");
+            var client = new RestClient(options);
+
+            var request = new RestRequest($"/Teams/{SelectedTeam.TeamId}/AddToListOfDancers", Method.Put);
+
+            request.AddJsonBody(new { dancerId = SelectedDancer.DancerId, IsTrialLesson });
+
+            var response = await client.ExecuteAsync<TeamDto>(request, CancellationToken.None);
+
+            if (response.Data != null)
             {
-                var options = new RestClientOptions("https://localhost:7163");
-                var client = new RestClient(options);
-
-                var request = new RestRequest($"/Teams/{SelectedTeam.TeamId}/AddToListOfDancers", Method.Put);
-
-                request.AddJsonBody(new { dancerId = SelectedDancer.DancerId, trialLesson = IsTrialLesson });
-        
-
-                var returnedStatus = await client.ExecutePutAsync(request, CancellationToken.None);
-                JsonSerializerOptions _options = new();
-                _options.PropertyNameCaseInsensitive = true;
-
-                if (!returnedStatus.IsSuccessStatusCode)
-                {            
-                    ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedStatus.Content ?? "{}", _options)!;
-                }
-
-                var mauiTeamDto = JsonSerializer.Deserialize<TeamDto>(returnedStatus.Content ?? "{}", _options);
+                var mauiTeamDto = response.Data;
 
                 mauiTeamDto.DancersOnTeam.First(d => d.DancerId == SelectedDancer.DancerId).IsHighlighted = true;
+
+                var validDancers = mauiTeamDto.DancersOnTeam
+                                    .Where(d => d.LastDancedate >= DateOnly.FromDateTime(DateTime.Now))
+                                    .ToList();
+
+                DancersOnTeam = new ObservableCollection<DancerDto>(validDancers);
 
                 DancersOnTeam = mauiTeamDto.DancersOnTeam;
                 SelectedDancer = null;
                 DancerIsSelected = false;
-
             }
+        }
 
 
 

@@ -60,6 +60,9 @@ namespace SimoneMaui
             builder.Services.AddTransient<CalendarViewModel>();
             builder.Services.AddTransient<CalendarPage>();
 
+            builder.Services.AddTransient<PostStaffViewModel>();
+            builder.Services.AddTransient<PostStaffPage>();
+
 
 #if DEBUG
             builder.Logging.AddDebug();

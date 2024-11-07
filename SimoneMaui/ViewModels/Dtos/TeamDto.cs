@@ -9,6 +9,7 @@ namespace SimoneMaui.ViewModels.Dtos
         public string Name { get; set; } = string.Empty;
         public string SceduledTime { get; set; } = string.Empty;
         public DayOfWeek DayOfWeek { get; set; }=default;
+        public DateOnly LastDancedate { get; set; } = default;
 
         public bool IsTrialLesson { get; set; } = false;
         public string IfTrialLessonIsTrue => IsTrialLesson == true ? " - PRØVETIME" : "";

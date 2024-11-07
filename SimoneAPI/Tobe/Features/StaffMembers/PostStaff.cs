@@ -5,14 +5,15 @@ using SimoneAPI.DbContexts;
 namespace SimoneAPI.Tobe.Features.StaffMembers
 {
     public static class PostStaff
-    {
-        //public static void RegisterStaffEndpoint(this WebApplication endpointRouteBuilder)
-        //{
-        //    endpointRouteBuilder.MapPost("", Post);
-        //}
-
+    {     
         public static async Task<IResult> Post(SimoneDbContext dBContext, IMapper mapper, PostStaffDto dto)
         {
+            var staff = new Staff
+            {
+                Name = dto.Name,
+                TimeOfBirth = dto.TimeOfBirth,
+                Role = dto.Role
+            };
             var staffMember = mapper.Map<Staff>(dto);
             dBContext.Staffs.Add(staffMember);
             await dBContext.SaveChangesAsync();
@@ -25,7 +26,7 @@ namespace SimoneAPI.Tobe.Features.StaffMembers
         {
             public string Name { get; set; } = string.Empty;
             public JobRoleEnum Role { get; set; }
-            public DateTime TimeofBirth { get; set; }
+            public DateOnly TimeOfBirth { get; set; }
         }
 
         public class PostStaffResponceDto
@@ -33,7 +34,7 @@ namespace SimoneAPI.Tobe.Features.StaffMembers
             public Guid StaffId { get; set; }
             public string Name { get; set; } = string.Empty;
             public JobRoleEnum Role { get; set; }
-            public DateTime TimeofBirth { get; set; }
+            public DateOnly TimeofBirth { get; set; }
         }
     }
 

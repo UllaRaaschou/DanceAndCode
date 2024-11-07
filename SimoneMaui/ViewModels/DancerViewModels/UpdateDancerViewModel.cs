@@ -102,6 +102,7 @@ namespace SimoneMaui.ViewModels
         private async Task WannaAddTeamTrialLesson()
         {
             WannaAddTeamToADancer = true;
+            
             await NavigationService.GoToSearchTeam(SelectedDancer, WannaAddTeamToADancer);
         }
 
@@ -184,9 +185,17 @@ namespace SimoneMaui.ViewModels
             var request = new RestRequest($"/dancers/{SelectedDancer.DancerId}/teams/{teamToAdd.TeamId}", Method.Put);
             request.AddJsonBody(new { isTrialLesson = IsTrialLesson });
             var returnedStatus = await client.ExecuteAsync<DancerDto>(request, CancellationToken.None);
-            SelectedDancer = returnedStatus.Data;
-            Teams = SelectedDancer.Teams;
-            TeamToAdd = null;
+            if (returnedStatus.Data != null)
+            {
+                var mauiDancerDto = returnedStatus.Data;
+
+                var validTeams = mauiDancerDto.Teams
+                                        .Where(d => d.LastDancedate >= DateOnly.FromDateTime(DateTime.Now))
+                                        .ToList();
+
+                Teams = new ObservableCollection<TeamDto>(validTeams);
+                TeamToAdd = null;
+            }
         }
 
         private bool CanUpdate()
@@ -269,7 +278,6 @@ namespace SimoneMaui.ViewModels
             {
                 SelectedDancer = dancerDto;
                 Teams = dancerDto.Teams;
-                IsStartOfProcedure = false;
                 DancerToAddIsSelected = true;
             }
 

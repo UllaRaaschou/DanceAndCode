@@ -26,6 +26,14 @@
             Command="{Binding WorkWithTeamCommand}"
             IsVisible="{Binding WorkingThemeIsToBeDecided}"/>
 
+        <Button
+            Margin="20, 20, 20, 20"
+            Text="Arbejd med Medarbejder"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            Command="{Binding WorkWithStaffCommand}"
+            IsVisible="{Binding WorkingThemeIsToBeDecided}"/>
+
 
         <Button
             Margin="20, 20, 20, 20"
@@ -58,6 +66,23 @@
              HorizontalOptions="Center" 
             Command="{Binding UpdateOrDeleteTeamCommand}"
             IsVisible="{Binding WorkingWithTeam}"/>
+
+
+        <Button
+            Margin="20, 20, 20, 20"
+            Text="Opret ny medarbejder"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            Command="{Binding PostStaffThemeCommand}"
+            IsVisible="{Binding WorkingWithStaff}"/>
+
+        <Button
+             Margin="20, 20, 20, 20"
+             Text="Opdater/slet hold"
+             VerticalOptions="Center" 
+             HorizontalOptions="Center" 
+             Command="{Binding UpdateOrDeleteStaffCommand}"
+            IsVisible="{Binding WorkingWithStaff}"/>
 
 
 

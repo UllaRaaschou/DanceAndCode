@@ -1,6 +1,6 @@
-﻿namespace SimoneAPI.DataModels
+﻿namespace SimoneMaui.ViewModels.Dtos
 {
-    public enum JobRoleEnum
+    public enum MauiJobRoleEnum
     {
         None,
         Teacher,

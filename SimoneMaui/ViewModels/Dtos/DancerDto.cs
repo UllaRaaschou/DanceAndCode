@@ -15,6 +15,9 @@ namespace SimoneMaui.ViewModels.Dtos
         public ObservableCollection<TeamDto> Teams { get; set; } = new ObservableCollection<TeamDto>();
         public bool IsHighlighted { get; set; } = false;
         public bool IsTrialLesson { get; set; } = false;
-        public string IfTrialLessonIsTrue { get; set; } = string.Empty;
+        public string DancerDetailsString => $"{Name} {TimeOfBirth} {IfTrialLessonIsTrue}";
+        public string IfTrialLessonIsTrue => IsTrialLesson ? " - PRØVETIME" : "jj";
+
+        public DateOnly LastDancedate { get; set; } = default;
     }
 }

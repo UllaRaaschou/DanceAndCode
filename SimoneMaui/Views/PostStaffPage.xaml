@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SimoneMaui.ViewModels"
+             xmlns:behaviors="clr-namespace:SimoneMaui.Behaviors"
+             xmlns:converters="clr-namespace:SimoneMaui.Converters"
+             x:Class="SimoneMaui.Views.PostStaffPage"
+             x:DataType="vm:PostStaffViewModel"
+             Title="PostStaffPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:EnumToListConverter x:Key="EnumToListConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout>
+        <Label 
+            Text="Opret medarbejder!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <Entry 
+            Placeholder="Fulde Navn"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            Text="{Binding Name}" />
+        <Entry     
+            Placeholder="Fødselsdag, format: dd-mm-yyyy" 
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            Text="{Binding TimeOfBirth, Mode=TwoWay}">
+            <Entry.Behaviors>
+                <behaviors:DateEntryBehavior />
+            </Entry.Behaviors>
+        </Entry>
+
+        <Picker Title="Job-funktion"
+         ItemsSource="{Binding Jobroles}"
+         SelectedItem="{Binding Role, Converter={StaticResource EnumToListConverter}}"  />
+
+        <Button 
+            Text="Opret medarbejder"
+            Command="{Binding PostStaffCommand}"
+            VerticalOptions="Center">
+        </Button>
+        
+    </VerticalStackLayout>
+</ContentPage>

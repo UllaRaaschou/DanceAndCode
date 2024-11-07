@@ -3,6 +3,7 @@
     public class CalendarDataModel
     {
         public Guid CalendarId { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public DateOnly SummerHolidayStart { get; set; }
         public DateOnly SummerHolidayEnd { get; set; }
 

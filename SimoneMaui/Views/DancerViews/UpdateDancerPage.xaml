@@ -105,7 +105,7 @@
             Text="Tildel elev en prøvetime på valgte hold"  
             Margin="10, 10, 10, 10" 
             Command="{Binding AddTeamTrialLessonCommand}"
-            IsVisible="{Binding DancerToAddIsSelected}"></Button>
+            IsVisible="{Binding TeamToAddIsSelected}"></Button>
 
 
         </VerticalStackLayout>

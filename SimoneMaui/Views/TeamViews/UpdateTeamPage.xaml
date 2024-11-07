@@ -77,7 +77,7 @@
         </HorizontalStackLayout>
         
         <CollectionView 
-            ItemsSource="{Binding DancersOnTeam}"            
+            ItemsSource="{Binding DancersOnTeam, Mode=OneWay}"            
             SelectionMode="Single"            
             HorizontalOptions="Center"
             VerticalOptions="Center">
@@ -85,7 +85,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">                        
-                    <Label Text="{Binding Name}"
+                    <Label Text="{Binding DancerDetailsString}"
                            HorizontalOptions="Center">
                             <Label.Style>
                                  <Style TargetType="Label">
@@ -100,35 +100,7 @@
                         </Label.Style>
                     </Label>
                         
-                    <Label Text="{Binding TimeOfBirth}"
-                            HorizontalOptions="Center">
-                            <Label.Style>
-                                 <Style TargetType="Label">
-                                         <Setter Property="FontAttributes" Value="None"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IsHighlighted}" Value="True">
-                                                         <Setter Property="FontAttributes" Value="Bold"/>
-                                                     </DataTrigger>
-                                                </Style.Triggers>
-
-                                </Style>
-                            </Label.Style>
-                    </Label>
-                        
-                    <Label Text="{Binding IfTrialLessonIsTrue}"
-                            HorizontalOptions="Center">
-                            <Label.Style>
-                                 <Style TargetType="Label">
-                                        <Setter Property="FontAttributes" Value="None"/>
-                                                <Style.Triggers>
-                                                     <DataTrigger TargetType="Label" Binding="{Binding IsHighlighted}" Value="True">
-                                                             <Setter Property="FontAttributes" Value="Bold"/>
-                                                    </DataTrigger>
-                                                 </Style.Triggers>
-
-                                 </Style>
-                             </Label.Style>
-                    </Label>                        
+                   
                         
                     </StackLayout>
                 </DataTemplate>
