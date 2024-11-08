@@ -40,36 +40,16 @@
             ItemsSource="{Binding Jobroles}"
             SelectedItem="{Binding Role, Converter={StaticResource EnumToListConverter}}"  />
 
+            <Button
+             Text="Opdater"
+             HorizontalOptions="Center"
+             VerticalOptions="Center"
+             Command="{Binding UpdateStaffCommand}">
+           
 
+            </Button>
 
-
-            <Button Text="Fjern eleven fra dette hold"  IsVisible="{Binding DancerIsSignedInToMinimumOneTeam}" Margin="10, 10, 10, 10" Command="{Binding RemoveTeamCommand}" />
-
-            <Label 
-            Text="Valgt dansehold" 
-            Margin="10, 10, 10, 10" 
-            FontSize="24" 
-            HorizontalOptions="Center"
-            IsVisible="{Binding TeamToAddIsSelected}"></Label>
-
-            <HorizontalStackLayout
-            HorizontalOptions="Center">
-                <Label Text="{Binding TeamToAdd.TeamDetailsString, Mode=TwoWay}" FontSize="18" HorizontalOptions="Center"></Label>
-            </HorizontalStackLayout>
-
-            <Button 
-         Text="Tilføj eleven til valgte hold"  
-         Margin="10, 10, 10, 10" 
-         Command="{Binding AddTeamCommand}"
-         IsVisible="{Binding TeamToAddIsSelected}"></Button>
-
-            <Button 
-        Text="Tildel elev en prøvetime på valgte hold"  
-        Margin="10, 10, 10, 10" 
-        Command="{Binding AddTeamTrialLessonCommand}"
-        IsVisible="{Binding TeamToAddIsSelected}"></Button>
-
-
+            
         </VerticalStackLayout>
     </ScrollView>
 
