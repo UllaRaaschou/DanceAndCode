@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using SimoneMaui.Navigation;
 using SimoneMaui.ViewModels;
+using SimoneMaui.ViewModels.StaffViewModels;
 using SimoneMaui.ViewModels.TeamViewModels;
 using SimoneMaui.Views;
 using SimoneMaui.Views.TeamViews;
@@ -62,6 +63,12 @@ namespace SimoneMaui
 
             builder.Services.AddTransient<PostStaffViewModel>();
             builder.Services.AddTransient<PostStaffPage>();
+
+            builder.Services.AddTransient<UpdateStaffViewModel>();
+            builder.Services.AddTransient<UpdateStaffPage>();
+
+            builder.Services.AddTransient<SearchStaffViewModel>();
+            builder.Services.AddTransient<SearchStaffPage>();
 
 
 #if DEBUG

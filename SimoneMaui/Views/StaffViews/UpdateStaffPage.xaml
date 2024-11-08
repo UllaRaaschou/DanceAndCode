@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SimoneMaui.ViewModels.StaffViewModels"
+             xmlns:behaviors="clr-namespace:SimoneMaui.Behaviors"
+             xmlns:converters="clr-namespace:SimoneMaui.Converters"
+             x:Class="SimoneMaui.Views.UpdateStaffPage"
+             x:DataType="vm:UpdateStaffViewModel"
+             
+             Title="UpdateStaffPage">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:EnumToListConverter x:Key="EnumToListConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+
+    <ScrollView>
+        <VerticalStackLayout  
+        Padding="20" >
+            <Label Text="Medarbejder, der skal opdateres:" HorizontalOptions="Center"></Label>
+
+          
+            <Entry
+            Placeholder="Navn"
+            HorizontalOptions="Center"
+            Text="{Binding SelectedStaff.Name, Mode=TwoWay}"></Entry>
+            <Entry     
+            Placeholder="Fødselsdag, format: dd-mm-yyyy" 
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            Text="{Binding SelectedStaff.TimeOfBirth, Mode=TwoWay}">
+                <Entry.Behaviors>
+                    <behaviors:DateEntryBehavior />
+                </Entry.Behaviors>
+            </Entry>
+            <Picker Title="Job-funktion"
+            ItemsSource="{Binding Jobroles}"
+            SelectedItem="{Binding Role, Converter={StaticResource EnumToListConverter}}"  />
+
+
+
+
+            <Button Text="Fjern eleven fra dette hold"  IsVisible="{Binding DancerIsSignedInToMinimumOneTeam}" Margin="10, 10, 10, 10" Command="{Binding RemoveTeamCommand}" />
+
+            <Label 
+            Text="Valgt dansehold" 
+            Margin="10, 10, 10, 10" 
+            FontSize="24" 
+            HorizontalOptions="Center"
+            IsVisible="{Binding TeamToAddIsSelected}"></Label>
+
+            <HorizontalStackLayout
+            HorizontalOptions="Center">
+                <Label Text="{Binding TeamToAdd.TeamDetailsString, Mode=TwoWay}" FontSize="18" HorizontalOptions="Center"></Label>
+            </HorizontalStackLayout>
+
+            <Button 
+         Text="Tilføj eleven til valgte hold"  
+         Margin="10, 10, 10, 10" 
+         Command="{Binding AddTeamCommand}"
+         IsVisible="{Binding TeamToAddIsSelected}"></Button>
+
+            <Button 
+        Text="Tildel elev en prøvetime på valgte hold"  
+        Margin="10, 10, 10, 10" 
+        Command="{Binding AddTeamTrialLessonCommand}"
+        IsVisible="{Binding TeamToAddIsSelected}"></Button>
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+
+
+
+</ContentPage>

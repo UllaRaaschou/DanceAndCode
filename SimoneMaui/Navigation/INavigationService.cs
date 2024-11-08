@@ -31,5 +31,9 @@ public interface INavigationService
     
     Task GoToPostStaff();
     Task GoToSearchStaff();
+    Task GoToUpdateStaff(StaffDto staffDto);
+    Task GoToDeleteStaff(StaffDto staffDto);
+
+
 }
 

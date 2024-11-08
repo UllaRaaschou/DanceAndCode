@@ -45,8 +45,8 @@ namespace SimoneMaui.Navigation
             Routing.RegisterRoute(DELETE_TEAM_PAGE_ROUTE, type: typeof(DeleteTeamPage));
 
             Routing.RegisterRoute(POST_STAFF_PAGE_ROUTE, type: typeof(PostStaffPage));
-            //Routing.RegisterRoute(SEARCH_STAFF_PAGE_ROUTE, type: typeof(SearchStaffPage));
-            //Routing.RegisterRoute(UPDATE_STAFF_PAGE_ROUTE, type: typeof(UpdateStaffPage));
+            Routing.RegisterRoute(SEARCH_STAFF_PAGE_ROUTE, type: typeof(SearchStaffPage));
+            Routing.RegisterRoute(UPDATE_STAFF_PAGE_ROUTE, type: typeof(UpdateStaffPage));
             //Routing.RegisterRoute(DELETE_STAFF_PAGE_ROUTE, type: typeof(DeleteStaffPage));
         }
 
@@ -139,6 +139,18 @@ namespace SimoneMaui.Navigation
         public async Task GoToSearchStaff()
         {
             await Shell.Current.GoToAsync(SEARCH_STAFF_PAGE_ROUTE);
+        }
+
+        public Task GoToUpdateStaff(StaffDto selectedStaff)
+        {
+            var parameters = new Dictionary<string, object> { { "staffDto", selectedStaff } };
+            return Shell.Current.GoToAsync(UPDATE_STAFF_PAGE_ROUTE, parameters);
+        }
+
+        public Task GoToDeleteStaff(StaffDto selectedStaff)
+        {
+            var parameters = new Dictionary<string, object> { { "staffDto", selectedStaff } };
+            return Shell.Current.GoToAsync(DELETE_STAFF_PAGE_ROUTE, parameters);
         }
 
     }

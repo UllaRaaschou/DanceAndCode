@@ -14,11 +14,20 @@ namespace SimoneAPI.Tobe.Features.StaffMembers
                 TimeOfBirth = dto.TimeOfBirth,
                 Role = dto.Role
             };
-            var staffMember = mapper.Map<Staff>(dto);
-            dBContext.Staffs.Add(staffMember);
+            //var staffMember = mapper.Map<Staff>(dto);
+            dBContext.Staffs.Add(staff);
             await dBContext.SaveChangesAsync();
-            var responceDto = mapper.Map<PostStaffResponceDto>(staffMember);
-            return TypedResults.Created($"/Staffs/{responceDto.StaffId}", responceDto);
+            var responceDto = new PostStaffResponceDto
+            {
+                StaffId = staff.StaffId,
+                Name = staff.Name,
+                TimeOfBirth = staff.TimeOfBirth,
+                Role = staff.Role
+            };
+
+            //var responceDto = mapper.Map<PostStaffResponceDto>(staffMember);
+            return TypedResults.Created("/staffMember", responceDto);
+            //return TypedResults.Created($"/Staffs/{responceDto.StaffId}", responceDto);
 
         }
 
@@ -34,7 +43,7 @@ namespace SimoneAPI.Tobe.Features.StaffMembers
             public Guid StaffId { get; set; }
             public string Name { get; set; } = string.Empty;
             public JobRoleEnum Role { get; set; }
-            public DateOnly TimeofBirth { get; set; }
+            public DateOnly TimeOfBirth { get; set; }
         }
     }
 

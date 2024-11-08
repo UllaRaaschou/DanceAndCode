@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SimoneMaui.ViewModels.StaffViewModels"
+             x:Class="SimoneMaui.Views.SearchStaffPage"
+             x:DataType="vm:SearchStaffViewModel"
+             Title="SearchStaffPage">
+
+
+
+    <ScrollView>
+        <VerticalStackLayout 
+              Padding="20" >
+            <Label Text="Fremsøg medarbejder" FontSize="24" HorizontalOptions="Center"></Label>
+
+            <HorizontalStackLayout
+              VerticalOptions="Center"
+              HorizontalOptions="Center">
+                <Button 
+                     Margin="20,10,20,10"
+                     Text="Opdater" 
+                     Command="{Binding WannaUpdateStaffCommand}" 
+                     IsVisible="{Binding IsUpdateButtonVisible}"/>
+                <Button 
+                     Margin="20,10,20,10"
+                     Text="Slet" 
+                     Command="{Binding WannaDeleteStaffCommand}"
+                     IsVisible="{Binding IsDeleteButtonVisible}"/>
+            </HorizontalStackLayout>
+
+
+            <Entry
+                     HorizontalOptions="Center"
+                     Placeholder="Navn"
+                     Text="{Binding NameEntry, Mode=TwoWay}"/>
+
+            <Button
+                     Margin="20,10,20,10"
+                      Text="Søg"
+                      Command="{Binding SearchStaffCommand}"/>
+
+
+            <CollectionView                    
+                     ItemsSource="{Binding StaffDtoList}"
+                     SelectedItem="{Binding SelectedStaff, Mode=TwoWay}"
+                     SelectionMode="Single"
+                     IsVisible="{Binding SearchResultVisible}"
+                     SelectionChangedCommand="{Binding StaffSelectedCommand}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout
+                     HorizontalOptions="Center" Spacing="10">
+                            <Label HorizontalOptions="Center" Text="{Binding Name}"/>
+                            <Label HorizontalOptions="Center" Text="{Binding TimeOfBirth}"/>                            
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+
+
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+
+
+
+</ContentPage>

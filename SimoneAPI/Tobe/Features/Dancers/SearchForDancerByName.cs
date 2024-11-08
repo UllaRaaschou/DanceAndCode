@@ -8,12 +8,6 @@ namespace SimoneAPI.Tobe.Features.Dancer
 {
     public static class SearchForDancerByName
     {
-        //public static void RegisterDancerEndpoint(this WebApplication endpointRouteBuilder)
-        //{
-        //    endpointRouteBuilder.MapGet("/Dancers", SearchForDancer).WithTags("Dancers");
-
-        //}
-
         public static async Task<IResult> SearchForDancer(SimoneDbContext dbContext,
             IMapper mapper, [FromQuery] string name)
         {

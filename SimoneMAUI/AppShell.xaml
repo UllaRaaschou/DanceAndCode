@@ -64,6 +64,30 @@
          ContentTemplate="{DataTemplate views:UpdateTeamPage}"
          Route="updateTeam" />
         </ShellSection>
+
+        <ShellSection Title="Post Staff">
+            <ShellContent
+        Title="Post Staff"
+        ContentTemplate="{DataTemplate views:PostStaffPage}"
+        Route="postStaff" />
+        </ShellSection>
+        <ShellSection Title="Search Staff">
+            <ShellContent
+        Title="Search Staff"
+        ContentTemplate="{DataTemplate views:SearchStaffPage}"
+        Route="searchStaff" />
+        </ShellSection>
+        <ShellSection Title="Update Staff">
+            <ShellContent
+        Title="Update Staff"
+        ContentTemplate="{DataTemplate views:UpdateStaffPage}"
+        Route="updateStaff" />
+        </ShellSection>
+
+
+
+
+
     </ShellItem>
 
 </Shell>

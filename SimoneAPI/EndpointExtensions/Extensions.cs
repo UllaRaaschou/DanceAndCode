@@ -49,7 +49,7 @@ namespace SimoneAPI.EndpointExtensions
             dancersEndpoints.MapGet("/SearchDancerFromNameOnly", SearchDancerFromNameOnly.Search)
                 .WithName("SearchForDancerFromName")
                 .WithOpenApi()
-                .WithSummary("Write a name and search for dancers from one of these properties");
+                .WithSummary("Write a name and search for dancers from this property");
 
             dancersEndpoints.MapGet("/Search", SearchForDancerByName.SearchForDancer)
                 .WithName("SearchForDancer")
@@ -162,6 +162,11 @@ namespace SimoneAPI.EndpointExtensions
 
             staffEndpoints.MapPost("", PostStaff.Post)
                 .WithSummary("Post a new member of staff");
+
+            staffEndpoints.MapGet("/SearchForStaffByName", SearchForStaffByName.Get)
+                .WithName("SearchForStaffFromName")
+                .WithOpenApi()
+                .WithSummary("Write a name and search for staff from this property");
 
             staffWithGuidEndpoints.MapGet("", GetStaffById.Get)
                 .WithSummary("Get a member of staff by Id");
