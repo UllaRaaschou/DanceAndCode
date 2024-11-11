@@ -26,12 +26,12 @@
             <Entry
             Placeholder="Navn"
             HorizontalOptions="Center"
-            Text="{Binding SelectedStaff.Name, Mode=TwoWay}"></Entry>
+            Text="{Binding Name, Mode=TwoWay}"></Entry>
             <Entry     
             Placeholder="Fødselsdag, format: dd-mm-yyyy" 
             VerticalOptions="Center" 
             HorizontalOptions="Center"
-            Text="{Binding SelectedStaff.TimeOfBirth, Mode=TwoWay}">
+            Text="{Binding TimeOfBirth, Mode=TwoWay}">
                 <Entry.Behaviors>
                     <behaviors:DateEntryBehavior />
                 </Entry.Behaviors>

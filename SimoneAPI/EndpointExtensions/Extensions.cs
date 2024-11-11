@@ -158,7 +158,7 @@ namespace SimoneAPI.EndpointExtensions
                 .WithTags("StaffMember")
                 .WithOpenApi();
 
-            var staffWithGuidEndpoints = staffEndpoints.MapGroup("staffEndpoints/{staffId:guid}");
+            var staffWithGuidEndpoints = staffEndpoints.MapGroup("/{staffId:guid}");
 
             staffEndpoints.MapPost("", PostStaff.Post)
                 .WithSummary("Post a new member of staff");
@@ -188,10 +188,10 @@ namespace SimoneAPI.EndpointExtensions
             //    .WithOpenApi()
             //    .WithSummary("Update a member of staff");
 
-            //staffEndpoints.MapDelete("", DeleteStaff.Delete)
-            //    .WithName("DeleteStaff")
-            //    .WithOpenApi()
-            //    .WithSummary("Delete a member of staff");
+            staffWithGuidEndpoints.MapDelete("", DeleteStaff.Delete)
+                .WithName("DeleteStaff")
+                .WithOpenApi()
+                .WithSummary("Delete a member of staff");
 
 
         }

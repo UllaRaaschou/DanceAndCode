@@ -1,7 +1,5 @@
 ﻿
-using SimoneMaui.ViewModels;
 using SimoneMaui.Views;
-using static SimoneMaui.ViewModels.SearchDancerViewmodel;
 using SimoneMaui.ViewModels.Dtos;
 using SimoneMaui.Views.TeamViews;
 
@@ -46,8 +44,8 @@ namespace SimoneMaui.Navigation
 
             Routing.RegisterRoute(POST_STAFF_PAGE_ROUTE, type: typeof(PostStaffPage));
             Routing.RegisterRoute(SEARCH_STAFF_PAGE_ROUTE, type: typeof(SearchStaffPage));
-            //Routing.RegisterRoute(UPDATE_STAFF_PAGE_ROUTE, type: typeof(UpdateStaffPage));
-            //Routing.RegisterRoute(DELETE_STAFF_PAGE_ROUTE, type: typeof(DeleteStaffPage));
+            Routing.RegisterRoute(UPDATE_STAFF_PAGE_ROUTE, type: typeof(UpdateStaffPage));
+            Routing.RegisterRoute(DELETE_STAFF_PAGE_ROUTE, type: typeof(DeleteStaffPage));
         }
 
 

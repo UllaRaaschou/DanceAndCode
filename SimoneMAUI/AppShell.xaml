@@ -83,6 +83,13 @@
         ContentTemplate="{DataTemplate views:UpdateStaffPage}"
         Route="updateStaff" />
         </ShellSection>
+        
+        <ShellSection Title="Delete Staff">
+            <ShellContent
+         Title="Update Staff"
+        ContentTemplate="{DataTemplate views:DeleteStaffPage}"
+        Route="deleteStaff" />
+        </ShellSection>
 
 
 

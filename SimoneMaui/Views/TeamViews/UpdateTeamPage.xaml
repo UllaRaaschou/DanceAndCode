@@ -60,7 +60,7 @@
         Margin="10,10, 10, 10"    
         VerticalOptions="Center" 
         HorizontalOptions="Center" 
-        Text="{Binding SceduledTime}"         
+        Text="{Binding ScheduledTime}"         
         />
 
 
@@ -145,7 +145,11 @@
             Command="{Binding AddTrialDancerCommand}" 
             IsVisible="{Binding DancerIsSelected}"/>
 
-
+        <Button 
+            Text="Opdater og gem"  
+            Margin="10, 10, 10, 10" 
+            Command="{Binding FinalUpdateTeamCommand}"
+            IsVisible="{Binding IsEndOfProcedure}"></Button>
 
 
 

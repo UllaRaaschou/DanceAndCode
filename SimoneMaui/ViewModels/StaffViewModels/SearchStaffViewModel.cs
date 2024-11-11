@@ -30,7 +30,7 @@ namespace SimoneMaui.ViewModels.StaffViewModels
         public AsyncRelayCommand WannaDeleteStaffCommand { get; }
         public AsyncRelayCommand SearchStaffCommand { get; }
 
-
+        
         public RelayCommand ChooseNavigationCommand { get; }
 
         [ObservableProperty]
@@ -66,7 +66,7 @@ namespace SimoneMaui.ViewModels.StaffViewModels
 
         private async Task StaffSelected()
         {
-            OnSelectedStaffChanged();
+            await OnSelectedStaffChanged();
         }
         private async Task OnSelectedStaffChanged()
         {
@@ -75,7 +75,7 @@ namespace SimoneMaui.ViewModels.StaffViewModels
             IsDeleteButtonVisible = true;
             SearchResultVisible = false;
             IsSearchHeaderVisible = false;
-            await NavigationService.GoToUpdateStaff(SelectedStaff);           
+            //await NavigationService.GoToUpdateStaff(SelectedStaff);           
         }
 
 

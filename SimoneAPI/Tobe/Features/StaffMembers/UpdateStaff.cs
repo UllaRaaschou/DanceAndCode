@@ -14,7 +14,7 @@ namespace SimoneAPI.Tobe.Features.StaffMembers
         //    endpointRouteBuilder.MapPut("", Put);
         //}
 
-        public static async Task<Results<NotFound, Ok>> Put(SimoneDbContext dbContext, IMapper mapper, Guid staffId, [FromBody] UpdateStaffDto updateStaffDto)
+        public static async Task<Results<NotFound, Ok>> Put(SimoneDbContext dbContext, Guid staffId, [FromBody] UpdateStaffDto updateStaffDto)
         {
             var staffMember = await dbContext.Staffs.FirstOrDefaultAsync(s => s.StaffId == staffId);
 
@@ -22,7 +22,11 @@ namespace SimoneAPI.Tobe.Features.StaffMembers
             {
                 return TypedResults.NotFound();
             }
-            mapper.Map(updateStaffDto, staffMember);
+
+            staffMember.Name = updateStaffDto.Name;
+            staffMember.TimeOfBirth = updateStaffDto.TimeofBirth;
+            staffMember.Role = updateStaffDto.Role;
+          
             await dbContext.SaveChangesAsync();
 
             return TypedResults.Ok();
@@ -34,7 +38,7 @@ namespace SimoneAPI.Tobe.Features.StaffMembers
             public Guid StaffId { get; set; }
             public string Name { get; set; }
             public JobRoleEnum Role { get; set; }
-            public DateTime TimeofBirth { get; set; }
+            public DateOnly TimeofBirth { get; set; }
             //public ICollection<RegisteredLesson> RegisteredLessons { get; set; } = new HashSet<RegisteredLesson>();
 
         }
@@ -42,7 +46,7 @@ namespace SimoneAPI.Tobe.Features.StaffMembers
         public class RegisteredLessonDto
         {
             public Guid LessonId { get; set; }
-            public DateTime Date { get; set; }
+            public DateOnly Date { get; set; }
             public Guid TeamId { get; set; }
             public Guid StaffId { get; set; }
             //public UpdateStaffDto StaffDtos { get; set; }

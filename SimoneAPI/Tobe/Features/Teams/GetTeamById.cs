@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DbContexts;
+using SimoneAPI.Dtos.Dancer;
 
 namespace SimoneAPI.Tobe.Features.Teams
 {
@@ -32,11 +33,11 @@ namespace SimoneAPI.Tobe.Features.Teams
 
         }
 
-        public class RequestDancerDto
-        {
-            public Guid DancerId { get; set; }
-            public string Name { get; set; } = string.Empty;
+        //public class RequestDancerDto
+        //{
+        //    public Guid DancerId { get; set; }
+        //    public string Name { get; set; } = string.Empty;
 
-        }
+        //}
     }
 }

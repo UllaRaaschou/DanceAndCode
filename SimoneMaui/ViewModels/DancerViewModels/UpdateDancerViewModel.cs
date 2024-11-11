@@ -6,6 +6,8 @@ using SimoneMaui.Navigation;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using SimoneMaui.ViewModels.Dtos;
+using RestSharp.Serializers.Json;
+using System.Text.Json.Serialization;
 
 namespace SimoneMaui.ViewModels
 {
@@ -53,6 +55,10 @@ namespace SimoneMaui.ViewModels
         private bool isStartOfProcedure = true;
 
         [ObservableProperty]
+        private bool isEndOfProcedure = true;
+
+
+        [ObservableProperty]
         private bool wannaAddTeamToADancer = false;
 
        
@@ -70,7 +76,7 @@ namespace SimoneMaui.ViewModels
 
         public RelayCommand RemoveTeamCommand { get; }
         //public RelayCommand WannaSearchCommand { get; }
-        public RelayCommand UpdateDancerCommand { get; }
+        public AsyncRelayCommand FinalUpdateDancerCommand { get; }
         public RelayCommand AddTeamCommand { get; }
         public AsyncRelayCommand WannaPutDancerOnATeamCommand { get; }
         public AsyncRelayCommand WannaDeleteDancerFromTeamCommand { get; }
@@ -89,9 +95,10 @@ namespace SimoneMaui.ViewModels
             RemoveTeamCommand = new RelayCommand(async() => await RemoveTeam(), CanRemoveTeam);
             AddTeamCommand = new RelayCommand(async () => await AddTeam(), CanAddTeam);            
            
-            UpdateDancerCommand = new RelayCommand(async () => await UpdateDancer(), CanUpdate);
+            
 
             AddTeamTrialLessonCommand = new AsyncRelayCommand(AddTeamTrialLesson, CanAddTeamTrialLesson);
+            FinalUpdateDancerCommand = new AsyncRelayCommand(FinalUpdateDancer, CanFinalUpdateDancer);
         }
 
         private bool CanWannaAddTeamTrialLesson()
@@ -198,7 +205,7 @@ namespace SimoneMaui.ViewModels
             }
         }
 
-        private bool CanUpdate()
+        private bool CanFinalUpdateDancer()
         {
             var dataWritten = !string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(TimeOfBirth);
             if (dataWritten == true && SelectedDancer != null)
@@ -209,28 +216,26 @@ namespace SimoneMaui.ViewModels
         }
 
 
-       public async Task UpdateDancer()
+       public async Task FinalUpdateDancer()
         {
             if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate))
             {
                 var options = new RestClientOptions("https://localhost:7163");
-                var client = new RestClient(options);
+                var client = new RestClient(options, configureSerialization: s =>
+                {
+                    s.UseSystemTextJson(new JsonSerializerOptions
+                    {
+                        Converters = { new JsonStringEnumConverter() }
+                    });
+                });
                 // The cancellation token comes from the caller. You can still make a call without it.
                 var request = new RestRequest($"/dancers/{SelectedDancer.DancerId}", Method.Put);
 
                 request.AddJsonBody(new { Name, TimeOfBirth = parsedDate });
 
-                var returnedStatus = await client.ExecutePutAsync(request, CancellationToken.None);
+                var returnedStatus = await client.PutAsync<DancerDto>(request, CancellationToken.None);
 
-                if (!returnedStatus.IsSuccessStatusCode)
-                {
-                    JsonSerializerOptions _options = new();
-                    _options.PropertyNameCaseInsensitive = true;
-
-                    ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedStatus.Content ?? "{}", _options)!;
-
-                }
-
+               
                 SelectedDancer = null;
                 //DancerDtoList.Clear();
 
@@ -246,13 +251,13 @@ namespace SimoneMaui.ViewModels
         partial void OnNameChanged(string? newValue)
         {
             Name = ToTitleCase(newValue);
-            UpdateDancerCommand.NotifyCanExecuteChanged();
+            FinalUpdateDancerCommand.NotifyCanExecuteChanged();
         }
 
         partial void OnTimeOfBirthChanged(string? newValue)
         {
             TimeOfBirth = newValue;
-            UpdateDancerCommand.NotifyCanExecuteChanged();
+            FinalUpdateDancerCommand.NotifyCanExecuteChanged();
         }
 
         private string ToTitleCase(string? input)

@@ -6,6 +6,8 @@ using SimoneMaui.Navigation;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using SimoneMaui.ViewModels.Dtos;
+using RestSharp.Serializers.Json;
+using System.Text.Json.Serialization;
 
 namespace SimoneMaui.ViewModels
 {
@@ -23,13 +25,16 @@ namespace SimoneMaui.ViewModels
         private string? number;
 
         [ObservableProperty]
-        private string? sceduledTime;
+        private string? scheduledTime;
 
         [ObservableProperty]
         private TeamDto? selectedTeam;
 
         [ObservableProperty]
         private DancerDto? selectedDancer;
+
+        [ObservableProperty]
+        private bool isEndOfProcedure = true;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Count))]
@@ -97,7 +102,9 @@ namespace SimoneMaui.ViewModels
 
         public AsyncRelayCommand AddDancerToTeamCommand { get; }
         public AsyncRelayCommand DeleteDancerFromTeamCommand { get; }
-      
+        public AsyncRelayCommand FinalUpdateTeamCommand { get; }
+
+
 
         public UpdateTeamViewModel(INavigationService navigationService)
         {
@@ -106,7 +113,38 @@ namespace SimoneMaui.ViewModels
             WannaDeleteDancerCommand = new AsyncRelayCommand(WannaDeleteDancer, CanWannaDeleteDancer);
             WannaAddTrialDancerCommand = new AsyncRelayCommand(WannaAddTrialDancer, CanWannaAddTrialDancer);
             AddDancerToTeamCommand = new AsyncRelayCommand(AddDancerToTeam, CanAddDancerToTeam);
-            AddTrialDancerCommand = new AsyncRelayCommand(AddTrialDancer, CanAddTrialDancer);   
+            AddTrialDancerCommand = new AsyncRelayCommand(AddTrialDancer, CanAddTrialDancer);
+            FinalUpdateTeamCommand = new AsyncRelayCommand(FinalUpdateTeam, CanFinalUpdateTeam);
+        }
+
+        private bool CanFinalUpdateTeam()
+        {
+            return selectedTeam != null;
+        }
+
+        private async Task FinalUpdateTeam()
+        {
+                var options = new RestClientOptions("https://localhost:7163");
+                var client = new RestClient(options, configureSerialization: s =>
+                {
+                    s.UseSystemTextJson(new JsonSerializerOptions
+                    {
+                        Converters = { new JsonStringEnumConverter() }
+                    });
+                });
+                // The cancellation token comes from the caller. You can still make a call without it.
+                var request = new RestRequest($"/Teams", Method.Put);
+
+                request.AddJsonBody(new { SelectedTeam!.TeamId, Number, Name, ScheduledTime, DancersOnTeam  });
+
+                var returnedStatus = await client.PutAsync<TeamDto>(request, CancellationToken.None);
+
+
+                SelectedDancer = null;
+                //DancerDtoList.Clear();
+
+
+          
         }
 
         private bool CanAddTrialDancer()
@@ -267,7 +305,7 @@ namespace SimoneMaui.ViewModels
                     SelectedTeam = teamDto;
                     Name = teamDto.Name;
                     Number = teamDto.Number;
-                    SceduledTime = teamDto.SceduledTime;
+                    ScheduledTime = teamDto.SceduledTime;
                     DancersOnTeam = new ObservableCollection<DancerDto>(teamDto.DancersOnTeam);
 
                 }

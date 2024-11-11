@@ -107,6 +107,14 @@
             Command="{Binding AddTeamTrialLessonCommand}"
             IsVisible="{Binding TeamToAddIsSelected}"></Button>
 
+            <Button 
+            Text="Opdater og gem"  
+            Margin="10, 10, 10, 10" 
+            Command="{Binding FinalUpdateDancerCommand}"
+            IsVisible="{Binding IsEndOfProcedure}"></Button>
+
+
+
 
         </VerticalStackLayout>
     </ScrollView>

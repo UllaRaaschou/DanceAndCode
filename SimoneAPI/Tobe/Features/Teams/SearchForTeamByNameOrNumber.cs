@@ -69,7 +69,9 @@ namespace SimoneAPI.Tobe.Features
         public Guid DancerId { get; set; }
         public string Name { get; set; } = string.Empty;
         public DateOnly TimeOfBirth { get; set; }
-           
+        public bool IsTrialLesson { get; set; } = false;
+        public DateOnly LastDanceDate { get; set; } = DateOnly.MinValue;
+
     }
 
 
