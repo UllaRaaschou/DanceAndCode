@@ -9,6 +9,13 @@
     <ScrollView>
         <VerticalStackLayout 
               Padding="20" >
+
+            <Button
+            Text="Til forsiden"
+            Command="{Binding NavigateToFirstPageCommand}"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            Margin="0,0,0,20"/>
             <Label Text="Fremsøg hold" FontSize="24" HorizontalOptions="Center"></Label>
 
             <HorizontalStackLayout
@@ -64,6 +71,26 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+            <HorizontalStackLayout 
+            Spacing="10" 
+            HorizontalOptions="Center"
+            VerticalOptions="End"
+            >
+                <!-- Tilbage-knap -->
+                <Button 
+                    Text="&lt;&lt; Tilbage"
+                    Command="{Binding NavigateBackCommand}"
+                    IsEnabled="{Binding NavigateBackCommand}" />
+
+                <!-- Frem-knap -->
+                <Button 
+                    Text="Frem &gt;&gt;"
+                    Command="{Binding NavigateForwardCommand}"
+                    IsEnabled="{Binding NavigateForwardCommand}" />
+            </HorizontalStackLayout>
+
+
 
 
         </VerticalStackLayout>

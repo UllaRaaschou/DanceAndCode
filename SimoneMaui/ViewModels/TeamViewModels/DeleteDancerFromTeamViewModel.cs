@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
+using SimoneMaui.Navigation;
 using SimoneMaui.ViewModels.Dtos;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -35,13 +36,30 @@ namespace SimoneMaui.ViewModels.TeamViewModels
 
         [ObservableProperty]
         private string teamDetailsString = string.Empty;
-       
-       
-        public AsyncRelayCommand DeleteDancerFromTeamCommand { get; set; }       
 
-        public DeleteDancerFromTeamViewModel() 
+        public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
+        public AsyncRelayCommand NavigateBackCommand { get; }
+        public AsyncRelayCommand NavigateForwardCommand { get; }
+
+        public async Task NavigateToFirstPage()
         {
+            await NavigationService.GoToFirstPage();
+        }
+
+
+        public AsyncRelayCommand DeleteDancerFromTeamCommand { get; set; }
+        public INavigationService NavigationService { get; private set; }
+
+        private readonly NavigationManager _navigationManager;
+
+        public DeleteDancerFromTeamViewModel(INavigationService navigationService) 
+        {
+            NavigationService = navigationService;
+            _navigationManager = new NavigationManager(navigationService);
             DeleteDancerFromTeamCommand = new AsyncRelayCommand(DeleteDancerFromTeam, CanDeleteDancerFromTeam);
+            NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
+            NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(NavigateToFirstPage);
         }
 
        

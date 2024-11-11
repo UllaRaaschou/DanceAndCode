@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RestSharp;
+using SimoneMaui.Navigation;
 using SimoneMaui.ViewModels.Dtos;
 
 namespace SimoneMaui.ViewModels.StaffViewModels
@@ -20,16 +21,33 @@ namespace SimoneMaui.ViewModels.StaffViewModels
 
        
         public RelayCommand DeleteStaffCommand { get; }
+        public INavigationService NavigationService { get; private set; }
+
+        private readonly NavigationManager _navigationManager;
 
         public event Action<string> StaffDeleted;
 
         [ObservableProperty]
-        private StaffDto? selectedStaff;     
+        private StaffDto? selectedStaff;
 
+        public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
+        public AsyncRelayCommand NavigateBackCommand { get; }
+        public AsyncRelayCommand NavigateForwardCommand { get; }
 
-        public DeleteStaffViewModel()
+        public async Task NavigateToFirstPage()
         {
-            DeleteStaffCommand = new RelayCommand(async () => await DeleteStaff(), CanDelete);            
+            await NavigationService.GoToFirstPage();
+        }
+
+        public DeleteStaffViewModel( INavigationService navigationService)
+        {
+            NavigationService = navigationService;
+            _navigationManager = new NavigationManager(navigationService);
+            DeleteStaffCommand = new RelayCommand(async () => await DeleteStaff(), CanDelete);
+            NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
+            NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(NavigateToFirstPage);
+
         }
 
         private bool CanDelete()

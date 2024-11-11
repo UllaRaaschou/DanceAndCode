@@ -13,6 +13,13 @@
               Padding="20" >
             <Label Text="Fremsøg medarbejder" FontSize="24" HorizontalOptions="Center"></Label>
 
+            <Button
+            Text="Til forsiden"
+            Command="{Binding NavigateToFirstPageCommand}"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            Margin="0,0,0,20"/>
+
             <HorizontalStackLayout
               VerticalOptions="Center"
               HorizontalOptions="Center">
@@ -57,7 +64,23 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
+            <HorizontalStackLayout 
+             Spacing="10" 
+            HorizontalOptions="Center"
+            VerticalOptions="End"
+                >
+                <!-- Tilbage-knap -->
+                <Button 
+                    Text="&lt;&lt; Tilbage"
+                    Command="{Binding NavigateBackCommand}"
+                    IsEnabled="{Binding NavigateBackCommand}" />
 
+                <!-- Frem-knap -->
+                <Button 
+                    Text="Frem &gt;&gt;"
+                    Command="{Binding NavigateForwardCommand}"
+                    IsEnabled="{Binding NavigateForwardCommand}" />
+            </HorizontalStackLayout>
 
 
 

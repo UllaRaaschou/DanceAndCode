@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 using SimoneMaui.Navigation;
 using System.Collections.ObjectModel;
@@ -8,24 +7,39 @@ using System.Text.Json;
 using SimoneMaui.ViewModels.Dtos;
 using RestSharp.Serializers.Json;
 using System.Text.Json.Serialization;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace SimoneMaui.ViewModels
 {
-    public partial class UpdateTeamViewModel : ObservableObject, IQueryAttributable
+    public partial class UpdateTeamViewModel : ObservableValidator, IQueryAttributable, INotifyPropertyChanged
     {
         public INavigationService NavigationService { get; set; }
 
+        private readonly NavigationManager _navigationManager;
+        [Required]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Navn må fylde mellem 2 og 50 tegn")]
         [ObservableProperty]
         private string? name;
 
         [ObservableProperty]
         private string? timeOfBirth;
 
+        [Required]
+        [Range(1, 200, ErrorMessage = "Holdnummer skal være mellem 1 og 200")]
         [ObservableProperty]
-        private string? number;
+        private int? numberEntry;
 
+        public string Number
+        {
+            get => numberEntry?.ToString() ?? string.Empty;
+            set => numberEntry = int.TryParse(value, out var number) ? number : (int?)null;
+        }
+
+        [TimeValidation(ErrorMessage = "Start- og sluttidspunkt skal være i formatet hh:mm")]
         [ObservableProperty]
-        private string? scheduledTime;
+        private string? startAndEndTime;
+        public string SceduledTime => $"{DayOfWeek} + {StartAndEndTime}";
 
         [ObservableProperty]
         private TeamDto? selectedTeam;
@@ -103,18 +117,32 @@ namespace SimoneMaui.ViewModels
         public AsyncRelayCommand AddDancerToTeamCommand { get; }
         public AsyncRelayCommand DeleteDancerFromTeamCommand { get; }
         public AsyncRelayCommand FinalUpdateTeamCommand { get; }
+        public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
+        public AsyncRelayCommand NavigateBackCommand { get; }
+        public AsyncRelayCommand NavigateForwardCommand { get; }
+
+        public async Task NavigateToFirstPage()
+        {
+            await NavigationService.GoToFirstPage();
+        }
+
 
 
 
         public UpdateTeamViewModel(INavigationService navigationService)
         {
             NavigationService = navigationService;
+            _navigationManager = new NavigationManager(navigationService);
             WannaAddDancerCommand = new AsyncRelayCommand(WannaAddDancer, CanWannaAddDancer);
             WannaDeleteDancerCommand = new AsyncRelayCommand(WannaDeleteDancer, CanWannaDeleteDancer);
             WannaAddTrialDancerCommand = new AsyncRelayCommand(WannaAddTrialDancer, CanWannaAddTrialDancer);
             AddDancerToTeamCommand = new AsyncRelayCommand(AddDancerToTeam, CanAddDancerToTeam);
             AddTrialDancerCommand = new AsyncRelayCommand(AddTrialDancer, CanAddTrialDancer);
             FinalUpdateTeamCommand = new AsyncRelayCommand(FinalUpdateTeam, CanFinalUpdateTeam);
+            NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
+            NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(NavigateToFirstPage);
+
         }
 
         private bool CanFinalUpdateTeam()
@@ -135,7 +163,7 @@ namespace SimoneMaui.ViewModels
                 // The cancellation token comes from the caller. You can still make a call without it.
                 var request = new RestRequest($"/Teams", Method.Put);
 
-                request.AddJsonBody(new { SelectedTeam!.TeamId, Number, Name, ScheduledTime, DancersOnTeam  });
+                request.AddJsonBody(new { SelectedTeam!.TeamId, Number, Name, StartAndEndTime, DancersOnTeam  });
 
                 var returnedStatus = await client.PutAsync<TeamDto>(request, CancellationToken.None);
 
@@ -305,7 +333,7 @@ namespace SimoneMaui.ViewModels
                     SelectedTeam = teamDto;
                     Name = teamDto.Name;
                     Number = teamDto.Number;
-                    ScheduledTime = teamDto.SceduledTime;
+                    StartAndEndTime = teamDto.SceduledTime;
                     DancersOnTeam = new ObservableCollection<DancerDto>(teamDto.DancersOnTeam);
 
                 }

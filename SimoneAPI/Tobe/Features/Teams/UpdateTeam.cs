@@ -26,16 +26,6 @@ namespace SimoneAPI.Tobe.Features.Teams
             teamToUpdate.Name = dto.Name;
             teamToUpdate.ScheduledTime = dto.ScheduledTime;
             teamToUpdate.DayOfWeek = dto.DayOfWeek;
-
-
-            //teamToUpdate.TeamDancerRelations = dto.DancersOnTeam.Select(d =>
-            //new DataModels.TeamDancerRelation()
-            //{
-            //    TeamId = teamToUpdate.TeamId,
-            //    DancerId = d.DancerId,
-            //    IsTrialLesson = d.IsTrialLesson,
-            //    LastDanceDate = d.LastDanceDate
-            //}).ToList();
             try
             {
 

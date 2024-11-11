@@ -6,19 +6,30 @@ using SimoneMaui.Navigation;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using SimoneMaui.ViewModels.Dtos;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace SimoneMaui.ViewModels
 {
-    public partial class SearchTeamViewModel: ObservableObject, IQueryAttributable
+    public partial class SearchTeamViewModel: ObservableValidator, IQueryAttributable, INotifyPropertyChanged
     {
         public INavigationService NavigationService { get; set; }
 
+        private readonly NavigationManager _navigationManager;
+        [Range(1, 200, ErrorMessage = "Holdnummer skal være mellem 1 og 200")]       
         [NotifyPropertyChangedFor(nameof(IsTeamNameEntryEnabled))]
         [NotifyPropertyChangedFor(nameof(IsTeamNumberEntryEnabled))]
         [NotifyCanExecuteChangedFor(nameof(SearchTeamCommand))]
         [ObservableProperty]
-        private string? teamNumberEntry;
+        private int? teamNumberEntry;
 
+        public string Number
+        {
+            get => teamNumberEntry?.ToString() ?? string.Empty;
+            set => teamNumberEntry = int.TryParse(value, out var number) ? number : (int?)null;
+        }
+
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Navn må fylde mellem 2 og 50 tegn")]
         [NotifyPropertyChangedFor(nameof(IsTeamNumberEntryEnabled))]
         [NotifyPropertyChangedFor(nameof(IsTeamNameEntryEnabled))]
         [NotifyCanExecuteChangedFor(nameof(SearchTeamCommand))]
@@ -41,8 +52,8 @@ namespace SimoneMaui.ViewModels
         [ObservableProperty]
         private string name = string.Empty;
 
-        [ObservableProperty]
-        private string number = string.Empty;
+        //[ObservableProperty]
+        //private string number = string.Empty;
 
         [ObservableProperty]
         private string sceduledTime = string.Empty;
@@ -51,7 +62,7 @@ namespace SimoneMaui.ViewModels
         private string teamDetailsString = string.Empty;
 
         public bool IsTeamNumberEntryEnabled => string.IsNullOrWhiteSpace(TeamNameEntry);
-        public bool IsTeamNameEntryEnabled => string.IsNullOrWhiteSpace(TeamNumberEntry);
+        public bool IsTeamNameEntryEnabled => TeamNumberEntry != null;
 
         [ObservableProperty]
         private bool isSearchHeaderVisible = false;
@@ -76,17 +87,30 @@ namespace SimoneMaui.ViewModels
         public AsyncRelayCommand WannaUpdateTeamCommand { get; }
         public AsyncRelayCommand WannaDeleteTeamCommand { get; }        
         public AsyncRelayCommand SearchTeamCommand { get; }
-       
-                
+        public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
+        public AsyncRelayCommand NavigateBackCommand { get; }
+        public AsyncRelayCommand NavigateForwardCommand { get; }
+
+        public async Task NavigateToFirstPage()
+        {
+            await NavigationService.GoToFirstPage();
+        }
+
+
+
 
 
         public SearchTeamViewModel(INavigationService navigationService)
         {
             NavigationService = navigationService;
+            _navigationManager = new NavigationManager(navigationService);
             SearchTeamCommand = new AsyncRelayCommand(SearchTeam, CanSearchTeam);
             WannaUpdateTeamCommand = new AsyncRelayCommand(WannaUpdateTeam, CanWannaUpdateTeam);
             WannaDeleteTeamCommand = new AsyncRelayCommand(WannaDeleteTeam, CanWannaDeleteTeam);
             TeamSelectedCommand = new RelayCommand(TeamSelected);
+            NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
+            NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(NavigateToFirstPage);
         }
 
 
@@ -97,7 +121,7 @@ namespace SimoneMaui.ViewModels
         private async void OnSelectedTeamChanged()
         {
             TeamNameEntry = SelectedTeam.Name;
-            TeamNumberEntry = SelectedTeam.Number.ToString();
+            TeamNumberEntry = int.TryParse(SelectedTeam.Number, out var teamNumberEntry)? teamNumberEntry:(int?)null;
             SceduledTime = SelectedTeam.SceduledTime;
             IsUpdateButtonVisible = true;
             IsDeleteButtonVisible = true;
@@ -142,7 +166,7 @@ namespace SimoneMaui.ViewModels
 
         private bool CanSearchTeam()
         {
-            return (!string.IsNullOrEmpty(TeamNameEntry) || !string.IsNullOrEmpty(TeamNumberEntry));           
+            return (!string.IsNullOrEmpty(TeamNameEntry) || TeamNumberEntry != null);           
         }
 
         public event Action<string> TeamNotFound;
@@ -159,15 +183,15 @@ namespace SimoneMaui.ViewModels
 
             }
 
-            if (!string.IsNullOrEmpty(TeamNumberEntry))
+            if (TeamNumberEntry != null)
             {
-                request.AddOrUpdateParameter("number", TeamNumberEntry);
+                request.AddOrUpdateParameter("number", Number);
             }
 
             var teamCollection = await client.GetAsync<ObservableCollection<TeamDto>>(request, CancellationToken.None);
 
             TeamNameEntry = string.Empty;
-            TeamNumberEntry = string.Empty;
+            TeamNumberEntry = null;
 
             //var teamCollection = new ObservableCollection<TeamDto>(returnedCollection);
 
@@ -194,7 +218,7 @@ namespace SimoneMaui.ViewModels
         {
             
             TeamNameEntry = string.Empty;
-            TeamNumberEntry = string.Empty;
+            TeamNumberEntry = null;
 
             
             IsSearchHeaderVisible = false;

@@ -6,16 +6,21 @@ using SimoneMaui.Navigation;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using SimoneMaui.ViewModels.Dtos;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace SimoneMaui.ViewModels
 {
-    public partial class SearchDancerViewmodel: ObservableObject, IQueryAttributable
+    public partial class SearchDancerViewmodel: ObservableValidator, IQueryAttributable, INotifyPropertyChanged
     {
         public INavigationService NavigationService { get; set; }
 
+        private readonly NavigationManager _navigationManager;
         [ObservableProperty]
         private ObservableCollection<DancerDto> dancerDtoList = new ObservableCollection<DancerDto>();
 
+        [Required]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Navn må fylde mellem 2 og 50 tegn")]
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SearchDancerCommand))]
         private string? nameEntry = string.Empty;
@@ -67,17 +72,29 @@ namespace SimoneMaui.ViewModels
 
         public event Action<string> NoDancerFoundInDb;
 
+        public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
+        public AsyncRelayCommand NavigateBackCommand { get; }
+        public AsyncRelayCommand NavigateForwardCommand { get; }
+
 
 
         public SearchDancerViewmodel(INavigationService navigationService)
         {
             NavigationService = navigationService;
+            _navigationManager = new NavigationManager(navigationService);
             SearchDancerCommand = new AsyncRelayCommand(SearchAsyncDancer, CanSearchAsync);
             WannaUpdateDancerCommand = new AsyncRelayCommand(WannaUpdateDancer, CanWannaUpdateDancer);
             WannaDeleteDancerCommand = new AsyncRelayCommand(WannaDeleteDancer, CanWannaDeleteDancer);
             DancerSelectedCommand = new AsyncRelayCommand(DancerSelected);
+            NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
+            NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(_navigationManager.NavigateToFirstPage);
         }
 
+        //public async Task NavigateToFirstPage()
+        //{
+        //    await NavigationService.GoToFirstPage();
+        //}
         private async Task DancerSelected()
         {
             OnSelectedDancerChanged();

@@ -4,23 +4,31 @@ using RestSharp;
 using SimoneMaui.Navigation;
 using SimoneMaui.ViewModels.Dtos;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace SimoneMaui.ViewModels.StaffViewModels
 {
-    public partial class SearchStaffViewModel : ObservableObject, IQueryAttributable
+    public partial class SearchStaffViewModel : ObservableValidator, IQueryAttributable, INotifyPropertyChanged
     {
         public INavigationService NavigationService { get; set; }
 
+        private readonly NavigationManager _navigationManager;
         [ObservableProperty]
         private ObservableCollection<StaffDto> staffDtoList = new ObservableCollection<StaffDto>();
 
+        [Required]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Navn må fylde mellem 2 og 50 tegn")]
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SearchStaffCommand))]
         private string? nameEntry = string.Empty;
 
+        
         [ObservableProperty]
         private string? name = string.Empty;
 
+        [Required]
+        [RegularExpression(@"^\d{2}-\d{2}-\d{4}$", ErrorMessage = "Dato skal tastes i formatet dd-MM-yyyy")]
         [ObservableProperty]
         private string? timeOfBirth = string.Empty;
 
@@ -51,6 +59,15 @@ namespace SimoneMaui.ViewModels.StaffViewModels
         private bool isSearchHeaderVisible;
 
         public event Action<string> NoStaffFoundInDb;
+        public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
+        public AsyncRelayCommand NavigateBackCommand { get; }
+        public AsyncRelayCommand NavigateForwardCommand { get; }
+
+        public async Task NavigateToFirstPage()
+        {
+            await NavigationService.GoToFirstPage();
+        }
+
 
 
         public SearchStaffViewModel() { }
@@ -58,10 +75,15 @@ namespace SimoneMaui.ViewModels.StaffViewModels
         public SearchStaffViewModel(INavigationService navigationService)
         {
             NavigationService = navigationService;
+            _navigationManager = new NavigationManager(navigationService);
             SearchStaffCommand = new AsyncRelayCommand(SearchAsyncStaff, CanSearchAsync);
             WannaUpdateStaffCommand = new AsyncRelayCommand(WannaUpdateStaff, CanWannaUpdateStaff);
             WannaDeleteStaffCommand = new AsyncRelayCommand(WannaDeleteStaff, CanWannaDeleteStaff);
             StaffSelectedCommand = new AsyncRelayCommand(StaffSelected);
+            NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
+            NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(NavigateToFirstPage);
+
         }
 
         private async Task StaffSelected()

@@ -5,6 +5,7 @@ using RestSharp;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using SimoneMaui.ViewModels.Dtos;
+using SimoneMaui.Navigation;
 
 namespace SimoneMaui.ViewModels
 {
@@ -31,6 +32,9 @@ namespace SimoneMaui.ViewModels
             DeleteDancerCommand.NotifyCanExecuteChanged();
         }
 
+        public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
+        public AsyncRelayCommand NavigateBackCommand { get; }
+        public AsyncRelayCommand NavigateForwardCommand { get; }
         public RelayCommand DeleteDancerCommand { get; }
 
         public event Action<string> DancerDeleted;
@@ -57,18 +61,24 @@ namespace SimoneMaui.ViewModels
             }
         }
 
+        public INavigationService NavigationService { get; private set; }
 
-       
+        private readonly NavigationManager _navigationManager;
 
-        public DeleteDancerViewModel()
+        public DeleteDancerViewModel(INavigationService navigationService)
         {
+            NavigationService = navigationService;
+            _navigationManager = new NavigationManager(navigationService);
             DeleteDancerCommand = new RelayCommand(async () => await DeleteDancer(), CanDelete);
-            ////DancerDtoList = new ObservableCollection<DancerDto>()
-            ////{
-            ////    new DancerDto{Name="Test", TimeOfBirth="01-01-2001" }
-            ////};
+            NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
+            NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(NavigateToFirstPage);
 
 
+        }
+        public async Task NavigateToFirstPage()
+        {
+            await NavigationService.GoToFirstPage();
         }
 
         private bool CanDelete()

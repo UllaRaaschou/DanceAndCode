@@ -1,25 +1,51 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RestSharp;
+using SimoneMaui.Navigation;
 using SimoneMaui.ViewModels.Dtos;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace SimoneMaui.ViewModels
 {
-    public partial class PostDancerViewModel : ObservableObject
+    public partial class PostDancerViewModel : ObservableValidator, INotifyPropertyChanged
 
     {
+        [Required]
+        [RegularExpression(@"^\d{2}-\d{2}-\d{4}$", ErrorMessage = "Dato skal tastes i formatet dd-MM-yyyy")]
         [ObservableProperty]
         private string timeOfBirth = string.Empty;
 
+        [Required]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Navn må fylde mellem 2 og 50 tegn")]
         [ObservableProperty]
         private string name = string.Empty;
 
+        public INavigationService NavigationService { get; private set; }
+
+        private readonly NavigationManager _navigationManager;
+
         public AsyncRelayCommand PostDancerCommand { get; }
-                 
-        public PostDancerViewModel()
+
+        public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
+        public AsyncRelayCommand NavigateBackCommand { get; }
+        public AsyncRelayCommand NavigateForwardCommand { get; }
+
+        //public async Task NavigateToFirstPage()
+        //{
+        //    await NavigationService.GoToFirstPage();
+        //}
+
+        public PostDancerViewModel(INavigationService navigationService)
         {
+            NavigationService = navigationService;
+            _navigationManager = new NavigationManager(navigationService);
             PostDancerCommand = new AsyncRelayCommand(PostDancer, CanPost);
+            NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
+            NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(_navigationManager.NavigateToFirstPage);
+            
         }
 
         public event Action<string> DancerPosted;

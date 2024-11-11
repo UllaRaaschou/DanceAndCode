@@ -8,6 +8,8 @@ namespace SimoneMaui.Navigation
 
     public class NavigationService : INavigationService
     {
+        public const string FIRST_PAGE_ROUTE = "firstPage";
+
         public const string POST_DANCER_PAGE_ROUTE = "postDancer";
         public const string UPDATE_DANCER_PAGE_ROUTE = "updateDancer";
         public const string SEARCH_DANCER_PAGE_ROUTE = "searchDancer";
@@ -31,6 +33,8 @@ namespace SimoneMaui.Navigation
 
         public static void ConfigureRouter()
         {
+            Routing.RegisterRoute(FIRST_PAGE_ROUTE, type: typeof(FirstPage));
+
             Routing.RegisterRoute(POST_DANCER_PAGE_ROUTE, type: typeof(PostDancerPage));
             Routing.RegisterRoute(UPDATE_DANCER_PAGE_ROUTE, type: typeof(UpdateDancerPage));
             Routing.RegisterRoute(SEARCH_DANCER_PAGE_ROUTE, type: typeof(SearchDancerPage));
@@ -48,6 +52,10 @@ namespace SimoneMaui.Navigation
             Routing.RegisterRoute(DELETE_STAFF_PAGE_ROUTE, type: typeof(DeleteStaffPage));
         }
 
+        public async Task GoToFirstPage()
+        {
+            await Shell.Current.GoToAsync(FIRST_PAGE_ROUTE);
+        }
 
 
         public async Task GoToPostDancer()

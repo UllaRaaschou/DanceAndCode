@@ -6,13 +6,16 @@ using System.Text.Json;
 using SimoneMaui.ViewModels.Dtos;
 using CommunityToolkit.Maui.Alerts;
 using System.Collections.ObjectModel;
+using SimoneMaui.Navigation;
 
 namespace SimoneMaui.ViewModels
 {
     public partial class DeleteTeamViewModel : ObservableObject, IQueryAttributable
     {
         public AsyncRelayCommand DeleteTeamCommand { get; }
+        public INavigationService NavigationService { get; private set; }
 
+        private readonly NavigationManager _navigationManager;
         [ObservableProperty]
         private string teamDetailsString;
 
@@ -20,9 +23,23 @@ namespace SimoneMaui.ViewModels
         [NotifyCanExecuteChangedFor(nameof(DeleteTeamCommand))]
         private TeamDto teamToDelete;
 
-        public DeleteTeamViewModel() 
+        public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
+        public AsyncRelayCommand NavigateBackCommand { get; }
+        public AsyncRelayCommand NavigateForwardCommand { get; }
+
+        public async Task NavigateToFirstPage()
         {
+            await NavigationService.GoToFirstPage();
+        }
+
+        public DeleteTeamViewModel(INavigationService navigationService) 
+        {
+            NavigationService = navigationService;
+            _navigationManager = new NavigationManager(navigationService);
             DeleteTeamCommand = new AsyncRelayCommand(DeleteTeamAsync, CanDeleteTeam);
+            NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
+            NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(NavigateToFirstPage);
         }
 
         private bool CanDeleteTeam() 

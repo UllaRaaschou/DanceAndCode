@@ -34,14 +34,14 @@ namespace SimoneAPI.Tobe.Features.Dancer
 
             dancerDataModel.Name = updateDancerDto.Name;
             dancerDataModel.TimeOfBirth = updateDancerDto.TimeOfBirth;
-            var relations = new List<TeamDancerRelation>();
-            updateDancerDto.Teams.Select(t => new TeamDancerRelation
-            {
-                TeamId = t.TeamId,
-                DancerId = updateDancerDto.DancerId,                
-                IsTrialLesson = false,
-                LastDanceDate = t.LastDancedate
-            });
+            //var relations = new List<TeamDancerRelation>();
+            //updateDancerDto.Teams.Select(t => new TeamDancerRelation
+            //{
+            //    TeamId = t.TeamId,
+            //    DancerId = updateDancerDto.DancerId,                
+            //    IsTrialLesson = false,
+            //    LastDanceDate = t.LastDancedate
+            //});
                       
 
             await dbContext.SaveChangesAsync();

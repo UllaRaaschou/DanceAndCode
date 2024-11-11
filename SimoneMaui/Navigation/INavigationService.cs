@@ -3,7 +3,7 @@
 namespace SimoneMaui.Navigation;
 public interface INavigationService
 {
-
+    Task GoToFirstPage();
     Task GoToPostDancer();
 
     Task GoToSearchDancer();

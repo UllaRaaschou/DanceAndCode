@@ -1,11 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RestSharp;
+using SimoneMaui.Navigation;
 using SimoneMaui.ViewModels.Dtos;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace SimoneMaui.ViewModels.StaffViewModels
 {
-    public partial class UpdateStaffViewModel: ObservableObject, IQueryAttributable
+    public partial class UpdateStaffViewModel: ObservableValidator, IQueryAttributable, INotifyPropertyChanged
     {
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(UpdateStaffCommand))]
@@ -14,7 +17,11 @@ namespace SimoneMaui.ViewModels.StaffViewModels
         public AsyncRelayCommand UpdateStaffCommand { get; }
 
         public IReadOnlyList<string> Jobroles { get; } = Enum.GetNames(typeof(MauiJobRoleEnum));
+        public INavigationService NavigationService { get; private set; }
 
+        private readonly NavigationManager _navigationManager;
+        [Required]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Navn må fylde mellem 2 og 50 tegn")]
         [ObservableProperty]
         private string name;
 
@@ -23,10 +30,23 @@ namespace SimoneMaui.ViewModels.StaffViewModels
 
         [ObservableProperty]
         private StaffDto selectedStaff;
+        public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
+        public AsyncRelayCommand NavigateBackCommand { get; }
+        public AsyncRelayCommand NavigateForwardCommand { get; }
 
-        public UpdateStaffViewModel() 
+        public async Task NavigateToFirstPage()
         {
+            await NavigationService.GoToFirstPage();
+        }
+
+        public UpdateStaffViewModel(INavigationService navigationService) 
+        {
+            NavigationService = navigationService;
+            _navigationManager = new NavigationManager(navigationService);
             UpdateStaffCommand = new AsyncRelayCommand(UpdateStaff, CanUpdateStaff);
+            NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
+            NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(NavigateToFirstPage);
         }
 
         private bool CanUpdateStaff()

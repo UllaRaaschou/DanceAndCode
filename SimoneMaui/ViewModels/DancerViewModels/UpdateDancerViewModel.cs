@@ -8,13 +8,17 @@ using System.Text.Json;
 using SimoneMaui.ViewModels.Dtos;
 using RestSharp.Serializers.Json;
 using System.Text.Json.Serialization;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace SimoneMaui.ViewModels
 {
-    public partial class UpdateDancerViewModel : ObservableObject, IQueryAttributable
+    public partial class UpdateDancerViewModel : ObservableValidator, INotifyPropertyChanged, IQueryAttributable
     {
         public INavigationService NavigationService { get; set; }
 
+        private readonly NavigationManager _navigationManager;
         [ObservableProperty]
         private DancerDto? selectedDancer;
 
@@ -34,11 +38,47 @@ namespace SimoneMaui.ViewModels
         [NotifyCanExecuteChangedFor(nameof(RemoveTeamCommand))]
         private TeamDto? selectedTeam;
 
+        [Required]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Navn må fylde mellem 2 og 50 tegn")]
         [ObservableProperty]
+
         private string? name = string.Empty;
 
+        [Required]
+        [RegularExpression(@"^\d{2}-\d{2}-\d{4}$", ErrorMessage = "Dato skal tastes i formatet dd-MM-yyyy")]
         [ObservableProperty]
         private string? timeOfBirth = string.Empty;
+
+        public event Action<string> ErrorInDate;
+        
+        private void ValidateTimeOfBirth()
+        {
+            ClearErrors(nameof(TimeOfBirth));
+
+            if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate))
+            {
+                if (parsedDate.Year < 1940 || parsedDate.Year > DateTime.Now.Year)
+                {
+                    ErrorInDate.Invoke("Året skal være mellem 1940 og nu.");
+                }
+            
+                if (parsedDate.Month < 1 || parsedDate.Month > 12)
+                {
+                    ErrorInDate.Invoke("Vælg korrekt måned");
+                }
+            
+           
+                if (parsedDate.Day < 1 || parsedDate.Day > DateTime.DaysInMonth(parsedDate.Year, parsedDate.Month))
+                {
+                    ErrorInDate.Invoke("Vælg korrekt dato");
+                }
+            }
+            else 
+            {
+                ErrorInDate.Invoke("Vælg korrekt datoformat");
+            }
+
+        }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Count))]
@@ -82,12 +122,15 @@ namespace SimoneMaui.ViewModels
         public AsyncRelayCommand WannaDeleteDancerFromTeamCommand { get; }
         public AsyncRelayCommand WannaAddTeamTrialLessonCommand { get; private set; }
         public AsyncRelayCommand AddTeamTrialLessonCommand { get; }
+        public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
+        public AsyncRelayCommand NavigateBackCommand { get; }
+        public AsyncRelayCommand NavigateForwardCommand { get; }
         public bool DancerToAddIsSelected { get; private set; } = false;
 
         public UpdateDancerViewModel(INavigationService navigationService)
         {
             NavigationService = navigationService;
-
+            _navigationManager = new NavigationManager(navigationService);
             WannaPutDancerOnATeamCommand = new AsyncRelayCommand(WannaPutDancerOnATeam, CanWannaPutDancerOnATeam);
             WannaDeleteDancerFromTeamCommand = new AsyncRelayCommand(WannaDeleteDancerFromTeam, CanWannaDeleteDancerFromTeam);
             WannaAddTeamTrialLessonCommand = new AsyncRelayCommand(WannaAddTeamTrialLesson, CanWannaAddTeamTrialLesson);
@@ -99,7 +142,16 @@ namespace SimoneMaui.ViewModels
 
             AddTeamTrialLessonCommand = new AsyncRelayCommand(AddTeamTrialLesson, CanAddTeamTrialLesson);
             FinalUpdateDancerCommand = new AsyncRelayCommand(FinalUpdateDancer, CanFinalUpdateDancer);
+
+            NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
+            NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(_navigationManager.NavigateToFirstPage);
         }
+
+        //public async Task NavigateToFirstPage()
+        //{
+        //    await NavigationService.GoToFirstPage();
+        //}
 
         private bool CanWannaAddTeamTrialLesson()
         {
@@ -237,6 +289,8 @@ namespace SimoneMaui.ViewModels
 
                
                 SelectedDancer = null;
+
+                await Shell.Current.GoToAsync("///firstPage");
                 //DancerDtoList.Clear();
 
 
@@ -257,6 +311,7 @@ namespace SimoneMaui.ViewModels
         partial void OnTimeOfBirthChanged(string? newValue)
         {
             TimeOfBirth = newValue;
+            ValidateTimeOfBirth();
             FinalUpdateDancerCommand.NotifyCanExecuteChanged();
         }
 

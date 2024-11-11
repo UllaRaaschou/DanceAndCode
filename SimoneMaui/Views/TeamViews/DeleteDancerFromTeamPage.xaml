@@ -11,6 +11,13 @@
     <VerticalStackLayout
         HorizontalOptions="Center"
         >
+
+        <Button
+        Text="Til forsiden"
+        Command="{Binding NavigateToFirstPageCommand}"
+        HorizontalOptions="Start"
+        VerticalOptions="Start"
+        Margin="0,0,0,20"/>
         <Label
             HorizontalOptions="Center"
             Text="{Binding SelectedTeam.TeamDetailsString}">
@@ -78,12 +85,28 @@
             Command="{Binding DeleteDancerFromTeamCommand}"
             VerticalOptions="Center"
             HorizontalOptions="Center" 
-            IsVisible="{Binding DancerToDeleteIsSelected}"/>
-
-      
+            IsVisible="{Binding DancerToDeleteIsSelected}"/>     
 
         </VerticalStackLayout>
-        
+
+        <HorizontalStackLayout 
+         Spacing="10" 
+        HorizontalOptions="Center"
+        VerticalOptions="End"
+        >
+            <!-- Tilbage-knap -->
+            <Button 
+                 Text="&lt;&lt; Tilbage"
+                 Command="{Binding NavigateBackCommand}"
+                IsEnabled="{Binding NavigateBackCommand}" />
+
+            <!-- Frem-knap -->
+            <Button 
+                Text="Frem &gt;&gt;"
+                Command="{Binding NavigateForwardCommand}"
+                IsEnabled="{Binding NavigateForwardCommand}" />
+        </HorizontalStackLayout>
+
     </VerticalStackLayout>
     
     

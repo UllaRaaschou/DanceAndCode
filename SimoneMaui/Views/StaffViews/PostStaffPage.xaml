@@ -15,10 +15,21 @@
     </ContentPage.Resources>
 
     <VerticalStackLayout>
+
+        <Button
+        Text="Til forsiden"
+        Command="{Binding NavigateToFirstPageCommand}"
+        HorizontalOptions="Start"
+        VerticalOptions="Start"
+        Margin="0,0,0,20"/>
+
+
         <Label 
             Text="Opret medarbejder!"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+        
+        
 
         <Entry 
             Placeholder="Fulde Navn"
@@ -44,6 +55,24 @@
             Command="{Binding PostStaffCommand}"
             VerticalOptions="Center">
         </Button>
-        
+
+        <HorizontalStackLayout 
+        Spacing="10" 
+        HorizontalOptions="Center"
+        VerticalOptions="End"
+            >
+            <!-- Tilbage-knap -->
+            <Button 
+                Text="&lt;&lt; Tilbage"
+                Command="{Binding NavigateBackCommand}"
+                IsEnabled="{Binding NavigateBackCommand}" />
+
+            <!-- Frem-knap -->
+            <Button 
+                Text="Frem &gt;&gt;"
+                Command="{Binding NavigateForwardCommand}"
+                IsEnabled="{Binding NavigateForwardCommand}" />
+        </HorizontalStackLayout>
+
     </VerticalStackLayout>
 </ContentPage>
