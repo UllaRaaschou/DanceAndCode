@@ -54,8 +54,9 @@ namespace SimoneMaui.Navigation
 
         public async Task GoToFirstPage()
         {
-            await Shell.Current.GoToAsync(FIRST_PAGE_ROUTE);
+            await Shell.Current.GoToAsync($"{FIRST_PAGE_ROUTE}?unique={Guid.NewGuid()}");
         }
+
 
 
         public async Task GoToPostDancer()
@@ -69,9 +70,10 @@ namespace SimoneMaui.Navigation
             await Shell.Current.GoToAsync(UPDATE_DANCER_PAGE_ROUTE, parameters);
         }
 
-        public async Task GoToUpdateDancer(DancerDto dancerDto, TeamDto teamDto)
+        public async Task GoToUpdateDancer(DancerDto dancerDto, TeamDto teamDto, bool wannaAddTeamToADancer, bool wannaAddTrialLessonToADancer)
         {
-            var parameters = new Dictionary<string, object> { { "dancerDto", dancerDto }, { "teamDto", teamDto } };
+            var parameters = new Dictionary<string, object> { { "dancerDto", dancerDto }, { "teamDto", teamDto },
+                {"WannaAddTeamToADancer",  wannaAddTeamToADancer}, {"WannaAddTrialLessonToADancer", wannaAddTrialLessonToADancer } } ;
             await Shell.Current.GoToAsync(UPDATE_DANCER_PAGE_ROUTE, parameters);
         }
 
@@ -109,11 +111,18 @@ namespace SimoneMaui.Navigation
             var parameters = new Dictionary<string, object> { { "dancerDto", dancerDto } };
             await Shell.Current.GoToAsync(SEARCH_TEAM_PAGE_ROUTE, parameters);
         }
-        public async Task GoToSearchTeam(DancerDto dancerDto, bool wannaAddTeamToADancer)
+        public async Task GoToSearchTeam(DancerDto dancerDto, bool wannaAddTeamToADancer, bool wannaAddTrialLesson)
         {
-            var parameters = new Dictionary<string, object> { { "dancerDto", dancerDto }, { "WannaAddTeamToADancer", wannaAddTeamToADancer } };
+            var parameters = new Dictionary<string, object> { { "dancerDto", dancerDto }, { "WannaAddTeamToADancer", wannaAddTeamToADancer },
+                {"WannaAddTrialLessonToADancer", wannaAddTrialLesson } };
             await Shell.Current.GoToAsync(SEARCH_TEAM_PAGE_ROUTE, parameters);
         }
+
+        //public async Task GoToSearchTeam(DancerDto dancerDto, bool wannaAddTrialLessonToADancer)
+        //{
+        //    var parameters = new Dictionary<string, object> { { "dancerDto", dancerDto }, { "WannaAddTrialLessonToADancer", wannaAddTrialLessonToADancer } };
+        //    await Shell.Current.GoToAsync(SEARCH_TEAM_PAGE_ROUTE, parameters);
+        //}
 
         public Task GoToUpdateTeam(TeamDto selectedTeam)
         {

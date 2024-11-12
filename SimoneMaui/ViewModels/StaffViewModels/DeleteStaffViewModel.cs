@@ -34,10 +34,7 @@ namespace SimoneMaui.ViewModels.StaffViewModels
         public AsyncRelayCommand NavigateBackCommand { get; }
         public AsyncRelayCommand NavigateForwardCommand { get; }
 
-        public async Task NavigateToFirstPage()
-        {
-            await NavigationService.GoToFirstPage();
-        }
+       
 
         public DeleteStaffViewModel( INavigationService navigationService)
         {
@@ -46,7 +43,7 @@ namespace SimoneMaui.ViewModels.StaffViewModels
             DeleteStaffCommand = new RelayCommand(async () => await DeleteStaff(), CanDelete);
             NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
             NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
-            NavigateToFirstPageCommand = new AsyncRelayCommand(NavigateToFirstPage);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(_navigationManager.NavigateToFirstPage);
 
         }
 

@@ -19,20 +19,11 @@ namespace SimoneMaui.ViewModels
         public INavigationService NavigationService { get; set; }
 
         private readonly NavigationManager _navigationManager;
+
+
         [ObservableProperty]
         private DancerDto? selectedDancer;
-
-        partial void OnSelectedDancerChanged(DancerDto? value)
-        {
-            if (value != null)
-            {
-                Name = value.Name;
-                TimeOfBirth = value.TimeOfBirth;
-                Teams = value.Teams;
-            }
-        }
-
-
+        
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(TeamDetailsString))]
         [NotifyCanExecuteChangedFor(nameof(RemoveTeamCommand))]
@@ -41,55 +32,20 @@ namespace SimoneMaui.ViewModels
         [Required]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Navn må fylde mellem 2 og 50 tegn")]
         [ObservableProperty]
-
         private string? name = string.Empty;
 
         [Required]
-        [RegularExpression(@"^\d{2}-\d{2}-\d{4}$", ErrorMessage = "Dato skal tastes i formatet dd-MM-yyyy")]
         [ObservableProperty]
-        private string? timeOfBirth = string.Empty;
-
-        public event Action<string> ErrorInDate;
-        
-        private void ValidateTimeOfBirth()
-        {
-            ClearErrors(nameof(TimeOfBirth));
-
-            if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate))
-            {
-                if (parsedDate.Year < 1940 || parsedDate.Year > DateTime.Now.Year)
-                {
-                    ErrorInDate.Invoke("Året skal være mellem 1940 og nu.");
-                }
-            
-                if (parsedDate.Month < 1 || parsedDate.Month > 12)
-                {
-                    ErrorInDate.Invoke("Vælg korrekt måned");
-                }
-            
-           
-                if (parsedDate.Day < 1 || parsedDate.Day > DateTime.DaysInMonth(parsedDate.Year, parsedDate.Month))
-                {
-                    ErrorInDate.Invoke("Vælg korrekt dato");
-                }
-            }
-            else 
-            {
-                ErrorInDate.Invoke("Vælg korrekt datoformat");
-            }
-
-        }
+        private string? timeOfBirth = string.Empty;      
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Count))]
         [NotifyPropertyChangedFor(nameof(DancerIsSignedInToMinimumOneTeam))]
         private ObservableCollection<TeamDto> teams;
 
-
-        public int? Count => Teams?.Count() ?? 0;
-
-        public bool DancerIsSignedInToMinimumOneTeam => (Count > 0 && SelectedTeam != null);
-        public string TeamDetailsString => SelectedTeam?.TeamDetailsString ?? "";
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(TeamToAddIsSelected))]
+        private TeamDto? teamToAdd;
 
         [ObservableProperty]
         private bool isStartOfProcedure = true;
@@ -97,25 +53,24 @@ namespace SimoneMaui.ViewModels
         [ObservableProperty]
         private bool isEndOfProcedure = true;
 
-
         [ObservableProperty]
         private bool wannaAddTeamToADancer = false;
-
-       
-
-
-        public bool TeamToAddIsSelected => teamToAdd != null;
-
+        
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(TeamToAddIsSelected))]
-        private TeamDto? teamToAdd;
+        private bool wannaAddTrialLessonToADancer = false;
 
         [ObservableProperty]
         private bool isTrialLesson = false;
 
 
+
+        public int? Count => Teams?.Count() ?? 0;
+        public bool DancerIsSignedInToMinimumOneTeam => (Count > 0 && SelectedTeam != null);
+        public string TeamDetailsString => SelectedTeam?.TeamDetailsString ?? "";      
+        public bool TeamToAddIsSelected => teamToAdd != null;
+
+
         public RelayCommand RemoveTeamCommand { get; }
-        //public RelayCommand WannaSearchCommand { get; }
         public AsyncRelayCommand FinalUpdateDancerCommand { get; }
         public RelayCommand AddTeamCommand { get; }
         public AsyncRelayCommand WannaPutDancerOnATeamCommand { get; }
@@ -125,7 +80,47 @@ namespace SimoneMaui.ViewModels
         public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
         public AsyncRelayCommand NavigateBackCommand { get; }
         public AsyncRelayCommand NavigateForwardCommand { get; }
-        public bool DancerToAddIsSelected { get; private set; } = false;
+        public bool DancerToAddIsSelected { get; private set; } = false;       
+        public bool TimeOfBirthValidated => ValidateTimeOfBirth(TimeOfBirth);
+        public bool ValidateTimeOfBirth(string value)
+        {
+            if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate))
+            {
+                if (parsedDate.Year < 1940 || parsedDate.Year > DateTime.Now.Year)
+                {
+                    ErrorInDate.Invoke("Året skal være mellem 1940 og nu.");
+                    return false;
+                }
+
+                //if (parsedDate.Month < 1 || parsedDate.Month > 12)
+                //{
+                //    ErrorInDate.Invoke("Vælg korrekt måned");
+                //    return false;
+                //}
+
+                //if (parsedDate.Day < 1 || parsedDate.Day > DateTime.DaysInMonth(parsedDate.Year, parsedDate.Month))
+                //{
+                //    ErrorInDate.Invoke("Vælg korrekt dato");
+                //    return false;
+                //}
+                else
+                {
+                    TimeOfBirth = value;
+                    return true;
+                }
+            }
+            else
+            {
+                ErrorInDate.Invoke("Problemer med datoformatet");
+                return false;
+            }
+        }
+
+        public event Action<string> ErrorInDate;
+        public event Action<string> TellUserToChoseTeam;
+
+
+
 
         public UpdateDancerViewModel(INavigationService navigationService)
         {
@@ -136,9 +131,7 @@ namespace SimoneMaui.ViewModels
             WannaAddTeamTrialLessonCommand = new AsyncRelayCommand(WannaAddTeamTrialLesson, CanWannaAddTeamTrialLesson);
 
             RemoveTeamCommand = new RelayCommand(async() => await RemoveTeam(), CanRemoveTeam);
-            AddTeamCommand = new RelayCommand(async () => await AddTeam(), CanAddTeam);            
-           
-            
+            AddTeamCommand = new RelayCommand(async () => await AddTeam(), CanAddTeam);       
 
             AddTeamTrialLessonCommand = new AsyncRelayCommand(AddTeamTrialLesson, CanAddTeamTrialLesson);
             FinalUpdateDancerCommand = new AsyncRelayCommand(FinalUpdateDancer, CanFinalUpdateDancer);
@@ -148,49 +141,52 @@ namespace SimoneMaui.ViewModels
             NavigateToFirstPageCommand = new AsyncRelayCommand(_navigationManager.NavigateToFirstPage);
         }
 
-        //public async Task NavigateToFirstPage()
-        //{
-        //    await NavigationService.GoToFirstPage();
-        //}
 
+
+
+        // Ønsker at tildele Prøvetime
         private bool CanWannaAddTeamTrialLesson()
         {
             return SelectedDancer != null;
         }
-
         private async Task WannaAddTeamTrialLesson()
         {
-            WannaAddTeamToADancer = true;
-            
-            await NavigationService.GoToSearchTeam(SelectedDancer, WannaAddTeamToADancer);
+            WannaAddTeamToADancer = false;
+            WannaAddTrialLessonToADancer = true;
+
+            await NavigationService.GoToSearchTeam(SelectedDancer, WannaAddTeamToADancer, WannaAddTrialLessonToADancer); 
         }
 
+
+
+        // Tildel Prøvetime
         private bool CanAddTeamTrialLesson()
         {
             return (SelectedDancer != null && TeamToAdd != null);
         }
-
         private async Task AddTeamTrialLesson()
         {
             IsTrialLesson = true;
             await AddTeam();
         }
 
-        public event Action<string> TellUserToChoseTeam;
+       
 
-
+        // Ønsker at sætte elev på dansehold
         private bool CanWannaPutDancerOnATeam()
         {
+            WannaAddTeamToADancer = true;
+            WannaAddTrialLessonToADancer = false;
             return SelectedDancer != null;
         }
-        private async Task WannaPutDancerOnATeam()
-        {
+        private async Task WannaPutDancerOnATeam()       {
 
-            WannaAddTeamToADancer = true;
-            await NavigationService.GoToSearchTeam(SelectedDancer, WannaAddTeamToADancer);
+            
+            await NavigationService.GoToSearchTeam(SelectedDancer, WannaAddTeamToADancer, WannaAddTrialLessonToADancer);
         }
 
 
+        // Ønsker at slette elev fra dansehold
         private bool CanWannaDeleteDancerFromTeam()
         {
             return SelectedDancer != null;
@@ -200,6 +196,8 @@ namespace SimoneMaui.ViewModels
             TellUserToChoseTeam.Invoke("Vælg hold, som eleven skal slettes på");
         }
 
+
+        // Sletter elev fra dansehold
         private bool CanRemoveTeam()
         {
             if (SelectedDancer != null && SelectedTeam != null)
@@ -227,7 +225,7 @@ namespace SimoneMaui.ViewModels
         }
 
         
-
+        //Sætter eleven på et dansehold
         private bool CanAddTeam() 
         {
             if (selectedDancer != null && teamToAdd != null)
@@ -236,7 +234,6 @@ namespace SimoneMaui.ViewModels
             }
             return false;
         }
-
         public async Task AddTeam()
         {
             var options = new RestClientOptions("https://localhost:7163");
@@ -257,6 +254,8 @@ namespace SimoneMaui.ViewModels
             }
         }
 
+
+        // Opdater og Gem-funktionen
         private bool CanFinalUpdateDancer()
         {
             var dataWritten = !string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(TimeOfBirth);
@@ -266,54 +265,84 @@ namespace SimoneMaui.ViewModels
             }
             return false;
         }
-
-
        public async Task FinalUpdateDancer()
         {
-            if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate))
+            ValidateTimeOfBirth(TimeOfBirth);
+            if (TimeOfBirthValidated == true) 
             {
-                var options = new RestClientOptions("https://localhost:7163");
-                var client = new RestClient(options, configureSerialization: s =>
+                if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate))
                 {
-                    s.UseSystemTextJson(new JsonSerializerOptions
+                    var options = new RestClientOptions("https://localhost:7163");
+                    var client = new RestClient(options, configureSerialization: s =>
                     {
-                        Converters = { new JsonStringEnumConverter() }
+                        s.UseSystemTextJson(new JsonSerializerOptions
+                        {
+                            Converters = { new JsonStringEnumConverter() }
+                        });
                     });
-                });
-                // The cancellation token comes from the caller. You can still make a call without it.
-                var request = new RestRequest($"/dancers/{SelectedDancer.DancerId}", Method.Put);
+                    // The cancellation token comes from the caller. You can still make a call without it.
+                    var request = new RestRequest($"/dancers/{SelectedDancer.DancerId}", Method.Put);
 
-                request.AddJsonBody(new { Name, TimeOfBirth = parsedDate });
+                    request.AddJsonBody(new { Name, TimeOfBirth = parsedDate });
 
-                var returnedStatus = await client.PutAsync<DancerDto>(request, CancellationToken.None);
-
-               
-                SelectedDancer = null;
-
-                await Shell.Current.GoToAsync("///firstPage");
-                //DancerDtoList.Clear();
+                    var returnedStatus = await client.PutAsync<DancerDto>(request, CancellationToken.None);
 
 
-            }
-            else
-            {
-                await Application.Current.MainPage.DisplayAlert("Fejl", "Ugyldigt datoformat. Brug venligst dd-MM-yyyy.", "OK");
-            }
+                    SelectedDancer = null;
+
+
+
+                    await Shell.Current.GoToAsync("///firstPage");
+                    //DancerDtoList.Clear();
+
+
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Fejl", "Ugyldigt datoformat. Brug venligst dd-MM-yyyy.", "OK");
+                }
+            }           
         }
 
 
+        partial void OnSelectedDancerChanged(DancerDto? value)
+        {
+            if (value != null)
+            {
+                Name = value.Name;
+                TimeOfBirth = value.TimeOfBirth;
+                Teams = value.Teams;
+            }
+        }
         partial void OnNameChanged(string? newValue)
         {
             Name = ToTitleCase(newValue);
+            if (SelectedDancer != null)
+            {
+                SelectedDancer.Name = newValue;
+            }
             FinalUpdateDancerCommand.NotifyCanExecuteChanged();
         }
 
         partial void OnTimeOfBirthChanged(string? newValue)
         {
-            TimeOfBirth = newValue;
-            ValidateTimeOfBirth();
-            FinalUpdateDancerCommand.NotifyCanExecuteChanged();
+            if(newValue.Length == 10) 
+            {
+                ValidateTimeOfBirth(newValue);
+                if (TimeOfBirthValidated == true)
+                {
+                    TimeOfBirth = newValue;
+
+                    if (SelectedDancer != null)
+                    {
+                        SelectedDancer.TimeOfBirth = newValue;
+                    }
+                    FinalUpdateDancerCommand.NotifyCanExecuteChanged();
+                }
+            }         
         }
+
+
 
         private string ToTitleCase(string? input)
         {
@@ -326,13 +355,8 @@ namespace SimoneMaui.ViewModels
 
             return textInfo.ToTitleCase(input.ToLower());
         }
-
-
-
-
-
         public void ApplyQueryAttributes(IDictionary<string, object> query)
-    {
+        {
             if (query.ContainsKey("dancerDto") && query["dancerDto"] is DancerDto dancerDto) 
                
             {
@@ -346,9 +370,16 @@ namespace SimoneMaui.ViewModels
                 TeamToAdd = teamDto;
                 IsStartOfProcedure = false;
             }
-    }
 
+            if (query.ContainsKey("WannaAddTeamToADancer") && query["WannaAddTeamToADancer"] is bool wannaAddTeamToADancer)
+            {
+                WannaAddTeamToADancer = wannaAddTeamToADancer;
+            }
 
+            if(query.ContainsKey("WannaAddTrialLessonToADancer") && query["WannaAddTrialLessonToADancer"] is bool wannaAddTrialLessonToADancer)
+            {
+                WannaAddTrialLessonToADancer = wannaAddTrialLessonToADancer;
+            }
+        }
     }    
-
 }

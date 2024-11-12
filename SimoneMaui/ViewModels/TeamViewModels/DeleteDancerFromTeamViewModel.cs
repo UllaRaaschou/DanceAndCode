@@ -41,12 +41,6 @@ namespace SimoneMaui.ViewModels.TeamViewModels
         public AsyncRelayCommand NavigateBackCommand { get; }
         public AsyncRelayCommand NavigateForwardCommand { get; }
 
-        public async Task NavigateToFirstPage()
-        {
-            await NavigationService.GoToFirstPage();
-        }
-
-
         public AsyncRelayCommand DeleteDancerFromTeamCommand { get; set; }
         public INavigationService NavigationService { get; private set; }
 
@@ -59,7 +53,7 @@ namespace SimoneMaui.ViewModels.TeamViewModels
             DeleteDancerFromTeamCommand = new AsyncRelayCommand(DeleteDancerFromTeam, CanDeleteDancerFromTeam);
             NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
             NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
-            NavigateToFirstPageCommand = new AsyncRelayCommand(NavigateToFirstPage);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(_navigationManager.NavigateToFirstPage);
         }
 
        

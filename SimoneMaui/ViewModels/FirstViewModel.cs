@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Newtonsoft.Json.Linq;
 using SimoneMaui.Navigation;
 
 namespace SimoneMaui.ViewModels
@@ -120,7 +121,20 @@ namespace SimoneMaui.ViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            throw new NotImplementedException();
+            if (query.ContainsKey("unique"))
+            {
+                var uniqueValue = query["unique"] as string;
+                WorkingThemeIsToBeDecided = true;
+                WorkingWithDancer = false;
+                WorkingWithStaff = false;
+                WorkingWithTeam = false;
+                
+                // Du kan tilføje logik her, hvis du har brug for at håndtere den unikke parameter
+            }
         }
+
+
+
+       
     }
 }

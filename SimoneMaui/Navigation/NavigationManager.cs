@@ -18,7 +18,8 @@ namespace SimoneMaui.Navigation
 
         public async Task NavigateToFirstPage()
         {
-            await Shell.Current.GoToAsync("///firstPage");
+            await Shell.Current.GoToAsync($"//firstPage?unique={Guid.NewGuid()}");
+
         }
 
         public async Task NavigateBack()
@@ -30,11 +31,11 @@ namespace SimoneMaui.Navigation
             {
                 _backNavigationHistory.Pop(); // Remove current location
                 var previousPage = _backNavigationHistory.Peek(); // Get the previous page
-                await Shell.Current.GoToAsync($"///{previousPage}");
+                await Shell.Current.GoToAsync($"//{previousPage}");
             }
             else
             {
-                await Shell.Current.GoToAsync("///firstPage");
+                await NavigateToFirstPage();// Shell.Current.GoToAsync("//firstPage");
             }
 
             _forwardNavigationHistory.Push(currentLocation);
@@ -48,7 +49,7 @@ namespace SimoneMaui.Navigation
                 var currentLocation = Shell.Current.CurrentState.Location.ToString();
                 _backNavigationHistory.Push(currentLocation);
 
-                await Shell.Current.GoToAsync($"///{nextPage}");
+                await Shell.Current.GoToAsync($"//{nextPage}");
 
                 _backNavigationHistory.Push(currentLocation);
             }

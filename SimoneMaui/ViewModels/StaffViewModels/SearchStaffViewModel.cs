@@ -63,13 +63,6 @@ namespace SimoneMaui.ViewModels.StaffViewModels
         public AsyncRelayCommand NavigateBackCommand { get; }
         public AsyncRelayCommand NavigateForwardCommand { get; }
 
-        public async Task NavigateToFirstPage()
-        {
-            await NavigationService.GoToFirstPage();
-        }
-
-
-
         public SearchStaffViewModel() { }
 
         public SearchStaffViewModel(INavigationService navigationService)
@@ -82,7 +75,7 @@ namespace SimoneMaui.ViewModels.StaffViewModels
             StaffSelectedCommand = new AsyncRelayCommand(StaffSelected);
             NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
             NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
-            NavigateToFirstPageCommand = new AsyncRelayCommand(NavigateToFirstPage);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(_navigationManager.NavigateToFirstPage);
 
         }
 

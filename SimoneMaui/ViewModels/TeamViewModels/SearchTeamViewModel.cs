@@ -76,8 +76,13 @@ namespace SimoneMaui.ViewModels
         [ObservableProperty]
         private bool searchResultVisible = true;
 
+
         [ObservableProperty]
         private bool wannaAddTeamToADancer = false;
+
+        [ObservableProperty]
+        private bool wannaAddTrialLessonToADancer = false;
+
 
 
 
@@ -90,11 +95,11 @@ namespace SimoneMaui.ViewModels
         public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
         public AsyncRelayCommand NavigateBackCommand { get; }
         public AsyncRelayCommand NavigateForwardCommand { get; }
-
-        public async Task NavigateToFirstPage()
-        {
-            await NavigationService.GoToFirstPage();
-        }
+       
+        //public async Task NavigateToFirstPage()
+        //{
+        //    await NavigationService.GoToFirstPage();
+        //}
 
 
 
@@ -110,7 +115,7 @@ namespace SimoneMaui.ViewModels
             TeamSelectedCommand = new RelayCommand(TeamSelected);
             NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
             NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
-            NavigateToFirstPageCommand = new AsyncRelayCommand(NavigateToFirstPage);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(_navigationManager.NavigateToFirstPage);
         }
 
 
@@ -127,9 +132,9 @@ namespace SimoneMaui.ViewModels
             IsDeleteButtonVisible = true;
             SearchResultVisible = false;
             IsSearchHeaderVisible = false;
-            if(WannaAddTeamToADancer == true) 
+            if(WannaAddTeamToADancer == true || WannaAddTrialLessonToADancer == true) 
             {
-                await NavigationService.GoToUpdateDancer(SelectedDancer, SelectedTeam);
+                await NavigationService.GoToUpdateDancer(SelectedDancer, SelectedTeam, WannaAddTeamToADancer, WannaAddTrialLessonToADancer);
             }
         }
 
@@ -259,6 +264,11 @@ namespace SimoneMaui.ViewModels
             if (query.ContainsKey("WannaAddTeamToADancer") && query["WannaAddTeamToADancer"] is bool wannaAddTeamToADancer)
             {
                 WannaAddTeamToADancer = wannaAddTeamToADancer;
+            }
+
+            if (query.ContainsKey("WannaAddTrialLessonToADancer") && query["WannaAddTrialLessonToADancer"] is bool wannaAddTrialLessonToADancer)
+            {
+                WannaAddTrialLessonToADancer = wannaAddTrialLessonToADancer;
             }
         }
 

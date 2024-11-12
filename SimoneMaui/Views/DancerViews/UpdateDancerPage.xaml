@@ -57,10 +57,10 @@
 
             <Entry
                 HorizontalOptions="Center"
-                Text="{Binding SelectedDancer.Name, Mode=TwoWay}"></Entry>
+                Text="{Binding Name, Mode=TwoWay}"></Entry>
             <Entry
                 HorizontalOptions="Center"
-                Text="{Binding SelectedDancer.TimeOfBirth, Mode=TwoWay}"></Entry>
+                Text="{Binding TimeOfBirth, Mode=TwoWay}"></Entry>
 
 
             <CollectionView
@@ -107,13 +107,13 @@
              Text="Tilføj eleven til valgte hold"  
              Margin="10, 10, 10, 10" 
              Command="{Binding AddTeamCommand}"
-             IsVisible="{Binding TeamToAddIsSelected}"></Button>
+             IsVisible="{Binding WannaAddTeamToADancer}"></Button>
 
             <Button 
             Text="Tildel elev en prøvetime på valgte hold"  
             Margin="10, 10, 10, 10" 
             Command="{Binding AddTeamTrialLessonCommand}"
-            IsVisible="{Binding TeamToAddIsSelected}"></Button>
+            IsVisible="{Binding WannaAddTrialLessonToADancer}"></Button>
 
             <Button 
             Text="Opdater og gem"  

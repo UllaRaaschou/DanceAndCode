@@ -52,12 +52,6 @@ namespace SimoneMaui.ViewModels
         public AsyncRelayCommand NavigateBackCommand { get; }
         public AsyncRelayCommand NavigateForwardCommand { get; }
 
-        public async Task NavigateToFirstPage()
-        {
-            await NavigationService.GoToFirstPage();
-        }
-
-
         public PostTeamViewModel(INavigationService navigationService)
         {
             NavigationService = navigationService;
@@ -65,7 +59,7 @@ namespace SimoneMaui.ViewModels
             PostTeamCommand = new AsyncRelayCommand(PostTeam, CanPost);
             NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
             NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
-            NavigateToFirstPageCommand = new AsyncRelayCommand(NavigateToFirstPage);
+            NavigateToFirstPageCommand = new AsyncRelayCommand(_navigationManager.NavigateToFirstPage);
 
         }
 
