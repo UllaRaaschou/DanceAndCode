@@ -20,7 +20,6 @@ namespace SimoneMaui.ViewModels
 
         private readonly NavigationManager _navigationManager;
 
-
         [ObservableProperty]
         private DancerDto? selectedDancer;
         
@@ -81,7 +80,8 @@ namespace SimoneMaui.ViewModels
         public AsyncRelayCommand NavigateBackCommand { get; }
         public AsyncRelayCommand NavigateForwardCommand { get; }
         public bool DancerToAddIsSelected { get; private set; } = false;       
-        public bool TimeOfBirthValidated => ValidateTimeOfBirth(TimeOfBirth);
+       
+        // public bool TimeOfBirthValidated => ValidateTimeOfBirth(TimeOfBirth);
         public bool ValidateTimeOfBirth(string value)
         {
             if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate))
@@ -267,8 +267,7 @@ namespace SimoneMaui.ViewModels
         }
        public async Task FinalUpdateDancer()
         {
-            ValidateTimeOfBirth(TimeOfBirth);
-            if (TimeOfBirthValidated == true) 
+            if (ValidateTimeOfBirth(TimeOfBirth)) 
             {
                 if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate))
                 {
@@ -326,10 +325,9 @@ namespace SimoneMaui.ViewModels
 
         partial void OnTimeOfBirthChanged(string? newValue)
         {
-            if(newValue.Length == 10) 
+            if(newValue?.Length == 10) 
             {
-                ValidateTimeOfBirth(newValue);
-                if (TimeOfBirthValidated == true)
+                if (ValidateTimeOfBirth(newValue))
                 {
                     TimeOfBirth = newValue;
 
