@@ -62,7 +62,7 @@ namespace SimoneMaui.ViewModels
         private string teamDetailsString = string.Empty;
 
         public bool IsTeamNumberEntryEnabled => string.IsNullOrWhiteSpace(TeamNameEntry);
-        public bool IsTeamNameEntryEnabled => TeamNumberEntry != null;
+        public bool IsTeamNameEntryEnabled => TeamNumberEntry == null;
 
         [ObservableProperty]
         private bool isSearchHeaderVisible = false;

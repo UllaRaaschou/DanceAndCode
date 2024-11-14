@@ -175,13 +175,13 @@ namespace SimoneMaui.ViewModels
         // Ønsker at sætte elev på dansehold
         private bool CanWannaPutDancerOnATeam()
         {
-            WannaAddTeamToADancer = true;
-            WannaAddTrialLessonToADancer = false;
+            
             return SelectedDancer != null;
         }
-        private async Task WannaPutDancerOnATeam()       {
-
-            
+        private async Task WannaPutDancerOnATeam()       
+        {
+            WannaAddTeamToADancer = true;
+            WannaAddTrialLessonToADancer = false;
             await NavigationService.GoToSearchTeam(SelectedDancer, WannaAddTeamToADancer, WannaAddTrialLessonToADancer);
         }
 
@@ -251,6 +251,7 @@ namespace SimoneMaui.ViewModels
 
                 Teams = new ObservableCollection<TeamDto>(validTeams);
                 TeamToAdd = null;
+                WannaAddTeamToADancer = false;
             }
         }
 
@@ -291,7 +292,7 @@ namespace SimoneMaui.ViewModels
 
 
 
-                    await Shell.Current.GoToAsync("///firstPage");
+                    await Shell.Current.GoToAsync($"//firstPage?unique={Guid.NewGuid()}");
                     //DancerDtoList.Clear();
 
 

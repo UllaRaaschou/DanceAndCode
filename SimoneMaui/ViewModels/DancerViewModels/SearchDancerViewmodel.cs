@@ -106,14 +106,14 @@ namespace SimoneMaui.ViewModels
             IsDeleteButtonVisible = true;
             SearchResultVisible = false;
             IsSearchHeaderVisible = false;
-            if(PuttingDancerOnTeam == false) 
-            {
-                await NavigationService.GoToUpdateDancer(SelectedDancer);
-            }
-            if(PuttingDancerOnTeam == true) 
-            {
-                await NavigationService.GoToUpdateTeam(SelectedTeam, SelectedDancer);
-            }
+            //if(PuttingDancerOnTeam == false) 
+            //{
+            //    await NavigationService.GoToUpdateDancer(SelectedDancer);
+            //}
+            //if(PuttingDancerOnTeam == true) 
+            //{
+            //    await NavigationService.GoToUpdateTeam(SelectedTeam, SelectedDancer);
+            //}
             
         }
 
