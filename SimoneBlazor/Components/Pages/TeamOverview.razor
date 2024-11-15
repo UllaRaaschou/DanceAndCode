@@ -1,0 +1,38 @@
+﻿@page "/TeamOverview"
+@attribute [StreamRendering(true)]
+
+<h1>Hold-oversigt</h1>
+
+@if (Teams == null)
+{
+    <p><em>Loading...</em></p>
+}
+
+<table class="table table-light">
+    <thead class="table-primary">
+        <tr>
+            <th></th>
+            <th>Holdnavn</th>
+            <th>Nummer</th>
+            <th>Ugedag</th>
+            <th>StartOgSlutTidspunkter</th>
+            <th>Elever</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var team in Teams)
+        {
+            <tr>
+                <td></td>
+                <td>@team.Name</td>
+                <td>@team.Number</td>
+                <td>@team.DayOfWeek</td>
+                <td>@team.ScheduledTime</td>
+            </tr>
+            
+        }
+
+    </tbody>
+
+</table>
