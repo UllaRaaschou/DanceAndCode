@@ -144,13 +144,13 @@
             HorizontalOptions="Center"
             Text="Føj valgte elev til holdet" 
             Command="{Binding AddDancerToTeamCommand}" 
-            IsVisible="{Binding DancerIsSelected}"/>
+            IsVisible="{Binding PuttingDancerOnTeam}"/>
 
         <Button 
             HorizontalOptions="Center"
             Text="Tildel valgte elev en prøvetime på holdet" 
             Command="{Binding AddTrialDancerCommand}" 
-            IsVisible="{Binding DancerIsSelected}"/>
+            IsVisible="{Binding AddTrialDancerToTeam}"/>
 
         <Button 
             Text="Opdater og gem"  

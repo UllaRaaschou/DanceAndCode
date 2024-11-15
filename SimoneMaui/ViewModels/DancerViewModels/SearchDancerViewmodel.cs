@@ -40,9 +40,11 @@ namespace SimoneMaui.ViewModels
         [ObservableProperty]
         private string teamDetailsString= string.Empty;
 
-        public bool PuttingDancerOnTeam { get; set; } = false;
-       
-       
+        [ObservableProperty] private bool puttingDancerOnTeam;
+        [ObservableProperty] private bool addTrialDancerToTeam;
+
+
+
 
 
         public AsyncRelayCommand DancerSelectedCommand { get; }
@@ -106,15 +108,15 @@ namespace SimoneMaui.ViewModels
             IsDeleteButtonVisible = true;
             SearchResultVisible = false;
             IsSearchHeaderVisible = false;
-            //if(PuttingDancerOnTeam == false) 
-            //{
-            //    await NavigationService.GoToUpdateDancer(SelectedDancer);
-            //}
-            //if(PuttingDancerOnTeam == true) 
-            //{
-            //    await NavigationService.GoToUpdateTeam(SelectedTeam, SelectedDancer);
-            //}
-            
+            if (AddTrialDancerToTeam == true)
+            {
+                await NavigationService.GoToUpdateTeam(SelectedTeam, SelectedDancer, PuttingDancerOnTeam, AddTrialDancerToTeam);
+            }
+            if (PuttingDancerOnTeam == true)
+            {
+                await NavigationService.GoToUpdateTeam(SelectedTeam, SelectedDancer, PuttingDancerOnTeam, AddTrialDancerToTeam);
+            }
+
         }
 
 
@@ -223,10 +225,17 @@ namespace SimoneMaui.ViewModels
             if (query.ContainsKey("puttingDancerOnTeam") && query["puttingDancerOnTeam"] is bool puttingDancerOnTeam)
 
             {
-                PuttingDancerOnTeam = true;
+                PuttingDancerOnTeam = puttingDancerOnTeam;
 
             }
             
+
+            if (query.ContainsKey("addTrialDancerToTeam") && query["addTrialDancerToTeam"] is bool addTrialDancerToTeam)
+
+            {
+                AddTrialDancerToTeam = addTrialDancerToTeam;
+
+            }
         }
     }
 }
