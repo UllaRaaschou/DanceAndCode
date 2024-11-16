@@ -1,1 +1,33 @@
-﻿@page "/SpecificTeamDetails/{TeamId:Guid}"
+﻿@page "/SpecificTeamDetails/{Number:int}"
+@rendermode InteractiveServer   // sætter signalR-connection op
+
+<section class="specific-team-details">
+    <h1 class="page-title"> Hold @Team.Number - @Team.Name - @Team.DayOfWeek - @Team.ScheduledTime</h1>
+
+    <br />
+
+    <table class="table table-light">
+        <thead class="table-primary">
+            <tr>
+                <th></th>
+                <th>Elever</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dancer in Team.DancersOnTeam)
+            {
+                <tr>
+                    <td></td>
+                    <td>@dancer.Name</td>      
+                    <td>@dancer.IsAttending</td>
+                    <td> 
+                        <div class="mt-2">
+                            <button type="button" @onclick="(() => ChangeAttendanceStatus(dancer.DancerId))" class="btn btn-outline-primary me-1"> Skift tilstedeværelsesStatus </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section> 

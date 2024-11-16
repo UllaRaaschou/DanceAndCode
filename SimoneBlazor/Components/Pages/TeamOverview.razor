@@ -1,6 +1,7 @@
 ﻿@page "/TeamOverview"
 @attribute [StreamRendering(true)]
 
+<PageTitle>@Title</PageTitle>
 <h1>Hold-oversigt</h1>
 
 @if (Teams == null)
@@ -29,8 +30,10 @@
                 <td>@team.Number</td>
                 <td>@team.DayOfWeek</td>
                 <td>@team.ScheduledTime</td>
-            </tr>
-            
+                <td>
+                    <a href="@($"SpecificTeamDetails/{team.Number}")" class="btn btn-outline-primary btn-sm mb-1"> Til holdet </a>
+                </td>
+            </tr>            
         }
 
     </tbody>

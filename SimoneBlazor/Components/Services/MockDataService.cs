@@ -6,14 +6,14 @@ namespace SimoneBlazor.Components.Services
 {
     public class MockDataService
     {
-        private static List<TeamBlazor>? _teamBlazors = default!;
+        private static List<TeamBlazor>? _teams = default!;
 
-        public static List<TeamBlazor>? TeamBlazors
+        public static List<TeamBlazor>? Teams
         {
             get
             {
-                _teamBlazors ??= ÍnitializeMockTeams();
-                return _teamBlazors;
+                _teams ??= ÍnitializeMockTeams();
+                return _teams;
             }            
         }
 
