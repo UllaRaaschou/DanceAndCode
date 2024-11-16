@@ -84,6 +84,11 @@ namespace SimoneAPI.EndpointExtensions
                 .WithOpenApi()
                 .WithSummary("Write a team number or a team name/part of a name and the system will return a match if possible");
 
+            teamsEndpoints.MapGet("/all", GetAllDancersOnTeam.Get)
+                .WithName("Get all teams")
+                .WithOpenApi()
+                .WithSummary("Returns a list of all teams");
+
 
             teamsEndpoints.MapPost("", PostTeam.Post)
                 .WithName("PostTeam")

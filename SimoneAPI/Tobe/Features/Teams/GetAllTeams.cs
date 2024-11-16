@@ -10,13 +10,13 @@ namespace SimoneAPI.Tobe.Features.Teams
 {
     public class GetAllTeams
     {
-        
-            public static async Task<IResult> Get(SimoneDbContext dbContext)
-            {
-                var teams = await dbContext.TeamDataModels
-                            .Include(t => t.TeamDancerRelations)
-                            .ThenInclude(tdr => tdr.DancerDataModel)
-                            .ToListAsync();
+
+        public static async Task<IResult> Get(SimoneDbContext dbContext)
+        {
+            var teams = await dbContext.TeamDataModels
+                        .Include(t => t.TeamDancerRelations)
+                        .ThenInclude(tdr => tdr.DancerDataModel)
+                        .ToListAsync();
 
             Collection<TeamDto> teamDtos = new Collection<TeamDto>();
             foreach (var teamDataModel in teams)
@@ -30,26 +30,18 @@ namespace SimoneAPI.Tobe.Features.Teams
                 var dancersOnTeam = new List<DancerDto>();
                 if (teamDataModel.TeamDancerRelations != null)
                 {
-                    dancerIdsOnTeam.AddRange(teamDataModel.TeamDancerRelations.Select(tdr => tdr.DancerId));
+                    dancerIdsOnTeam.AddRange(teamDataModel.TeamDancerRelations
+                        .Where(tdr => tdr.LastDanceDate >= DateOnly.FromDateTime(DateTime.Today))
+                        .Select(tdr => tdr.DancerId));
                     dancersOnTeam.AddRange(await dbContext.DancerDataModels
                         .Where(ddm => dancerIdsOnTeam.Contains(ddm.DancerId))
-                        .Select(ddm => new DancerDto { DancerId = ddm.DancerId, Name = ddm.Name, TimeOfBirth = ddm.TimeOfBirth, LastDanceDate = ddm.LastDanceDate }).ToListAsync());
+                        .Select(ddm => new DancerDto { DancerId = ddm.DancerId, Name = ddm.Name, TimeOfBirth = ddm.TimeOfBirth }).ToListAsync());
                 }
                 teamDto.DancersOnTeam.AddRange(dancersOnTeam);
                 teamDtos.Add(teamDto);
             }
             return TypedResults.Ok(teamDtos);
         }
-            
-                
-
-                            
-
-                return teams != null
-                ? TypedResults.Ok(mapper.Map<RequestTeamDto>(team))
-                : TypedResults.NotFound();
-            }
-
-            
-    }
+    }           
+   
 }
