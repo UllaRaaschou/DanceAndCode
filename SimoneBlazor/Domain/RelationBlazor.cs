@@ -1,4 +1,6 @@
-﻿namespace SimoneBlazor.Domain
+﻿using SimoneAPI.DataModels;
+
+namespace SimoneBlazor.Domain
 {
     public class RelationBlazor
     {    
@@ -9,8 +11,20 @@
         
         public bool IsChecked { get; set; }
 
-        public Dictionary<DateOnly, bool> Attendances { get; set; } = new Dictionary<DateOnly, bool>();
-        
-        
+        public List<Attendance> Attendances { get; set; } = new List<Attendance>();
+
+        public Dictionary<DateOnly, AttendanceBlazor> GetADateToAttendanceDictionary()
+        {
+            return Attendances.ToDictionary(a => a.Date, a => new AttendanceBlazor
+            {
+                AttendanceId = a.AttendanceId,
+                Date = a.Date,
+                IsPresent = a.IsPresent,
+                Note = a.Note
+            });
+        }
+
+
+
     }
 }

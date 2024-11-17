@@ -20,19 +20,19 @@ namespace SimoneBlazor.Components.Pages
         
 
        
-
-        protected async override void OnInitialized()
+        protected async override Task OnInitializedAsync()
         {
             var options = new RestClientOptions("https://localhost:7163");
             var client = new RestClient(options);
 
-            var request1 = new RestRequest("/Teams/TeamId}", Method.Get);
+            var request1 = new RestRequest($"/Teams/{TeamId}", Method.Get);
+
             Team = await client.GetAsync<TeamBlazor>(request1, CancellationToken.None);
 
-            var request2 = new RestRequest("/Relations/{TeamId}", Method.Get);
+            var request2 = new RestRequest($"/Relations/{TeamId}", Method.Get);
             Relations = await client.GetAsync<List<RelationBlazor>>(request2, CancellationToken.None);
 
-            var request3 = new RestRequest("/danceDates/{TeamId}", Method.Get);
+            var request3 = new RestRequest($"/Teams/{TeamId}/DanceDates", Method.Get);
             TeamDanceDates = await client.GetAsync<List<DateOnly>>(request3, CancellationToken.None);
 
           
@@ -42,10 +42,16 @@ namespace SimoneBlazor.Components.Pages
         public void ChangeAttendanceStatus (Guid dancerId, DateOnly date) 
         {
             var relation = Relations.FirstOrDefault(r => r.DancerId == dancerId);
-            if(relation != null && relation.Attendances.ContainsKey(date)) 
+            List<Attendance> attendances = relation.Attendances;
+
+            if(relation != null) 
             {
-                relation.Attendances[date] = !relation.Attendances[date];
-            }
+                var attendance = attendances.FirstOrDefault(a => a.Date == date);
+                if (attendance != null)
+                {
+                    attendance.IsPresent = !attendance.IsPresent;
+                }
+            }            
         }
 
 

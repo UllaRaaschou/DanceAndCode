@@ -29,7 +29,7 @@
                             <button type="button"
                                     @onclick="(() => ChangeAttendanceStatus(relation.DancerId, date))"
                                     class=" btn btn-outline-primary"/>
-                            @(relation.Attendances[date] ? "✔" : "✖")
+                            @(relation.GetADateToAttendanceDictionary().TryGetValue(date, out var attendance) && attendance.IsPresent ? "✔" : "✖")
                         </td>
                     } 
                 </tr>
