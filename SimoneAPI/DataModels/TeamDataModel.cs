@@ -1,4 +1,6 @@
 ﻿
+using SimoneAPI.DbContexts;
+
 namespace SimoneAPI.DataModels
 {
     public class TeamDataModel
@@ -23,11 +25,19 @@ namespace SimoneAPI.DataModels
         }
        
 
-        public List<DateOnly> getDanceDates() 
+        public List<DateOnly> getDanceDates(SimoneDbContext context) 
         {
-            CalendarDataModel calendarDataModel = new CalendarDataModel();
-            var danceDates =DanceDatesCalculator.CalculateDanceDates(calendarDataModel, this);
-            return danceDates;
+            CalendarDataModel? calendarDataModel = context.CalendarDataModels
+                                                    .OrderByDescending(c => c.CreatedDate)
+                                                    .FirstOrDefault();
+            if ((calendarDataModel != null))
+            {
+                var danceDates = DanceDatesCalculator.CalculateDanceDates(context, calendarDataModel, this);
+                return danceDates;
+            }
+            return null;
+
+            
         }
         
     }

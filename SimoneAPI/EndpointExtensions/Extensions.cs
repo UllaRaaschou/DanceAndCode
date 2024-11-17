@@ -84,10 +84,15 @@ namespace SimoneAPI.EndpointExtensions
                 .WithOpenApi()
                 .WithSummary("Write a team number or a team name/part of a name and the system will return a match if possible");
 
-            teamsEndpoints.MapGet("/all", GetAllDancersOnTeam.Get)
+            teamsEndpoints.MapGet("/all", GetAllTeams.Get)
                 .WithName("Get all teams")
                 .WithOpenApi()
                 .WithSummary("Returns a list of all teams");
+
+            teamsWithGuidEndpoints.MapGet("/danceDates", GetTeamDancedates.Get)
+                .WithName("Get the dancedates of the team")
+                .WithOpenApi()
+                .WithSummary("Returns a list of dancedates for the team");
 
 
             teamsEndpoints.MapPost("", PostTeam.Post)
@@ -126,6 +131,18 @@ namespace SimoneAPI.EndpointExtensions
                 .WithName("AddDancerToTrialLessonOnATeam")
                 .WithOpenApi()
                 .WithSummary("Add a dancer to a trial lesson on a team");
+
+        }
+
+
+        public static void RegisterRelationEndpoints(this IEndpointRouteBuilder endpointRouiteBuilder)
+        {
+            var relationEndpoints = endpointRouiteBuilder.MapGroup("/Relations").WithTags("Relations");
+
+            relationEndpoints.MapGet("/{teamId:guid}", GetAllTeamDancerRelations.Get)
+                .WithName("GetAllTeamDancerRelations")
+                .WithOpenApi()
+                .WithSummary("Get all teamDancer relations for a specific team");
 
         }
 

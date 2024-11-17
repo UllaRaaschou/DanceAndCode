@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.TagHelpers;
+using RestSharp;
 using SimoneBlazor.Components.Services;
 using SimoneBlazor.Domain;
 using System.Collections.ObjectModel;
@@ -9,40 +10,20 @@ namespace SimoneBlazor.Components.Pages
 {
     public partial class TeamOverview
     {
-        public List<TeamBlazor> Teams { get; set; } = default!;
+        public List<TeamBlazor> Teams { get; set; } = new();
 
         private string Title = "DCT Dans - UnderviserSide";
         protected async override Task OnInitializedAsync()
         {
-            Teams = MockDataService.Teams;
+            //Teams = MockDataService.Teams;
 
             var options = new RestClientOptions("https://localhost:7163");
             var client = new RestClient(options);
-            var request = new RestRequest("/teams/all", Method.Get);
+            var request = new RestRequest("/teams/all", Method.Get);           
 
-            
+            var teamCollection = await client.GetAsync<List<TeamBlazor>>(request, CancellationToken.None);
+            Teams = teamCollection;
+        }   
 
-            var teamCollection = await client.GetAsync<ObservableCollection<TeamBlazor>>(request, CancellationToken.None);
-
-
-            //if (teamCollection?.Count == 0)
-            //{
-            //    // Ingen hold fundet i databasen
-            //    TeamNotFound?.Invoke("Ingen hold i databasen matcher denne søgning");
-            //    ReloadSearchPage(); // Genindlæs søgesiden
-            //    return;
-            //}
-
-            
-        }
-
-        
-
-
-
-
-
-
-        }
     }
 }

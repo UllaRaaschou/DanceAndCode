@@ -1,4 +1,4 @@
-﻿@page "/SpecificTeamDetails/{Number:int}"
+﻿@page "/SpecificTeamDetails/{TeamId:guid}"
 @rendermode InteractiveServer   // sætter signalR-connection op
 
 <section class="specific-team-details">
@@ -7,27 +7,34 @@
     <br />
 
     <table class="table table-light">
-        <thead class="table-primary">
+        <thead class="table-primary">            
             <tr>
                 <th></th>
-                <th>Elever</th>
+                @foreach (var date in TeamDanceDates)
+                {
+                    <th>@date</th>
+                }
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var dancer in Team.DancersOnTeam)
+            @foreach (var relation in Relations)
             {
                 <tr>
-                    <td></td>
-                    <td>@dancer.Name</td>      
-                    <td>@dancer.IsAttending</td>
-                    <td> 
-                        <div class="mt-2">
-                            <button type="button" @onclick="(() => ChangeAttendanceStatus(dancer.DancerId))" class="btn btn-outline-primary me-1"> Skift tilstedeværelsesStatus </button>
-                        </div>
-                    </td>
+                    
+                    <td>@relation.DancerName</td>
+                    @foreach (var date in TeamDanceDates)
+                    {
+                        <td>
+                            <button type="button"
+                                    @onclick="(() => ChangeAttendanceStatus(relation.DancerId, date))"
+                                    class=" btn btn-outline-primary"/>
+                            @(relation.Attendances[date] ? "✔" : "✖")
+                        </td>
+                    } 
                 </tr>
             }
+        
         </tbody>
     </table>
 </section> 

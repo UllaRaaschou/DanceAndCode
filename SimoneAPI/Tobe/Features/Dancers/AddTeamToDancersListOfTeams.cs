@@ -43,7 +43,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
                 return TypedResults.NotFound();
             }
 
-            List<DateOnly> danceDates = DanceDatesCalculator.CalculateDanceDates(calendarDataModel, teamDataModel);
+            List<DateOnly> danceDates = DanceDatesCalculator.CalculateDanceDates(dbContext, calendarDataModel, teamDataModel);
             var lastDanceDate = danceDates.LastOrDefault();
             if (request.IsTrialLesson == true)
             {

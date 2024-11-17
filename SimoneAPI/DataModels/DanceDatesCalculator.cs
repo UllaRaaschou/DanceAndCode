@@ -1,25 +1,33 @@
-﻿namespace SimoneAPI.DataModels
+﻿using SimoneAPI.DbContexts;
+
+namespace SimoneAPI.DataModels
 {
     public static class DanceDatesCalculator
     {
               
-        public static List<DateOnly> CalculateDanceDates(CalendarDataModel calendarDataModel, TeamDataModel team)
+        public static List<DateOnly> CalculateDanceDates(SimoneDbContext context, CalendarDataModel calendarDataModel, TeamDataModel team)
         {
+            
+
             var dayOfWeek = team.DayOfWeek;
             DateOnly firstDancedate = default;
-            var seasonStart = calendarDataModel.SummerHolidayEnd.AddDays(1);
-            if (seasonStart.DayOfWeek == dayOfWeek)
+            var seasonStart = calendarDataModel?.SummerHolidayEnd.AddDays(1);
+            if(seasonStart != null) 
             {
-                firstDancedate = seasonStart;
-            }
-            for (int i = 1; i < 7; i++)
-            {
-                if (seasonStart.AddDays(i).DayOfWeek == dayOfWeek)
+                if (seasonStart.Value.DayOfWeek == dayOfWeek)
                 {
-                    firstDancedate = seasonStart.AddDays(i);
-                    break;
+                    firstDancedate = (DateOnly)seasonStart;
+                }
+                for (int i = 1; i < 7; i++)
+                {
+                    if (seasonStart.Value.AddDays(i).DayOfWeek == dayOfWeek)
+                    {
+                        firstDancedate = seasonStart.Value.AddDays(i);
+                        break;
+                    }
                 }
             }
+            
             List<DateOnly> danceDates = new();
             danceDates.Add(firstDancedate);
             for (int i = 1; i < 45; i++)

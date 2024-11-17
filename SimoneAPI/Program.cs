@@ -44,6 +44,15 @@ builder.Services.Configure<RouteOptions>(options =>
     options.ConstraintMap.Add("dateOnly", typeof(DateOnlyRouteConstraint));
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("*");
+    });
+});
+
+
 builder.Services.AddProblemDetails();
 builder.Services.AddAuthentication("BasicAuthorization")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthorization", null);//.AddJwtBearer();
@@ -73,7 +82,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 });
 
 var app = builder.Build();
-
+app.UseCors();
 //TODO: Register endpoints
 // NAMING IS IMPORTENT !!
 app.UseAuthentication();
@@ -82,6 +91,7 @@ app.RegisterDancersEndpoints();
 app.RegisterTeamsEndpoints();
 app.RegisterAttendanceEndpoints();
 app.RegisterStaffEndpoints();
+app.RegisterRelationEndpoints();
 
 
 using (var scope = app.Services.CreateScope())
