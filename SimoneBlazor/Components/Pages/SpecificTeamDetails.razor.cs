@@ -35,7 +35,17 @@ namespace SimoneBlazor.Components.Pages
             var request3 = new RestRequest($"/Teams/{TeamId}/DanceDates", Method.Get);
             TeamDanceDates = await client.GetAsync<List<DateOnly>>(request3, CancellationToken.None);
 
-          
+            foreach (var relation in Relations)
+            {
+                relation.Attendances = new List<Attendance>();
+                foreach (var date in TeamDanceDates)
+                {
+                    relation.Attendances.Add(new Attendance
+                    {
+                        Date = date
+                    });
+                }
+            }
         }
 
         public async Task<AttendanceBlazor> GetAttendance(Guid dancerId, Guid teamId, DateOnly date)
