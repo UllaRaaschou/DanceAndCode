@@ -20,18 +20,20 @@
         <tbody>
             @foreach (var relation in Relations)
             {
-                <tr>
-                    
+                <tr>                    
                     <td>@relation.DancerName</td>
-                    @foreach (var date in TeamDanceDates)
+                   
+                    @foreach(var att in relation.Attendances)
                     {
                         <td>
                             <button type="button"
-                                    @onclick="(() => ChangeAttendanceStatus(relation.DancerId, date))"
+                                    @onclick="(() => ChangeAttendanceStatus(relation.DancerId, relation.TeamId, att.Date ))"
                                     class=" btn btn-outline-primary"/>
-                            @(relation.GetADateToAttendanceDictionary().TryGetValue(date, out var attendance) && attendance.IsPresent ? "✔" : "✖")
+
+                            @(relation.GetADateToAttendanceDictionary().TryGetValue(att.Date, out var a) && a.IsPresent ? "✔" : "✖")
                         </td>
-                    } 
+                    }
+
                 </tr>
             }
         

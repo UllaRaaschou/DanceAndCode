@@ -144,31 +144,39 @@ namespace SimoneAPI.EndpointExtensions
                 .WithOpenApi()
                 .WithSummary("Get all teamDancer relations for a specific team");
 
+            relationEndpoints.MapPut("/{teamId:guid}", UpdateAttendancesWithinRelations.SaveAttendances)
+                .WithName("UpdateAttendancesWithinRelations")
+                .WithOpenApi()
+                .WithSummary("Save all the attendances on a specific team");
+
+
+
         }
 
-        public static void RegisterAttendanceEndpoints(this IEndpointRouteBuilder endpointRouiteBuilder) 
+        public static void RegisterAttendanceEndpoints(this IEndpointRouteBuilder endpointRouiteBuilder)
         {
-            var attendanceEndpoints = endpointRouiteBuilder.MapGroup("/Attendance").WithTags("Attendance");
+            var attendanceEndpoints = endpointRouiteBuilder.MapGroup("/Attendances").WithTags("Attendance");
 
             attendanceEndpoints.MapPost("", PostAttendance.Post)
                 .WithName("PostAttendance")
                 .WithOpenApi()
                 .WithSummary("Post a new attendance for a dancer on a team");
 
-            attendanceEndpoints.MapGet("", GetAttendances.Get)
+            attendanceEndpoints.MapGet("/Attendances/{teamId}/{dancerId}/{date}\"", GetAttendances.Get)
                 .WithName("GetAttendances")
                 .WithOpenApi()
-                .WithSummary("Get a dancers attendances on a team");
+                .WithSummary("Get a spcific attendances");
 
             attendanceEndpoints.MapDelete("", DeleteAttendance.Delete)
                .WithName("DeleteAttendance")
                .WithOpenApi()
                .WithSummary("Delete a dancers attendance on a team");
 
-            attendanceEndpoints.MapPut("", UpdateAttendance.Put)
-              .WithName("UpdateAttendance")
-              .WithOpenApi()
-              .WithSummary("Update a dancers attendance on a team");
+            //    attendanceEndpoints.MapPut("", UpdateAttendance.Put)
+            //      .WithName("UpdateAttendance")
+            //      .WithOpenApi()
+            //      .WithSummary("Update a dancers attendance on a team");
+            //}
         }
 
         public static void RegisterStaffEndpoints(this IEndpointRouteBuilder endpointRouteBuilder) 

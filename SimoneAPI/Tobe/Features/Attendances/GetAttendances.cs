@@ -2,26 +2,28 @@
 using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
+using SimoneAPI.Entities;
 
 namespace SimoneAPI.Tobe.Features.Attendances
 {
     public class GetAttendances
     {
-        public void RegisterAttendanceEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
+        
+        public static async Task<IResult> Get(SimoneDbContext dBContext, Guid teamId, Guid dancerId, DateOnly date)
+  
         {
-            endpointRouteBuilder.MapGet("", Get);
-        }
-
-        public static async Task<IResult> Get(SimoneDbContext dBContext, IMapper mapper, Guid dancerId, Guid teamId)
-        {
-            var relation = await dBContext.TeamDancerRelations
-                .Include(tdr => tdr.Attendances)
-                .FirstOrDefaultAsync(tdr => tdr.TeamId == teamId && tdr.DancerId == dancerId);
+            var relation = await dBContext.TeamDancerRelations              
+                .FirstOrDefaultAsync(tdr => tdr.TeamId == teamId && tdr.DancerId == dancerId  );
             if (relation == null)
             {
                 return TypedResults.NotFound();
             }
-            return TypedResults.Ok(relation.Attendances);
+            var attendance = relation.Attendances.FirstOrDefault(a => a.Date == date);
+            if (attendance == null)
+            {
+                return TypedResults.NotFound();
+            }
+            return TypedResults.Ok(attendance);
         }
 
         

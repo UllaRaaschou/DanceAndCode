@@ -38,39 +38,45 @@ namespace SimoneBlazor.Components.Pages
           
         }
 
-
-        public void ChangeAttendanceStatus (Guid dancerId, DateOnly date) 
+        public async Task<AttendanceBlazor> GetAttendance(Guid dancerId, Guid teamId, DateOnly date)
         {
-            var relation = Relations.FirstOrDefault(r => r.DancerId == dancerId);
-            List<Attendance> attendances = relation.Attendances;
+            var options = new RestClientOptions("https://localhost:7163");
+            var client = new RestClient(options);
 
-            if(relation != null) 
-            {
-                var attendance = attendances.FirstOrDefault(a => a.Date == date);
-                if (attendance != null)
-                {
-                    attendance.IsPresent = !attendance.IsPresent;
-                }
+            var request = new RestRequest($"/Attendances/{teamId}/{dancerId}/{date}", Method.Get);
+            var att = client.GetAsync<AttendanceBlazor>(request, CancellationToken.None).Result;
+            return att;
+        }
+
+
+        public async Task ChangeAttendanceStatus (Guid dancerId, Guid teamId, DateOnly date) 
+        {
+            var attendance = await GetAttendance(dancerId, teamId, date);
+
+            if (attendance != null) 
+            {  
+                attendance.IsPresent = !attendance.IsPresent;               
             }            
         }
 
-
-
-
-
-
-
-
-
-
-
-        private void ChangeAttendanceStatus(Guid dancerId)
+        public void SaveAttendances()
         {
-            var dancer = Team.DancersOnTeam.SingleOrDefault(d => d.DancerId == dancerId);
-            if (dancer != null)
-            {
-                dancer.IsAttending = !dancer.IsAttending;
-            }
+            var options = new RestClientOptions("https://localhost:7163");
+            var client = new RestClient(options);
+
+            var request = new RestRequest($"/Relations/{TeamId}", Method.Put);
+            request.AddJsonBody(Relations);
+
+            client.PutAsync(request, CancellationToken.None);
         }
+
+        //private void ChangeAttendanceStatus(Guid dancerId)
+        //{
+        //    var dancer = Team.DancersOnTeam.SingleOrDefault(d => d.DancerId == dancerId);
+        //    if (dancer != null)
+        //    {
+        //        dancer.IsAttending = !dancer.IsAttending;
+        //    }
+        //}
     }
 }

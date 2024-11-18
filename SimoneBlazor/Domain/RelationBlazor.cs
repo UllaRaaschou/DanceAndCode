@@ -1,4 +1,6 @@
-﻿using SimoneAPI.DataModels;
+﻿using RestSharp;
+using SimoneAPI.DataModels;
+using SimoneAPI.Entities;
 
 namespace SimoneBlazor.Domain
 {
@@ -12,6 +14,31 @@ namespace SimoneBlazor.Domain
         public bool IsChecked { get; set; }
 
         public List<Attendance> Attendances { get; set; } = new List<Attendance>();
+
+        public RelationBlazor()
+        {
+
+            var teamDanceDates = GetDanceDatesOfTheRelation().Result;
+
+            foreach (var date in teamDanceDates)
+            {
+                Attendances.Add(new Attendance
+                {
+                    Date = date
+                });
+            }
+
+        }
+
+        public async Task<List<DateOnly>> GetDanceDatesOfTheRelation()
+        {
+            var options = new RestClientOptions("https://localhost:7163");
+            var client = new RestClient(options);
+
+            var request = new RestRequest($"/Teams/{TeamId}/danceDates", Method.Get);
+            return await client.GetAsync<List<DateOnly>>(request, CancellationToken.None);
+        }
+
 
         public Dictionary<DateOnly, AttendanceBlazor> GetADateToAttendanceDictionary()
         {

@@ -1,15 +1,12 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
-using SimoneAPI.Entities;
 
-namespace SimoneAPI.Tobe.Features.Attendances
+namespace SimoneAPI.Tobe.Features
 {
-    public class UpdateAttendance
+    public class UpdateAttendancesWithinRelations
     {
-        
         public static async Task<IResult> SaveAttendances(Guid teamId, SimoneDbContext dbContext, [FromBody] List<RelationBlazorDto> relations)
         {
             foreach (var relationBlazor in relations)
@@ -59,20 +56,6 @@ namespace SimoneAPI.Tobe.Features.Attendances
             //public bool IsChecked { get; set; } = false;
             public string Note { get; set; } = string.Empty;
             public List<Attendance> Attendances { get; set; } = new List<Attendance>();
-
-
-
-
-
-            public class PutAttendanceResponceDto
-            {
-                public Guid AttendanceId { get; set; }
-                public Guid TeamDancerRelationId { get; set; }
-                public DateTime Date { get; set; }
-                public bool IsPresent { get; set; } = false;
-                public string Note { get; set; } = string.Empty;
-                public TeamDancerRelation TeamDancerRelation { get; set; } = new TeamDancerRelation();
-            }
         }
     }
 }
