@@ -11,7 +11,7 @@ using SimoneAPI.DbContexts;
 namespace SimoneAPI.Migrations
 {
     [DbContext(typeof(SimoneDbContext))]
-    [Migration("20241107132547_FirstOne")]
+    [Migration("20241119090050_FirstOne")]
     partial class FirstOne
     {
         /// <inheritdoc />
@@ -26,7 +26,10 @@ namespace SimoneAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<Guid>("DancerId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsPresent")
@@ -36,18 +39,12 @@ namespace SimoneAPI.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("TeamDancerRelationDancerId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("TeamDancerRelationId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("TeamDancerRelationTeamId")
+                    b.Property<Guid>("TeamId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("AttendanceId");
 
-                    b.HasIndex("TeamDancerRelationDancerId", "TeamDancerRelationTeamId");
+                    b.HasIndex("DancerId", "TeamId");
 
                     b.ToTable("Attendances");
                 });
@@ -110,7 +107,7 @@ namespace SimoneAPI.Migrations
                             ChristmasHolidayEnd = new DateOnly(2025, 1, 2),
                             ChristmasHolidayStart = new DateOnly(2024, 12, 23),
                             ChristmasShow = new DateOnly(2024, 12, 10),
-                            CreatedDate = new DateTime(2024, 11, 7, 13, 25, 47, 215, DateTimeKind.Utc).AddTicks(5803),
+                            CreatedDate = new DateTime(2024, 11, 19, 9, 0, 49, 939, DateTimeKind.Utc).AddTicks(1568),
                             EasterHolidayEnd = new DateOnly(2025, 4, 17),
                             EasterHolidayStart = new DateOnly(2025, 4, 10),
                             RecitalShow = new DateOnly(2025, 6, 10),
@@ -334,7 +331,7 @@ namespace SimoneAPI.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("TimeOfBirth")
+                    b.Property<DateOnly>("TimeOfBirth")
                         .HasColumnType("TEXT");
 
                     b.HasKey("StaffId");
@@ -862,7 +859,7 @@ namespace SimoneAPI.Migrations
                 {
                     b.HasOne("SimoneAPI.DataModels.TeamDancerRelation", "TeamDancerRelation")
                         .WithMany("Attendances")
-                        .HasForeignKey("TeamDancerRelationDancerId", "TeamDancerRelationTeamId")
+                        .HasForeignKey("DancerId", "TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

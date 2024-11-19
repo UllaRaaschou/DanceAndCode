@@ -57,7 +57,7 @@ namespace SimoneAPI.Migrations
                     StaffId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Role = table.Column<int>(type: "INTEGER", nullable: false),
-                    TimeOfBirth = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    TimeOfBirth = table.Column<DateOnly>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,19 +130,18 @@ namespace SimoneAPI.Migrations
                 columns: table => new
                 {
                     AttendanceId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    TeamDancerRelationId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Date = table.Column<DateOnly>(type: "TEXT", nullable: false),
                     IsPresent = table.Column<bool>(type: "INTEGER", nullable: false),
                     Note = table.Column<string>(type: "TEXT", nullable: false),
-                    TeamDancerRelationDancerId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    TeamDancerRelationTeamId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    DancerId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    TeamId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Attendances", x => x.AttendanceId);
                     table.ForeignKey(
-                        name: "FK_Attendances_TeamDancerRelations_TeamDancerRelationDancerId_TeamDancerRelationTeamId",
-                        columns: x => new { x.TeamDancerRelationDancerId, x.TeamDancerRelationTeamId },
+                        name: "FK_Attendances_TeamDancerRelations_DancerId_TeamId",
+                        columns: x => new { x.DancerId, x.TeamId },
                         principalTable: "TeamDancerRelations",
                         principalColumns: new[] { "DancerId", "TeamId" },
                         onDelete: ReferentialAction.Cascade);
@@ -151,7 +150,7 @@ namespace SimoneAPI.Migrations
             migrationBuilder.InsertData(
                 table: "CalendarDataModels",
                 columns: new[] { "CalendarId", "AutumnHolidayEnd", "AutumnHolidayStart", "ChristmasHolidayEnd", "ChristmasHolidayStart", "ChristmasShow", "CreatedDate", "EasterHolidayEnd", "EasterHolidayStart", "RecitalShow", "SummerHolidayEnd", "SummerHolidayStart", "WintherHolidayEnd", "WintherHolidayStart" },
-                values: new object[] { new Guid("00000000-1111-0000-0000-000000000000"), new DateOnly(2024, 10, 21), new DateOnly(2024, 10, 17), new DateOnly(2025, 1, 2), new DateOnly(2024, 12, 23), new DateOnly(2024, 12, 10), new DateTime(2024, 11, 7, 13, 25, 47, 215, DateTimeKind.Utc).AddTicks(5803), new DateOnly(2025, 4, 17), new DateOnly(2025, 4, 10), new DateOnly(2025, 6, 10), new DateOnly(2024, 8, 7), new DateOnly(2024, 6, 27), new DateOnly(2025, 2, 17), new DateOnly(2025, 2, 13) });
+                values: new object[] { new Guid("00000000-1111-0000-0000-000000000000"), new DateOnly(2024, 10, 21), new DateOnly(2024, 10, 17), new DateOnly(2025, 1, 2), new DateOnly(2024, 12, 23), new DateOnly(2024, 12, 10), new DateTime(2024, 11, 19, 9, 0, 49, 939, DateTimeKind.Utc).AddTicks(1568), new DateOnly(2025, 4, 17), new DateOnly(2025, 4, 10), new DateOnly(2025, 6, 10), new DateOnly(2024, 8, 7), new DateOnly(2024, 6, 27), new DateOnly(2025, 2, 17), new DateOnly(2025, 2, 13) });
 
             migrationBuilder.InsertData(
                 table: "DancerDataModels",
@@ -267,9 +266,9 @@ namespace SimoneAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attendances_TeamDancerRelationDancerId_TeamDancerRelationTeamId",
+                name: "IX_Attendances_DancerId_TeamId",
                 table: "Attendances",
-                columns: new[] { "TeamDancerRelationDancerId", "TeamDancerRelationTeamId" });
+                columns: new[] { "DancerId", "TeamId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeamDancerRelations_TeamId",

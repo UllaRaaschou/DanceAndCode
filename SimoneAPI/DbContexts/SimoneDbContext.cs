@@ -5,20 +5,20 @@ namespace SimoneAPI.DbContexts
 {
 
 
-    public class SimoneDbContext: DbContext
+    public class SimoneDbContext : DbContext
     {
         public DbSet<TeamDancerRelation> TeamDancerRelations { get; set; }
-        public  DbSet<DancerDataModel> DancerDataModels { get; set; }
+        public DbSet<DancerDataModel> DancerDataModels { get; set; }
         public DbSet<TeamDataModel> TeamDataModels { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
-        public DbSet<Staff> Staffs { get; set; }    
+        public DbSet<Staff> Staffs { get; set; }
         public DbSet<CalendarDataModel> CalendarDataModels { get; set; }
 
         public DbSet<WorkingHours> WorkingHours { get; set; }
-       
+
         public SimoneDbContext(DbContextOptions<SimoneDbContext> options) : base(options)
         {
-       
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -29,6 +29,12 @@ namespace SimoneAPI.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CalendarDataModel>()
+                .HasKey(c => c.CalendarId);
+
+            modelBuilder.Entity<Attendance>()
+              .HasKey(rl => rl.AttendanceId);
+
             modelBuilder.Entity<WorkingHours>()
                 .HasKey(rl => rl.WorkingHoursId);
 
@@ -40,49 +46,38 @@ namespace SimoneAPI.DbContexts
                 .WithOne(rl => rl.Staff)
                 .HasForeignKey(rl => rl.StaffId);
 
-            modelBuilder.Entity<TeamDancerRelation>()
-                .HasKey(tdr =>  new { tdr.DancerId, tdr.TeamId });
-
-            //modelBuilder.Entity<TeamDancerRelation>()
-            //    .HasMany(tdr => tdr.Attendances)
-            //    .WithOne(a => a.TeamDancerRelation)
-            //    .HasForeignKey(a => a.TeamDancerRelationId);
+            modelBuilder.Entity<DancerDataModel>()
+                .HasKey(t => t.DancerId);
 
             modelBuilder.Entity<TeamDataModel>()
                 .HasKey(t => t.TeamId);
 
-            modelBuilder.Entity<TeamDataModel>()
-                .HasMany(t => t.TeamDancerRelations)
-                .WithOne(tdr => tdr.TeamDataModel)
-                .HasForeignKey(tdr => tdr.TeamId);
+            modelBuilder.Entity<TeamDancerRelation>()
+                .HasKey(tdr => new { tdr.DancerId, tdr.TeamId });
 
-            modelBuilder.Entity<DancerDataModel>()
-                .HasKey(d => d.DancerId);
+            modelBuilder.Entity<TeamDancerRelation>()
+               .HasMany(teamDancerRelation => teamDancerRelation.Attendances)
+               .WithOne(a => a.TeamDancerRelation)
+               .HasForeignKey(a => new { a.DancerId, a.TeamId });
 
-            modelBuilder.Entity<DancerDataModel>()
-                .HasMany(d => d.TeamDancerRelations)
-                .WithOne(tdr => tdr.DancerDataModel)
-                .HasForeignKey(tdr => tdr.DancerId);
 
-            modelBuilder.Entity<CalendarDataModel>()
-                .HasKey(c => c.CalendarId);
 
-           var calendarDataModel = new CalendarDataModel
-               {
-                    CalendarId = new Guid("00000000-1111-0000-0000-000000000000"),
-                    SummerHolidayStart = new DateOnly(2024, 6, 27),
-                    SummerHolidayEnd = new DateOnly(2024, 8, 7),
-                    AutumnHolidayStart = new DateOnly(2024, 10, 17),
-                    AutumnHolidayEnd = new DateOnly(2024, 10, 21),
-                    ChristmasHolidayStart = new DateOnly(2024, 12, 23),
-                    ChristmasHolidayEnd = new DateOnly(2025, 1, 2),
-                    WintherHolidayStart = new DateOnly(2025, 2, 13),
-                    WintherHolidayEnd = new DateOnly(2025, 2, 17),
-                    EasterHolidayStart = new DateOnly(2025, 4, 10),
-                    EasterHolidayEnd = new DateOnly(2025, 4, 17),
-                    ChristmasShow = new DateOnly(2024, 12, 10),
-                    RecitalShow = new DateOnly(2025, 6, 10)
-           };
+            var calendarDataModel = new CalendarDataModel
+            {
+                CalendarId = new Guid("00000000-1111-0000-0000-000000000000"),
+                SummerHolidayStart = new DateOnly(2024, 6, 27),
+                SummerHolidayEnd = new DateOnly(2024, 8, 7),
+                AutumnHolidayStart = new DateOnly(2024, 10, 17),
+                AutumnHolidayEnd = new DateOnly(2024, 10, 21),
+                ChristmasHolidayStart = new DateOnly(2024, 12, 23),
+                ChristmasHolidayEnd = new DateOnly(2025, 1, 2),
+                WintherHolidayStart = new DateOnly(2025, 2, 13),
+                WintherHolidayEnd = new DateOnly(2025, 2, 17),
+                EasterHolidayStart = new DateOnly(2025, 4, 10),
+                EasterHolidayEnd = new DateOnly(2025, 4, 17),
+                ChristmasShow = new DateOnly(2024, 12, 10),
+                RecitalShow = new DateOnly(2025, 6, 10)
+            };
 
             modelBuilder.Entity<CalendarDataModel>().HasData(calendarDataModel);
 
@@ -97,7 +92,7 @@ namespace SimoneAPI.DbContexts
             new TeamDataModel(calendarDataModel) { TeamId = new Guid("88888888-8888-8888-8888-888888888888"), Number = 8, Name = "Showdance 1", ScheduledTime = "Tirsdag 17:00 - 17:45" },
             new TeamDataModel(calendarDataModel) { TeamId = new Guid("99999999-9999-9999-9999-999999999999"), Number = 9, Name = "Showdance 2", ScheduledTime = "Onsdag 18:00 - 18:45" },
             new TeamDataModel(calendarDataModel) { TeamId = new Guid("07000000-0000-0000-0000-000000000000"), Number = 10, Name = "Showdance 3", ScheduledTime = "Torsdag 17:15 - 18:00" }
-);
+            );
 
             modelBuilder.Entity<DancerDataModel>().HasData(
                new DancerDataModel { DancerId = new Guid("00000000-0000-0000-0000-000000000003"), Name = "Mathias", TimeOfBirth = new DateOnly(2012, 5, 12) },
@@ -133,8 +128,8 @@ namespace SimoneAPI.DbContexts
             );
 
 
-            modelBuilder.Entity<TeamDancerRelation>().HasData(            
-            new TeamDancerRelation { TeamId = new Guid("11111111-1111-1111-1111-111111111111"), DancerId = new Guid("00000000-0000-0000-0000-000000000003"), IsTrialLesson =false, LastDanceDate = new DateOnly(2025, 6, 10) },
+            modelBuilder.Entity<TeamDancerRelation>().HasData(
+            new TeamDancerRelation { TeamId = new Guid("11111111-1111-1111-1111-111111111111"), DancerId = new Guid("00000000-0000-0000-0000-000000000003"), IsTrialLesson = false, LastDanceDate = new DateOnly(2025, 6, 10) },
             new TeamDancerRelation { TeamId = new Guid("11111111-1111-1111-1111-111111111111"), DancerId = new Guid("00000000-0000-0000-0000-000000000004"), IsTrialLesson = false, LastDanceDate = new DateOnly(2025, 6, 10) },
             new TeamDancerRelation { TeamId = new Guid("11111111-1111-1111-1111-111111111111"), DancerId = new Guid("00000000-0000-0000-0000-000000000005"), IsTrialLesson = false, LastDanceDate = new DateOnly(2025, 6, 10) },
             new TeamDancerRelation { TeamId = new Guid("11111111-1111-1111-1111-111111111111"), DancerId = new Guid("00000000-0000-0000-0000-000000000006"), IsTrialLesson = false, LastDanceDate = new DateOnly(2025, 6, 10) },
@@ -189,7 +184,7 @@ namespace SimoneAPI.DbContexts
 
 
                      );
-        
+
 
 
             base.OnModelCreating(modelBuilder);
@@ -197,3 +192,4 @@ namespace SimoneAPI.DbContexts
 
     }
 }
+

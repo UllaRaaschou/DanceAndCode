@@ -74,7 +74,7 @@ namespace SimoneBlazor.Components.Pages
                       
         }
 
-        public void SaveAttendances()
+        public void SaveChanges()
         {
             var options = new RestClientOptions("https://localhost:7163");
             var client = new RestClient(options);
