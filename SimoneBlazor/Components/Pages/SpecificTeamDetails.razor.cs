@@ -59,14 +59,19 @@ namespace SimoneBlazor.Components.Pages
         }
 
 
-        public async Task ChangeAttendanceStatus (Guid dancerId, Guid teamId, DateOnly date) 
+        public async Task ChangeAttendanceStatus (Guid dancerId, Guid teamId, DateOnly date, bool isPresent) 
         {
-            var attendance = await GetAttendance(dancerId, teamId, date);
-
-            if (attendance != null) 
-            {  
-                attendance.IsPresent = !attendance.IsPresent;               
-            }            
+            var relation = Relations.FirstOrDefault(r => r.DancerId == dancerId && r.TeamId == teamId);
+            if(relation != null) 
+            {
+                var attendance = relation.Attendances.FirstOrDefault(a => a.Date == date);
+                if(attendance != null) 
+                {
+                    attendance.IsPresent = !attendance.IsPresent;
+                    StateHasChanged();
+                }
+            }
+                      
         }
 
         public void SaveAttendances()

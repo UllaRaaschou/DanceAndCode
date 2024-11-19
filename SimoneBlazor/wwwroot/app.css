@@ -1,5 +1,6 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    overflow: auto; /* Tilføjer scrollbars, hvis indholdet overstiger visningsområdet */
 }
 
 a, .btn-link {

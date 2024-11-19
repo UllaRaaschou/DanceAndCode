@@ -8,6 +8,7 @@ namespace SimoneBlazor.Domain
     {    
         public Guid TeamId { get; set; }
         public Guid DancerId { get; set; }
+        
         public string DancerName { get; set; } = string.Empty;
         public DateOnly DancersLastDanceDate { get; set; }
         

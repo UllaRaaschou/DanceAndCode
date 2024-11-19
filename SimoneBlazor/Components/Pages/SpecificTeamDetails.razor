@@ -1,6 +1,26 @@
 ﻿@page "/SpecificTeamDetails/{TeamId:guid}"
 @rendermode InteractiveServer   // sætter signalR-connection op
 
+<style>
+    .attendance-button {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border: 1px solid #007bff;
+        background-color: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .checkmark {
+        position: absolute;
+        font-size: 24px;
+        color: #007bff;
+    }
+</style>
+
 <section class="specific-team-details">
     <h1 class="page-title"> Hold @Team.Number - @Team.Name - @Team.DayOfWeek - @Team.ScheduledTime</h1>
 
@@ -27,10 +47,10 @@
                     {
                         <td>
                             <button type="button"
-                                    @onclick="(() => ChangeAttendanceStatus(relation.DancerId, relation.TeamId, att.Date ))"
-                                    class=" btn btn-outline-primary"/>
-
-                            @(relation.GetADateToAttendanceDictionary().TryGetValue(att.Date, out var a) && a.IsPresent ? "✔" : "✖")
+                                    @onclick="(() => ChangeAttendanceStatus(relation.DancerId, relation.TeamId, att.Date, att.IsPresent ))"
+                                    class=" btn btn-outline-primary attendance-button">
+                            <span class="checkmark" style="display: @(att.IsPresent ? "inline" : "none")">✔</span>
+                            </button>                           
                         </td>
                     }
 
