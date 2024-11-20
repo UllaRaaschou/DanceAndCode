@@ -2,8 +2,11 @@
 using RestSharp;
 using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
+using SimoneAPI.Entities;
+using SimoneAPI.Tobe.Features.Dancer;
 using SimoneBlazor.Components.Services;
 using SimoneBlazor.Domain;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SimoneBlazor.Components.Pages
 {
@@ -35,17 +38,26 @@ namespace SimoneBlazor.Components.Pages
             var request3 = new RestRequest($"/Teams/{TeamId}/DanceDates", Method.Get);
             TeamDanceDates = await client.GetAsync<List<DateOnly>>(request3, CancellationToken.None);
 
-            foreach (var relation in Relations)
+            foreach (var relation in Relations) 
             {
-                relation.Attendances = new List<Attendance>();
-                foreach (var date in TeamDanceDates)
+                if(!relation.Attendances.Any()) 
                 {
-                    relation.Attendances.Add(new Attendance
+                    relation.Attendances = new List<Attendance>();
+                    foreach (var date in TeamDanceDates)
                     {
-                        Date = date
-                    });
+                        relation.Attendances.Add(new Attendance
+                        {
+                            AttendanceId = Guid.NewGuid(),
+                            Date = date,
+                            IsPresent = false,
+                            Note = string.Empty,
+                            DancerId = relation.DancerId,
+                            TeamId = relation.TeamId,
+                        });
+                    }
                 }
             }
+
         }
 
         public async Task<AttendanceBlazor> GetAttendance(Guid dancerId, Guid teamId, DateOnly date)
@@ -59,9 +71,9 @@ namespace SimoneBlazor.Components.Pages
         }
 
 
-        public async Task ChangeAttendanceStatus (Guid dancerId, Guid teamId, DateOnly date, bool isPresent) 
+        public async Task ChangeAttendanceStatus (Guid dancerId, DateOnly date, bool isPresent) 
         {
-            var relation = Relations.FirstOrDefault(r => r.DancerId == dancerId && r.TeamId == teamId);
+            var relation = Relations.FirstOrDefault(r => r.DancerId == dancerId && r.TeamId == TeamId);
             if(relation != null) 
             {
                 var attendance = relation.Attendances.FirstOrDefault(a => a.Date == date);
@@ -79,19 +91,25 @@ namespace SimoneBlazor.Components.Pages
             var options = new RestClientOptions("https://localhost:7163");
             var client = new RestClient(options);
 
+            var teamDancerRelations = Relations.Select(r => ToTeamDancerRelation(r)).ToList();
+
             var request = new RestRequest($"/Relations/{TeamId}", Method.Put);
-            request.AddJsonBody(Relations);
+            request.AddJsonBody(teamDancerRelations);
 
             client.PutAsync(request, CancellationToken.None);
         }
 
-        //private void ChangeAttendanceStatus(Guid dancerId)
-        //{
-        //    var dancer = Team.DancersOnTeam.SingleOrDefault(d => d.DancerId == dancerId);
-        //    if (dancer != null)
-        //    {
-        //        dancer.IsAttending = !dancer.IsAttending;
-        //    }
-        //}
+        private TeamDancerRelation ToTeamDancerRelation(RelationBlazor relationBlazor) 
+        {
+            return new TeamDancerRelation
+            {
+                TeamId = relationBlazor.TeamId,
+                DancerId = relationBlazor.DancerId,
+                IsTrialLesson = relationBlazor.IsTrialLesson,
+                LastDanceDate = relationBlazor.DancersLastDanceDate,
+                Attendances = relationBlazor.Attendances                
+            };
+            
+        }
     }
 }

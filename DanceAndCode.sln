@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimoneTestProject", "Simone
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimoneMaui", "SimoneMaui\SimoneMaui.csproj", "{EFF176FF-93F5-44F1-9099-1FE3E3C49584}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimoneBlazor", "SimoneBlazor\SimoneBlazor.csproj", "{034E4B06-3F81-4071-8648-C517C2D7D12E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimoneBlazor", "SimoneBlazor\SimoneBlazor.csproj", "{034E4B06-3F81-4071-8648-C517C2D7D12E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

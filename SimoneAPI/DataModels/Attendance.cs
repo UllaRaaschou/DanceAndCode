@@ -1,4 +1,7 @@
-﻿namespace SimoneAPI.DataModels
+﻿using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+
+namespace SimoneAPI.DataModels
 {
     public class Attendance
     {
@@ -7,10 +10,10 @@
         public DateOnly Date { get; set; }
         public bool IsPresent { get; set; } = false;
         public string Note { get; set; } = string.Empty;
-       
 
-       
 
+
+        [JsonIgnore]
         // Navigation property
         public TeamDancerRelation TeamDancerRelation { get; set; }
 

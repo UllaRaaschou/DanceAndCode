@@ -12,9 +12,10 @@ namespace SimoneBlazor.Domain
         public string DancerName { get; set; } = string.Empty;
         public DateOnly DancersLastDanceDate { get; set; }
         
-        public bool IsChecked { get; set; }
+        //public bool IsChecked { get; set; }
 
         public List<Attendance> Attendances { get; set; } = new List<Attendance>();
+        public bool IsTrialLesson { get; set; }
 
         public RelationBlazor()
         {

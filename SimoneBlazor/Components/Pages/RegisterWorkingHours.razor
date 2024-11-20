@@ -1,0 +1,98 @@
+﻿@page "/RegisterWorkingHours"
+@rendermode InteractiveServer
+
+@* <PageTitle> Registrer arbejdstimer</PageTitle> *@
+
+
+<style>
+    .entry-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
+
+    .entry-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .entry-item label {
+        margin-bottom: 5px;
+    }
+
+    .entry-item select {
+        width: 100px;
+    }
+</style>
+
+
+
+<section class="specific-xxx">
+
+    <h1>Registrer arbejdstimer</h1>
+
+    <div>
+        <label>Vælg dato:</label>
+        <InputDate @bind-Value="selectedDate"/>
+    </div>
+
+    <div class="entry-container">
+        @for(int i = 0; i < 4; i++)
+        {
+            <div class= "entry-item">
+                <label>@labelTexts[i]</label>
+                <select @bind="selectedValues[i]">
+                    @foreach(var value in dropdownValues)
+                    {
+                        <option value="@value">@value</option>
+                    }
+                </select>
+            </div>
+        }
+        <div class= "entry-item">
+            <label> Vikar </label>
+
+            <button type="button" @onclick="(()=>ChangeVikarStatus())"
+                class= "btn btn-outline-primary attendance-button">
+             <span class= "checkmark" style="@(IsVikar ? "display: inline; " : "display: none; ")" >✔</span>
+            </button>
+        </div>
+
+        <div class="entry-item">
+
+        </div>
+    </div>
+
+    <button @onclick="SaveValues">Gem</button>
+
+    <h2>Gemte værdier</h2>
+    <table>
+        <thead>
+            <tr>
+                <th> Dato </th>
+                <th> Løn 1 </th>
+                <th> Løn 2 </th>
+                <th> Løn 3 </th>
+                <th> Løn 4 </th>
+                <th> Løn 5 </th>
+                <th> Løn 6 </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var row in savedValues)
+            {
+                <tr>
+                    <td> @row.Date.ToShortDateString() </td>
+                    @foreach(var value in row.Values)
+                    {
+                        <td> @value </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+
+
+

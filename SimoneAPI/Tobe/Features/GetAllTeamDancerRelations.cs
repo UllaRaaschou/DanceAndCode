@@ -12,6 +12,7 @@ namespace SimoneAPI.Tobe.Features
         {
             var teamDancerRelations = await dbContext.TeamDancerRelations
                         .Include(tdr => tdr.DancerDataModel)
+                        .Include(tdr => tdr.Attendances)
                         .Where(tdr => tdr.TeamId == teamId)                       
                         .ToListAsync();      
             TeamDataModel? team = await dbContext.TeamDataModels
@@ -29,11 +30,7 @@ namespace SimoneAPI.Tobe.Features
                 DancerId = tdr.DancerId,
                 DancerName = tdr.DancerDataModel.Name,
                 DancersLastDanceDate = tdr.LastDanceDate,
-                Attendances= teamDanceDates.Select(tdd => new Attendance 
-                {
-                    Date = tdd,
-                    IsPresent = false
-                }).ToList()
+                Attendances= tdr.Attendances.OrderBy(a=> a.Date).ToList()
             }).ToList();
 
             return TypedResults.Ok(attendanceDtoList);
