@@ -3,10 +3,11 @@
     public class WorkingHours
     {
         public Guid WorkingHoursId { get; set; }    
-        public Staff Staff { get; set; } = new Staff();
         public Guid StaffId { get; set; }
-        public DateOnly Date { get; set; }
-        public decimal ChosenValueOfWorkingHours { get; set; }  
+        public DateTime Date { get; set; }
+        public decimal ChosenValueOfWorkingHours { get; set; }
+        public bool IsVikar { get; set; }
+        public string Comment { get; set; }
         public List<decimal> ListOfWorkingHours { get; } = new List<decimal>
         {
             0.25m,
