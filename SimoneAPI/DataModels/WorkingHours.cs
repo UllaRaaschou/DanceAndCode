@@ -4,10 +4,12 @@
     {
         public Guid WorkingHoursId { get; set; }    
         public Guid StaffId { get; set; }
+
+        public Staff Staff { get; set; }
         public DateTime Date { get; set; }
         public decimal ChosenValueOfWorkingHours { get; set; }
-        public bool IsVikar { get; set; }
-        public string Comment { get; set; }
+        public bool IsVikar { get; set; } = false;  
+        public string Comment { get; set; } = string.Empty;
         public List<decimal> ListOfWorkingHours { get; } = new List<decimal>
         {
             0.25m,

@@ -42,9 +42,9 @@ namespace SimoneAPI.DbContexts
                 .HasKey(t => t.StaffId);
 
             modelBuilder.Entity<Staff>()
-                .HasMany(t => t.RegisteredWorkingHours)
-                .WithOne(rl => rl.Staff)
-                .HasForeignKey(rl => rl.StaffId);
+                .HasMany(s => s.RegisteredWorkingHours)
+                .WithOne(w => w.Staff)
+                .HasForeignKey(rw => rw.StaffId);
 
             modelBuilder.Entity<DancerDataModel>()
                 .HasKey(t => t.DancerId);

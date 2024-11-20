@@ -11,7 +11,7 @@ using SimoneAPI.DbContexts;
 namespace SimoneAPI.Migrations
 {
     [DbContext(typeof(SimoneDbContext))]
-    [Migration("20241119090050_FirstOne")]
+    [Migration("20241120110131_FirstOne")]
     partial class FirstOne
     {
         /// <inheritdoc />
@@ -107,7 +107,7 @@ namespace SimoneAPI.Migrations
                             ChristmasHolidayEnd = new DateOnly(2025, 1, 2),
                             ChristmasHolidayStart = new DateOnly(2024, 12, 23),
                             ChristmasShow = new DateOnly(2024, 12, 10),
-                            CreatedDate = new DateTime(2024, 11, 19, 9, 0, 49, 939, DateTimeKind.Utc).AddTicks(1568),
+                            CreatedDate = new DateTime(2024, 11, 20, 11, 1, 31, 297, DateTimeKind.Utc).AddTicks(3683),
                             EasterHolidayEnd = new DateOnly(2025, 4, 17),
                             EasterHolidayStart = new DateOnly(2025, 4, 10),
                             RecitalShow = new DateOnly(2025, 6, 10),
@@ -842,8 +842,15 @@ namespace SimoneAPI.Migrations
                     b.Property<decimal>("ChosenValueOfWorkingHours")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateOnly>("Date")
+                    b.Property<string>("Comment")
+                        .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsVikar")
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("StaffId")
                         .HasColumnType("TEXT");

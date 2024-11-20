@@ -205,13 +205,13 @@ namespace SimoneAPI.EndpointExtensions
                 .WithName("UpdateStaff")
                 .WithSummary("Update basic data of a member of staff by Id");
 
-            staffWithGuidEndpoints.MapPut("/{workedHours:decimal}/{date:datetime}", RegisterWorkingHours.Register)
-                .WithName("RegisterWorkingHours")
-                .WithSummary("Add a new register of working hours");
+            //staffWithGuidEndpoints.MapPut("/{workedHours:decimal}/{date:datetime}", RegisterWorkingHours.Register)
+            //    .WithName("RegisterWorkingHours")
+            //    .WithSummary("Add a new register of working hours");
 
-            staffWithGuidEndpoints.MapGet("/{firstDayOfPeriod:dateOnly}/{lastDayInPeriod:dateOnly}", GetNumberOfWorkingHoursForPeriod.Get)
-                .WithName("GeNumberOfWorkingHoursForPeriod")
-                .WithSummary("Write a period and get the number of working hours for a staff in that periode returned");
+            //staffWithGuidEndpoints.MapGet("/{firstDayOfPeriod:dateOnly}/{lastDayInPeriod:dateOnly}", GetNumberOfWorkingHoursForPeriod.Get)
+            //    .WithName("GeNumberOfWorkingHoursForPeriod")
+            //    .WithSummary("Write a period and get the number of working hours for a staff in that periode returned");
 
             //staffEndpoints.MapPut("", UpdateStaff.Put)
             //    .WithName("UpdateStaff")

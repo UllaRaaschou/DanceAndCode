@@ -33,41 +33,41 @@ namespace SimoneBlazor.Components.Pages
 
         private async Task SaveValues()
         {
-            var workingHours = new WorkingHours
-            {
-                StaffId = Guid.NewGuid(),
-                Date = selectedDate,
-                ChosenValueOfWorkingHours = decimal.Parse(selectedValues[0]),
-                IsVikar = IsVikar,
-                Comment = Comment
-            };
+            //    var workingHours = new WorkingHours
+            //    {
+            //        StaffId = Guid.NewGuid(),
+            //        Date = selectedDate,
+            //        ChosenValueOfWorkingHours = decimal.Parse(selectedValues[0]),
+            //        IsVikar = IsVikar,
+            //        Comment = Comment
+            //    };
 
-            var options = new RestClientOptions("https://localhost:7163");
-            var client = new RestClient(options);
+            //    var options = new RestClientOptions("https://localhost:7163");
+            //    var client = new RestClient(options);
 
-            var request = new RestRequest("/workinghours", Method.Post);
-            request.AddJsonBody(workingHours);
+            //    var request = new RestRequest("/workinghours", Method.Post);
+            //    request.AddJsonBody(workingHours);
 
-            try
-            {
-                var response = await client.ExecuteAsync(request);
+            //    try
+            //    {
+            //        var response = await client.ExecuteAsync(request);
 
-                if (response.IsSuccessful)
-                {
-                    savedValues.Add((selectedDate, (decimal[])selectedValues.Clone(), IsVikar, Comment));
-                    UserMessage = "Values saved successfully!";
-                }
-                else
-                {
-                    UserMessage = $"Error: {response.StatusCode} - {response.ErrorMessage}";
-                }
-            }
-            catch (Exception ex)
-            {
-                UserMessage = $"Exception: {ex.Message}";
-            }
+            //        if (response.IsSuccessful)
+            //        {
+            //            savedValues.Add((selectedDate, (decimal[])selectedValues.Clone(), IsVikar, Comment));
+            //            UserMessage = "Values saved successfully!";
+            //        }
+            //        else
+            //        {
+            //            UserMessage = $"Error: {response.StatusCode} - {response.ErrorMessage}";
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        UserMessage = $"Exception: {ex.Message}";
+            //    }
 
-            StateHasChanged();
+            //    StateHasChanged();
         }
 
         public string[] GetDropDownValues()

@@ -85,8 +85,10 @@ namespace SimoneAPI.Migrations
                 {
                     WorkingHoursId = table.Column<Guid>(type: "TEXT", nullable: false),
                     StaffId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Date = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    ChosenValueOfWorkingHours = table.Column<decimal>(type: "TEXT", nullable: false)
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    ChosenValueOfWorkingHours = table.Column<decimal>(type: "TEXT", nullable: false),
+                    IsVikar = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Comment = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -150,7 +152,7 @@ namespace SimoneAPI.Migrations
             migrationBuilder.InsertData(
                 table: "CalendarDataModels",
                 columns: new[] { "CalendarId", "AutumnHolidayEnd", "AutumnHolidayStart", "ChristmasHolidayEnd", "ChristmasHolidayStart", "ChristmasShow", "CreatedDate", "EasterHolidayEnd", "EasterHolidayStart", "RecitalShow", "SummerHolidayEnd", "SummerHolidayStart", "WintherHolidayEnd", "WintherHolidayStart" },
-                values: new object[] { new Guid("00000000-1111-0000-0000-000000000000"), new DateOnly(2024, 10, 21), new DateOnly(2024, 10, 17), new DateOnly(2025, 1, 2), new DateOnly(2024, 12, 23), new DateOnly(2024, 12, 10), new DateTime(2024, 11, 19, 9, 0, 49, 939, DateTimeKind.Utc).AddTicks(1568), new DateOnly(2025, 4, 17), new DateOnly(2025, 4, 10), new DateOnly(2025, 6, 10), new DateOnly(2024, 8, 7), new DateOnly(2024, 6, 27), new DateOnly(2025, 2, 17), new DateOnly(2025, 2, 13) });
+                values: new object[] { new Guid("00000000-1111-0000-0000-000000000000"), new DateOnly(2024, 10, 21), new DateOnly(2024, 10, 17), new DateOnly(2025, 1, 2), new DateOnly(2024, 12, 23), new DateOnly(2024, 12, 10), new DateTime(2024, 11, 20, 11, 1, 31, 297, DateTimeKind.Utc).AddTicks(3683), new DateOnly(2025, 4, 17), new DateOnly(2025, 4, 10), new DateOnly(2025, 6, 10), new DateOnly(2024, 8, 7), new DateOnly(2024, 6, 27), new DateOnly(2025, 2, 17), new DateOnly(2025, 2, 13) });
 
             migrationBuilder.InsertData(
                 table: "DancerDataModels",
