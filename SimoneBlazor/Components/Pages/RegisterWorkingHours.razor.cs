@@ -16,10 +16,10 @@ namespace SimoneBlazor.Components.Pages
         private DateTime selectedDate = DateTime.Today;
         public string[] selectedValues = new string[] { "0", "0", "0", "0" };
 
-        public EntryItem Loen1 { get; set; }
-        public EntryItem Loen2 { get; set; }
-        public EntryItem Loen3 { get; set; }
-        public EntryItem Loen4 { get; set; }
+        public EntryItem Loen1 { get; set; } = new EntryItem();
+        public EntryItem Loen2 { get; set; } = new EntryItem();
+        public EntryItem Loen3 { get; set; } = new EntryItem();
+        public EntryItem Loen4 { get; set; } = new EntryItem();
 
         public bool IsVikar { get; set; } = false;
         public string Comment { get; set; } = string.Empty;
@@ -36,9 +36,7 @@ namespace SimoneBlazor.Components.Pages
             {
                 entryItems.Add(new EntryItem { LabelText = labelTexts[i], SelectedValue = "0" });
             }
-            
         }
-            
 
         public void ChangeVikarStatus()
         {
@@ -50,12 +48,12 @@ namespace SimoneBlazor.Components.Pages
         {
             var workingHoursToBeRegistered = new WorkingHours
             {
-                StaffId = mockStaff.StaffId,
+                StaffId = Guid.Parse("D7A499EB-65D8-4A62-BDD2-91C65E45E89C"),
                 Date = selectedDate,
-                Loen1 = double.Parse(Loen1.SelectedValue),
-                Loen2 = double.Parse(Loen2.SelectedValue),
-                Loen3 = double.Parse(Loen3.SelectedValue),
-                Loen4 = double.Parse(Loen4.SelectedValue),
+                Loen1 = double.TryParse(Loen1.SelectedValue, out var l1) ? l1 : 0,
+                Loen2 = double.TryParse(Loen2.SelectedValue, out var l2) ? l2 : 0,
+                Loen3 = double.TryParse(Loen3.SelectedValue, out var l3) ? l3 : 0,
+                Loen4 = double.TryParse(Loen4.SelectedValue, out var l4) ? l4 : 0,
                 IsVikar = IsVikar,
                 Comment = Comment
             };
@@ -72,7 +70,7 @@ namespace SimoneBlazor.Components.Pages
 
                 if (response.IsSuccessful)
                 {
-                    savedValues.Add((selectedDate, (decimal[])selectedValues.Clone(), IsVikar, Comment));
+                    savedValues.Add((selectedDate, entryItems.Select(e => decimal.Parse(e.SelectedValue)).ToArray(), IsVikar, Comment));
                     UserMessage = "Values saved successfully!";
                 }
                 else

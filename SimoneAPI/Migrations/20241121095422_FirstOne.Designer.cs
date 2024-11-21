@@ -11,7 +11,7 @@ using SimoneAPI.DbContexts;
 namespace SimoneAPI.Migrations
 {
     [DbContext(typeof(SimoneDbContext))]
-    [Migration("20241121083657_FirstOne")]
+    [Migration("20241121095422_FirstOne")]
     partial class FirstOne
     {
         /// <inheritdoc />
@@ -107,7 +107,7 @@ namespace SimoneAPI.Migrations
                             ChristmasHolidayEnd = new DateOnly(2025, 1, 2),
                             ChristmasHolidayStart = new DateOnly(2024, 12, 23),
                             ChristmasShow = new DateOnly(2024, 12, 10),
-                            CreatedDate = new DateTime(2024, 11, 21, 8, 36, 57, 386, DateTimeKind.Utc).AddTicks(9526),
+                            CreatedDate = new DateTime(2024, 11, 21, 9, 54, 21, 749, DateTimeKind.Utc).AddTicks(8624),
                             EasterHolidayEnd = new DateOnly(2025, 4, 17),
                             EasterHolidayStart = new DateOnly(2025, 4, 10),
                             RecitalShow = new DateOnly(2025, 6, 10),
@@ -844,7 +844,7 @@ namespace SimoneAPI.Migrations
 
             modelBuilder.Entity("SimoneAPI.DataModels.WorkingHours", b =>
                 {
-                    b.Property<Guid>("WorkingHoursId")
+                    b.Property<Guid?>("WorkingHoursId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -861,6 +861,18 @@ namespace SimoneAPI.Migrations
                     b.Property<string>("ListOfChosenDropDownMenuValues")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<double>("Loen1")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Loen2")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Loen3")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Loen4")
+                        .HasColumnType("REAL");
 
                     b.Property<Guid>("StaffId")
                         .HasColumnType("TEXT");

@@ -53,17 +53,18 @@
                 </div>
             }
         } *@
-        <div class ="entry-item">
+        <div >
             <label> Løn 1</label>
             <select @bind="Loen1.SelectedValue">
                 @foreach(var value in dropdownValues)
                 {
-                    <option value="@value">@value</option>
+                    <option value="@value">    @value
+                    </option>
                 }
             </select>
         </div>
 
-         <div class ="entry-item">
+         <div >
             <label> Løn 2</label>
             <select @bind="Loen2.SelectedValue">
                 @foreach(var value in dropdownValues)
@@ -73,7 +74,7 @@
             </select>
         </div>
 
-         <div class ="entry-item">
+         <div >
             <label> Løn 3</label>
             <select @bind="Loen3.SelectedValue">
                 @foreach(var value in dropdownValues)
@@ -83,7 +84,7 @@
             </select>
         </div>
 
-        <div class ="entry-item">
+        <div >
             <label> Løn 4</label>
             <select @bind="Loen4.SelectedValue">
                 @foreach(var value in dropdownValues)
