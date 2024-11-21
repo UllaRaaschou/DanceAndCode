@@ -84,6 +84,15 @@
              Command="{Binding UpdateOrDeleteStaffCommand}"
             IsVisible="{Binding WorkingWithStaff}"/>
 
+        <Button
+            Margin="20, 20, 20, 20"
+            Text="Hent Lønperiodens timeregistreringer"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            Command="{Binding GetWorkingHoursCommand}"
+            IsVisible="{Binding WorkingWithStaff}"/>
+
+
 
 
     </VerticalStackLayout>

@@ -24,6 +24,8 @@ namespace SimoneBlazor.Components.Pages
         public bool IsVikar { get; set; } = false;
         public string Comment { get; set; } = string.Empty;
 
+        public List<WorkingHours> RegistrationsFromDb = new List<WorkingHours>();
+
         private List<(DateTime Date, decimal[] Values, bool IsVikar, string Comment)> savedValues = new List<(DateTime, decimal[], bool isVikar, string comment)>();
         public string UserMessage { get; set; } = string.Empty;
 
@@ -64,13 +66,19 @@ namespace SimoneBlazor.Components.Pages
             var request = new RestRequest($"/WorkingHours", Method.Post);
             request.AddJsonBody(workingHoursToBeRegistered);
 
+            
+            
+
             try
             {
                 var response = await client.ExecuteAsync(request);
 
                 if (response.IsSuccessful)
                 {
-                    savedValues.Add((selectedDate, entryItems.Select(e => decimal.Parse(e.SelectedValue)).ToArray(), IsVikar, Comment));
+                    var request2 = new RestRequest($"/WorkingHours/{Guid.Parse("D7A499EB-65D8-4A62-BDD2-91C65E45E89C")}");
+                    RegistrationsFromDb = await client.GetAsync<List<WorkingHours>>(request2, CancellationToken.None);
+
+                    //savedValues.Add((selectedDate, entryItems.Select(e => decimal.Parse(e.SelectedValue)).ToArray(), IsVikar, Comment));
                     UserMessage = "Values saved successfully!";
                 }
                 else

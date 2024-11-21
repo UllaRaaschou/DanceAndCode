@@ -30,8 +30,8 @@ namespace SimoneAPI.Tobe.Features.WorkRegistration
 
             dbContext.WorkingHours.Add(workingHoursForDatabase);
 
-            await dbContext.SaveChangesAsync();
-            return TypedResults.Ok();
+            var savedRegistration = await dbContext.SaveChangesAsync();
+            return TypedResults.Ok(savedRegistration);
         }
     }
 }

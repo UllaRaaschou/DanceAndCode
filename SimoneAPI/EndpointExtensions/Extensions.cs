@@ -235,10 +235,15 @@ namespace SimoneAPI.EndpointExtensions
                 .WithTags("WorkingHours")
                 .WithOpenApi();
 
+            workingHoursEndpoints.MapGet("/{staffId:guid}", GetWorkingHours.Get)
+                .WithSummary("Post a new registration of working hours");
+
             //var staffWithGuidEndpoints = staffEndpoints.MapGroup("/{staffId:guid}");
 
             workingHoursEndpoints.MapPost("", RegisterWorkingHours.Register)
                 .WithSummary("Post a new registration of working hours");
+
+            
         }
     }
 }

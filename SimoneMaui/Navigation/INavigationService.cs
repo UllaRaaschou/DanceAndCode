@@ -33,8 +33,12 @@ public interface INavigationService
     
     Task GoToPostStaff();
     Task GoToSearchStaff();
+    Task GoToSearchStaff(bool workingWithWorkingHours);
     Task GoToUpdateStaff(StaffDto staffDto);
     Task GoToDeleteStaff(StaffDto staffDto);
+
+
+    Task GoToGetWorkingHours(StaffDto staffDto);
 
 
 }

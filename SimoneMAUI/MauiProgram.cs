@@ -73,6 +73,11 @@ namespace SimoneMaui
             builder.Services.AddTransient<DeleteStaffViewModel>();
             builder.Services.AddTransient<DeleteStaffPage>();
 
+            builder.Services.AddTransient<GetWorkingHoursViewModel>();
+            builder.Services.AddTransient<GetWorkingHoursPage>();
+
+            
+
 
 #if DEBUG
             builder.Logging.AddDebug();

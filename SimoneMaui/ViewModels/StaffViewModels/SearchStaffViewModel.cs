@@ -38,7 +38,9 @@ namespace SimoneMaui.ViewModels.StaffViewModels
         public AsyncRelayCommand WannaDeleteStaffCommand { get; }
         public AsyncRelayCommand SearchStaffCommand { get; }
 
-        
+        public AsyncRelayCommand WannaGetWorkingHoursCommand { get; }
+
+
         public RelayCommand ChooseNavigationCommand { get; }
 
         [ObservableProperty]
@@ -56,7 +58,13 @@ namespace SimoneMaui.ViewModels.StaffViewModels
         private bool isDeleteButtonVisible;
 
         [ObservableProperty]
+        private bool isWorkingHourButtonVisible;
+
+        [ObservableProperty]
         private bool isSearchHeaderVisible;
+
+        [ObservableProperty]
+        private bool workingWithWorkingHours;
 
         public event Action<string> NoStaffFoundInDb;
         public AsyncRelayCommand NavigateToFirstPageCommand { get; set; }
@@ -72,11 +80,23 @@ namespace SimoneMaui.ViewModels.StaffViewModels
             SearchStaffCommand = new AsyncRelayCommand(SearchAsyncStaff, CanSearchAsync);
             WannaUpdateStaffCommand = new AsyncRelayCommand(WannaUpdateStaff, CanWannaUpdateStaff);
             WannaDeleteStaffCommand = new AsyncRelayCommand(WannaDeleteStaff, CanWannaDeleteStaff);
+            WannaGetWorkingHoursCommand = new AsyncRelayCommand(WannaGetWorkingHours, CanWannaGetWorkingHours);
             StaffSelectedCommand = new AsyncRelayCommand(StaffSelected);
             NavigateBackCommand = new AsyncRelayCommand(_navigationManager.NavigateBack, _navigationManager.CanNavigateBack);
             NavigateForwardCommand = new AsyncRelayCommand(_navigationManager.NavigateForward, _navigationManager.CanNavigateForward);
             NavigateToFirstPageCommand = new AsyncRelayCommand(_navigationManager.NavigateToFirstPage);
+            
 
+        }
+
+        private bool CanWannaGetWorkingHours()
+        {
+            return true;
+        }
+
+        private async Task WannaGetWorkingHours()
+        {
+            await NavigationService.GoToGetWorkingHours(SelectedStaff);
         }
 
         private async Task StaffSelected()
@@ -88,6 +108,7 @@ namespace SimoneMaui.ViewModels.StaffViewModels
             NameEntry = SelectedStaff.Name;
             IsUpdateButtonVisible = true;
             IsDeleteButtonVisible = true;
+            IsWorkingHourButtonVisible = true;
             SearchResultVisible = false;
             IsSearchHeaderVisible = false;
             //await NavigationService.GoToUpdateStaff(SelectedStaff);           
@@ -183,12 +204,12 @@ namespace SimoneMaui.ViewModels.StaffViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            //if (query.ContainsKey("teamDto") && query["teamDto"] is TeamDto selectedTeam)
+            if (query.ContainsKey("workingWithWorkingHours") && query["workingWithWorkingHours"] is bool workingWithWorkingHours)
 
-            //{
-            //    SelectedTeam = selectedTeam;
+            {
+                WorkingWithWorkingHours = workingWithWorkingHours;
 
-            //}
+            }
             //if (query.ContainsKey("puttingDancerOnTeam") && query["puttingDancerOnTeam"] is bool puttingDancerOnTeam)
 
             //{

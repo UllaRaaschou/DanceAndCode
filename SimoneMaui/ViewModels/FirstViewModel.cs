@@ -8,6 +8,7 @@ namespace SimoneMaui.ViewModels
     public partial class FirstViewModel: ObservableObject, IQueryAttributable
     {
         public INavigationService NavigationService { get; set; }
+        
 
         [ObservableProperty]
         new AsyncRelayCommand workWithDancerCommand;
@@ -37,6 +38,9 @@ namespace SimoneMaui.ViewModels
         new AsyncRelayCommand updateOrDeleteStaffCommand;
 
         [ObservableProperty]
+        new AsyncRelayCommand getWorkingHoursCommand;
+
+        [ObservableProperty]
         public bool workingWithDancer = false;
 
         [ObservableProperty]
@@ -46,8 +50,10 @@ namespace SimoneMaui.ViewModels
         private bool workingWithStaff = false;
 
         [ObservableProperty]
-        public bool workingThemeIsToBeDecided = true;
-       
+        private bool workingThemeIsToBeDecided = true;
+
+        private bool WorkingWithWorkingHours = false;
+
 
         public FirstViewModel(INavigationService navigationService)
         {
@@ -61,11 +67,19 @@ namespace SimoneMaui.ViewModels
             UpdateOrDeleteTeamCommand = new AsyncRelayCommand(ToUpdateOrDeleteTeam);
             PostStaffThemeCommand = new AsyncRelayCommand(ToPostStaffTheme);
             UpdateOrDeleteStaffCommand = new AsyncRelayCommand(ToUpdateOrDeleteStaff);
+            GetWorkingHoursCommand = new AsyncRelayCommand(ToGetWorkingHours);
 
         }
 
         private async Task ToUpdateOrDeleteStaff()
         {
+            WorkingThemeIsToBeDecided = false;
+            await NavigationService.GoToSearchStaff();
+        }
+
+        private async Task ToGetWorkingHours()
+        {
+            WorkingWithWorkingHours = true;
             WorkingThemeIsToBeDecided = false;
             await NavigationService.GoToSearchStaff();
         }

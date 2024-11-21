@@ -103,6 +103,7 @@
 
 
 
+
         <div class= "entry-item">
             <label> Vikar </label>
 
@@ -127,19 +128,22 @@
                 <th> Løn 2 </th>
                 <th> Løn 3 </th>
                 <th> Løn 4 </th>
-                <th> Løn 5 </th>
-                <th> Løn 6 </th>
+                <th> Vikar </th>
+                <th> Kommentar </th>
             </tr>
         </thead>
         <tbody>
-            @foreach(var row in savedValues)
+            @foreach(var registration in RegistrationsFromDb)
             {
                 <tr>
-                    <td> @row.Date.ToShortDateString() </td>
-                    @foreach(var value in row.Values)
-                    {
-                        <td> @value </td>
-                    }
+                    <td> @registration.Date </td>
+                    <td> @registration.Loen1 </td>
+                    <td> @registration.Loen2 </td>
+                    <td> @registration.Loen3 </td>
+                    <td> @registration.Loen4 </td>
+                    <td> @registration.IsVikar </td>
+                    <td> @registration.Comment </td>
+
                 </tr>
             }
         </tbody>

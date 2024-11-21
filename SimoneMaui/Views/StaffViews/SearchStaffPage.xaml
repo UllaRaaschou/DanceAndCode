@@ -33,6 +33,11 @@
                      Text="Slet" 
                      Command="{Binding WannaDeleteStaffCommand}"
                      IsVisible="{Binding IsDeleteButtonVisible}"/>
+                <Button 
+                    Margin="20,10,20,10"
+                    Text="Find timeregistreringer" 
+                    Command="{Binding WannaGetWorkingHoursCommand}"
+                    IsVisible="{Binding IsWorkingHourButtonVisible}"/>
             </HorizontalStackLayout>
 
 

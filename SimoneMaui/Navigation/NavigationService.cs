@@ -2,7 +2,6 @@
 using SimoneMaui.Views;
 using SimoneMaui.ViewModels.Dtos;
 using SimoneMaui.Views.TeamViews;
-
 namespace SimoneMaui.Navigation
 {
 
@@ -28,6 +27,8 @@ namespace SimoneMaui.Navigation
         public const string SEARCH_STAFF_PAGE_ROUTE = "searchStaff";
         public const string DELETE_STAFF_PAGE_ROUTE = "deleteStaff";
 
+        public const string GET_WORKING_HOURS_PAGE_ROUTE = "getWorkingHours";
+
 
 
 
@@ -50,6 +51,9 @@ namespace SimoneMaui.Navigation
             Routing.RegisterRoute(SEARCH_STAFF_PAGE_ROUTE, type: typeof(SearchStaffPage));
             Routing.RegisterRoute(UPDATE_STAFF_PAGE_ROUTE, type: typeof(UpdateStaffPage));
             Routing.RegisterRoute(DELETE_STAFF_PAGE_ROUTE, type: typeof(DeleteStaffPage));
+
+            Routing.RegisterRoute(GET_WORKING_HOURS_PAGE_ROUTE, type: typeof(GetWorkingHoursPage)); 
+
         }
 
         public async Task GoToFirstPage()
@@ -172,6 +176,14 @@ namespace SimoneMaui.Navigation
             await Shell.Current.GoToAsync(SEARCH_STAFF_PAGE_ROUTE);
         }
 
+        public async Task GoToSearchStaff(bool workingWithWorkingHours)
+        {
+            var parameters = new Dictionary<string, object> { { "workingWithWorkingHours", workingWithWorkingHours } };
+            await Shell.Current.GoToAsync(SEARCH_STAFF_PAGE_ROUTE, parameters);
+        }
+
+        
+
         public Task GoToUpdateStaff(StaffDto selectedStaff)
         {
             var parameters = new Dictionary<string, object> { { "staffDto", selectedStaff } };
@@ -184,6 +196,11 @@ namespace SimoneMaui.Navigation
             return Shell.Current.GoToAsync(DELETE_STAFF_PAGE_ROUTE, parameters);
         }
 
+        public Task GoToGetWorkingHours(StaffDto selectedStaff)
+        {
+            var parameters = new Dictionary<string, object> { { "staffDto", selectedStaff } };
+            return Shell.Current.GoToAsync(GET_WORKING_HOURS_PAGE_ROUTE, parameters);
+        }
     }
 }
 

@@ -91,6 +91,13 @@
         Route="deleteStaff" />
         </ShellSection>
 
+        <ShellSection Title="Get WorkingHours">
+            <ShellContent
+        Title="Get WorkingHours"
+        ContentTemplate="{DataTemplate views:GetWorkingHoursPage}"
+        Route="GetWorkingHoursPage" />
+        </ShellSection>
+
 
 
 
