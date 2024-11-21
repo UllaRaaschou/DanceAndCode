@@ -37,19 +37,71 @@
         <InputDate @bind-Value="selectedDate"/>
     </div>
 
-    <div class="entry-container">
+    @* <div class="entry-container">
         @for(int i = 0; i < 4; i++)
         {
-            <div class= "entry-item">
-                <label>@labelTexts[i]</label>
-                <select @bind="selectedValues[i]">
-                    @foreach(var value in dropdownValues)
-                    {
-                        <option value="@value"> @value </option>
-                    }
-                </select>
-            </div>
-        }
+            @for(int j= 0; j < entryItems.Count; j++)
+            {
+                <div class="entry-item">
+                    <label>@entryItems[i].LabelText</label>
+                    <select @bind="entryItems[i].SelectedValue">
+                        @foreach(var value in dropdownValues)
+                        {
+                            <option value="@value">@value</option>
+                        }
+                    </select>
+                </div>
+            }
+        } *@
+        <div class ="entry-item">
+            <label> Løn 1</label>
+            <select @bind="Loen1.SelectedValue">
+                @foreach(var value in dropdownValues)
+                {
+                    <option value="@value">@value</option>
+                }
+            </select>
+        </div>
+
+         <div class ="entry-item">
+            <label> Løn 2</label>
+            <select @bind="Loen2.SelectedValue">
+                @foreach(var value in dropdownValues)
+                {
+                    <option value="@value">@value</option>
+                }
+            </select>
+        </div>
+
+         <div class ="entry-item">
+            <label> Løn 3</label>
+            <select @bind="Loen3.SelectedValue">
+                @foreach(var value in dropdownValues)
+                {
+                    <option value="@value">@value</option>
+                }
+            </select>
+        </div>
+
+        <div class ="entry-item">
+            <label> Løn 4</label>
+            <select @bind="Loen4.SelectedValue">
+                @foreach(var value in dropdownValues)
+                {
+                    <option value="@value">@value</option>
+                }
+            </select>
+        </div>
+
+
+
+
+
+
+
+
+
+
         <div class= "entry-item">
             <label> Vikar </label>
 
@@ -63,8 +115,6 @@
             <label>Kommentar</label>
             <textarea @bind="Comment" rows="3" cols="30"></textarea>
         </div>
-    </div>
-
     <button @onclick="SaveValues">Gem</button>
 
     <h2>Gemte værdier</h2>

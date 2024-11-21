@@ -86,9 +86,9 @@ namespace SimoneAPI.Migrations
                     WorkingHoursId = table.Column<Guid>(type: "TEXT", nullable: false),
                     StaffId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ChosenValueOfWorkingHours = table.Column<decimal>(type: "TEXT", nullable: false),
                     IsVikar = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Comment = table.Column<string>(type: "TEXT", nullable: false)
+                    Comment = table.Column<string>(type: "TEXT", nullable: false),
+                    ListOfChosenDropDownMenuValues = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -152,7 +152,7 @@ namespace SimoneAPI.Migrations
             migrationBuilder.InsertData(
                 table: "CalendarDataModels",
                 columns: new[] { "CalendarId", "AutumnHolidayEnd", "AutumnHolidayStart", "ChristmasHolidayEnd", "ChristmasHolidayStart", "ChristmasShow", "CreatedDate", "EasterHolidayEnd", "EasterHolidayStart", "RecitalShow", "SummerHolidayEnd", "SummerHolidayStart", "WintherHolidayEnd", "WintherHolidayStart" },
-                values: new object[] { new Guid("00000000-1111-0000-0000-000000000000"), new DateOnly(2024, 10, 21), new DateOnly(2024, 10, 17), new DateOnly(2025, 1, 2), new DateOnly(2024, 12, 23), new DateOnly(2024, 12, 10), new DateTime(2024, 11, 20, 11, 1, 31, 297, DateTimeKind.Utc).AddTicks(3683), new DateOnly(2025, 4, 17), new DateOnly(2025, 4, 10), new DateOnly(2025, 6, 10), new DateOnly(2024, 8, 7), new DateOnly(2024, 6, 27), new DateOnly(2025, 2, 17), new DateOnly(2025, 2, 13) });
+                values: new object[] { new Guid("00000000-1111-0000-0000-000000000000"), new DateOnly(2024, 10, 21), new DateOnly(2024, 10, 17), new DateOnly(2025, 1, 2), new DateOnly(2024, 12, 23), new DateOnly(2024, 12, 10), new DateTime(2024, 11, 21, 8, 36, 57, 386, DateTimeKind.Utc).AddTicks(9526), new DateOnly(2025, 4, 17), new DateOnly(2025, 4, 10), new DateOnly(2025, 6, 10), new DateOnly(2024, 8, 7), new DateOnly(2024, 6, 27), new DateOnly(2025, 2, 17), new DateOnly(2025, 2, 13) });
 
             migrationBuilder.InsertData(
                 table: "DancerDataModels",
@@ -190,6 +190,11 @@ namespace SimoneAPI.Migrations
                     { new Guid("00000000-0000-0000-0000-000000000031"), "Tilde", new DateOnly(2014, 10, 30) },
                     { new Guid("00000000-1000-0000-0000-000000000000"), "Frederik", new DateOnly(2011, 9, 9) }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Staffs",
+                columns: new[] { "StaffId", "Name", "Role", "TimeOfBirth" },
+                values: new object[] { new Guid("d7a499eb-65d8-4a62-bdd2-91c65e45e89c"), "John Ding", 1, new DateOnly(1980, 1, 1) });
 
             migrationBuilder.InsertData(
                 table: "TeamDataModels",

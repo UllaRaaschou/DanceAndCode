@@ -4,6 +4,7 @@ using SimoneAPI.Tobe.Features.Dancer;
 using SimoneAPI.Tobe.Features.Dancers;
 using SimoneAPI.Tobe.Features.StaffMembers;
 using SimoneAPI.Tobe.Features.Teams;
+using SimoneAPI.Tobe.Features.WorkRegistration;
 
 namespace SimoneAPI.EndpointExtensions
 {
@@ -12,7 +13,7 @@ namespace SimoneAPI.EndpointExtensions
         public static void RegisterDancersEndpoints(this IEndpointRouteBuilder endpointRouiteBuilder)
         {
             var dancersEndpoints = endpointRouiteBuilder.MapGroup("/dancers").WithTags("Dancers");
-                //.RequireAuthorization();
+            //.RequireAuthorization();
             var dancersWithGuidEndpoints = dancersEndpoints.MapGroup("/{dancerId:guid}");
 
             dancersWithGuidEndpoints.MapGet("", GetDancerById.Get)
@@ -75,7 +76,7 @@ namespace SimoneAPI.EndpointExtensions
         public static void RegisterTeamsEndpoints(this IEndpointRouteBuilder endpointRouiteBuilder)
         {
             var teamsEndpoints = endpointRouiteBuilder.MapGroup("/Teams").WithTags("Teams");
-                //.RequireAuthorization();
+            //.RequireAuthorization();
             var teamsWithGuidEndpoints = teamsEndpoints.MapGroup("/{teamId:guid}");
 
 
@@ -110,12 +111,12 @@ namespace SimoneAPI.EndpointExtensions
             teamsWithGuidEndpoints.MapGet("", GetTeamById.Get)
                 .WithName("GetTeamById")
                 .WithOpenApi()
-                .WithSummary("Get a team from it's id"); 
+                .WithSummary("Get a team from it's id");
 
             teamsWithGuidEndpoints.MapDelete("", DeleteTeam.Delete)
                 .WithName("DeleteTeam")
                 .WithOpenApi()
-                .WithSummary("Delete a team using it's id"); 
+                .WithSummary("Delete a team using it's id");
 
             teamsWithGuidEndpoints.MapPut("/AddToListOfDancers", AddDancerToTeam.Put)
                 .WithName("Add Dancer to Team")
@@ -179,7 +180,7 @@ namespace SimoneAPI.EndpointExtensions
             //}
         }
 
-        public static void RegisterStaffEndpoints(this IEndpointRouteBuilder endpointRouteBuilder) 
+        public static void RegisterStaffEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
         {
 
 
@@ -205,6 +206,7 @@ namespace SimoneAPI.EndpointExtensions
                 .WithName("UpdateStaff")
                 .WithSummary("Update basic data of a member of staff by Id");
 
+
             //staffWithGuidEndpoints.MapPut("/{workedHours:decimal}/{date:datetime}", RegisterWorkingHours.Register)
             //    .WithName("RegisterWorkingHours")
             //    .WithSummary("Add a new register of working hours");
@@ -224,6 +226,19 @@ namespace SimoneAPI.EndpointExtensions
                 .WithSummary("Delete a member of staff");
 
 
+        }
+
+
+        public static void RegisterWorkingHoursEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
+        {
+            var workingHoursEndpoints = endpointRouteBuilder.MapGroup("/WorkingHours")
+                .WithTags("WorkingHours")
+                .WithOpenApi();
+
+            //var staffWithGuidEndpoints = staffEndpoints.MapGroup("/{staffId:guid}");
+
+            workingHoursEndpoints.MapPost("", RegisterWorkingHours.Register)
+                .WithSummary("Post a new registration of working hours");
         }
     }
 }

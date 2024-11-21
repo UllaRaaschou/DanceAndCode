@@ -61,6 +61,15 @@ namespace SimoneAPI.DbContexts
                .HasForeignKey(a => new { a.DancerId, a.TeamId });
 
 
+            modelBuilder.Entity<Staff>().HasData(
+                new Staff
+                {
+                    StaffId = Guid.Parse("d7a499eb-65d8-4a62-bdd2-91c65e45e89c"),
+                    Name = "John Ding",
+                    Role = JobRoleEnum.Teacher,
+                    TimeOfBirth = new DateOnly(1980, 1, 1)
+                });
+
 
             var calendarDataModel = new CalendarDataModel
             {
@@ -78,6 +87,8 @@ namespace SimoneAPI.DbContexts
                 ChristmasShow = new DateOnly(2024, 12, 10),
                 RecitalShow = new DateOnly(2025, 6, 10)
             };
+
+            
 
             modelBuilder.Entity<CalendarDataModel>().HasData(calendarDataModel);
 

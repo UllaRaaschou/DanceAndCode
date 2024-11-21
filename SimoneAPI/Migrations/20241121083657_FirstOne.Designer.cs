@@ -11,7 +11,7 @@ using SimoneAPI.DbContexts;
 namespace SimoneAPI.Migrations
 {
     [DbContext(typeof(SimoneDbContext))]
-    [Migration("20241120110131_FirstOne")]
+    [Migration("20241121083657_FirstOne")]
     partial class FirstOne
     {
         /// <inheritdoc />
@@ -107,7 +107,7 @@ namespace SimoneAPI.Migrations
                             ChristmasHolidayEnd = new DateOnly(2025, 1, 2),
                             ChristmasHolidayStart = new DateOnly(2024, 12, 23),
                             ChristmasShow = new DateOnly(2024, 12, 10),
-                            CreatedDate = new DateTime(2024, 11, 20, 11, 1, 31, 297, DateTimeKind.Utc).AddTicks(3683),
+                            CreatedDate = new DateTime(2024, 11, 21, 8, 36, 57, 386, DateTimeKind.Utc).AddTicks(9526),
                             EasterHolidayEnd = new DateOnly(2025, 4, 17),
                             EasterHolidayStart = new DateOnly(2025, 4, 10),
                             RecitalShow = new DateOnly(2025, 6, 10),
@@ -337,6 +337,15 @@ namespace SimoneAPI.Migrations
                     b.HasKey("StaffId");
 
                     b.ToTable("Staffs");
+
+                    b.HasData(
+                        new
+                        {
+                            StaffId = new Guid("d7a499eb-65d8-4a62-bdd2-91c65e45e89c"),
+                            Name = "John Ding",
+                            Role = 1,
+                            TimeOfBirth = new DateOnly(1980, 1, 1)
+                        });
                 });
 
             modelBuilder.Entity("SimoneAPI.DataModels.TeamDancerRelation", b =>
@@ -839,9 +848,6 @@ namespace SimoneAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("ChosenValueOfWorkingHours")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -851,6 +857,10 @@ namespace SimoneAPI.Migrations
 
                     b.Property<bool>("IsVikar")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("ListOfChosenDropDownMenuValues")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("StaffId")
                         .HasColumnType("TEXT");

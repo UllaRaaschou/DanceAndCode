@@ -96,6 +96,7 @@ app.RegisterTeamsEndpoints();
 app.RegisterAttendanceEndpoints();
 app.RegisterStaffEndpoints();
 app.RegisterRelationEndpoints();
+app.RegisterWorkingHoursEndpoints();
 
 
 using (var scope = app.Services.CreateScope())
