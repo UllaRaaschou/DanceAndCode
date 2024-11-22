@@ -5,6 +5,8 @@
              x:Class="SimoneMaui.Views.GetWorkingHoursPage"
               x:DataType="vm:GetWorkingHoursViewModel"
              Title="GetWorkingHoursPage">
+
+    <ScrollView>
     <VerticalStackLayout>
         
 
@@ -34,33 +36,35 @@
             HorizontalOptions="Center"
             IsVisible="{Binding ButtonIsVisible}"/>
 
-        <CollectionView ItemsSource="{Binding WorkingHoursList}">
-            <CollectionView.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    
-                    <Label Text="Date" Grid.Column="0" />
-                    <Label Text="Loen1" Grid.Column="1" />
-                    <Label Text="Loen2" Grid.Column="2" />
-                    <Label Text="Loen3" Grid.Column="3" />
-                    <Label Text="Loen4" Grid.Column="4" />
-                    <Label Text="IsVikar" Grid.Column="5" />
-                    <Label Text="Comment" Grid.Column="6" />
-                </Grid>
-            </CollectionView.Header>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Text="Totalt timeantal af Løn 1" Grid.Column="0" Grid.Row="0" IsVisible="{Binding StaffIsConfirmed}" />
+                <Label Text="{Binding TotalValueOfLoen1}" Grid.Column="1" Grid.Row="0" IsVisible="{Binding StaffIsConfirmed}" />
+
+                <Label Text="Totalt timeantal af Løn 2" Grid.Column="0" Grid.Row="1" IsVisible="{Binding StaffIsConfirmed}" />
+                <Label Text="{Binding TotalValueOfLoen2}" Grid.Column="1" Grid.Row="1" IsVisible="{Binding StaffIsConfirmed}" />
+
+                <Label Text="Totalt timeantal af Løn 3" Grid.Column="0" Grid.Row="2" IsVisible="{Binding StaffIsConfirmed}" />
+                <Label Text="{Binding TotalValueOfLoen3}" Grid.Column="1" Grid.Row="2" IsVisible="{Binding StaffIsConfirmed}" />
+
+                <Label Text="Totalt timeantal af Løn 4" Grid.Column="0" Grid.Row="3" IsVisible="{Binding StaffIsConfirmed}" />
+                <Label Text="{Binding TotalValueOfLoen4}" Grid.Column="1" Grid.Row="3" IsVisible="{Binding StaffIsConfirmed}" />
+            </Grid>
+
+            <CollectionView ItemsSource="{Binding WorkingHoursList}">
+                <CollectionView.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
@@ -68,18 +72,40 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        
-                        <Label Text="{Binding Date}" Grid.Column="0" />
-                        <Label Text="{Binding Loen1}" Grid.Column="1" />
-                        <Label Text="{Binding Loen2}" Grid.Column="2" />
-                        <Label Text="{Binding Loen3}" Grid.Column="3" />
-                        <Label Text="{Binding Loen4}" Grid.Column="4" />
-                        <Label Text="{Binding IsVikar}" Grid.Column="5" />
-                        <Label Text="{Binding Comment}" Grid.Column="6" />
+
+                        <Label Text="Dato" Grid.Column="0" IsVisible="{Binding StaffIsConfirmed}" />
+                        <Label Text="Løn 1" Grid.Column="1" IsVisible="{Binding StaffIsConfirmed}" />
+                        <Label Text="Løn 2" Grid.Column="2" IsVisible="{Binding StaffIsConfirmed}" />
+                        <Label Text="Løn 3" Grid.Column="3" IsVisible="{Binding StaffIsConfirmed}" />
+                        <Label Text="Løn 4" Grid.Column="4" IsVisible="{Binding StaffIsConfirmed}" />
+                        <Label Text="Vikar ?" Grid.Column="5" IsVisible="{Binding StaffIsConfirmed}" />
+                        <Label Text="Kommentar" Grid.Column="6" IsVisible="{Binding StaffIsConfirmed}" />
                     </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding Date}" Grid.Column="0" IsVisible="{Binding StaffIsConfirmed}" />
+                            <Label Text="{Binding Loen1}" Grid.Column="1" IsVisible="{Binding StaffIsConfirmed}" />
+                            <Label Text="{Binding Loen2}" Grid.Column="2" IsVisible="{Binding StaffIsConfirmed}" />
+                            <Label Text="{Binding Loen3}" Grid.Column="3" IsVisible="{Binding StaffIsConfirmed}" />
+                            <Label Text="{Binding Loen4}" Grid.Column="4" IsVisible="{Binding StaffIsConfirmed}" />
+                            <Label Text="{Binding IsVikar}" Grid.Column="5" IsVisible="{Binding StaffIsConfirmed}" />
+                            <Label Text="{Binding Comment}" Grid.Column="6" IsVisible="{Binding StaffIsConfirmed}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
     </VerticalStackLayout>
-    
+    </ScrollView>
+
 </ContentPage>

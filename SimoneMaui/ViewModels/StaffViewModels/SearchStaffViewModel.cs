@@ -111,7 +111,11 @@ namespace SimoneMaui.ViewModels.StaffViewModels
             IsWorkingHourButtonVisible = true;
             SearchResultVisible = false;
             IsSearchHeaderVisible = false;
-            //await NavigationService.GoToUpdateStaff(SelectedStaff);           
+            if(WorkingWithWorkingHours == true) 
+            {
+                await NavigationService.GoToGetWorkingHours(SelectedStaff);        
+            }
+
         }
 
 

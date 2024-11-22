@@ -29,7 +29,22 @@ namespace SimoneMaui.ViewModels.StaffViewModels
         public double Loen3 { get; set; }
         public double Loen4 { get; set; }
         public bool IsVikar { get; set; } = false;
-        public string Comment { get; set; } = string.Empty; 
+        public string Comment { get; set; } = string.Empty;
+
+        [ObservableProperty]
+        private double totalValueOfLoen1;
+
+        [ObservableProperty]
+        private double totalValueOfLoen2;
+
+        [ObservableProperty]
+        private double totalValueOfLoen3;
+
+        [ObservableProperty]
+        private double totalValueOfLoen4;
+
+        [ObservableProperty]
+        private bool staffIsConfirmed = false;
 
 
         public AsyncRelayCommand GetWorkingHoursCommand { get; }
@@ -83,9 +98,23 @@ namespace SimoneMaui.ViewModels.StaffViewModels
                 SelectedStaff = null;
                 ButtonIsVisible = false;
 
+                StaffIsConfirmed = true;
+
                 foreach (var item in returnedRegistrations)
                 {
                     WorkingHoursList.Add(item);
+                }
+
+               
+
+                foreach (var dto in returnedRegistrations) 
+                {
+                    TotalValueOfLoen1 += dto.Loen1;
+                    TotalValueOfLoen2 += dto.Loen2;
+                    TotalValueOfLoen3 += dto.Loen3;
+                    TotalValueOfLoen4 += dto.Loen4;
+
+                    
                 }
                 
 

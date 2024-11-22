@@ -81,7 +81,7 @@ namespace SimoneMaui.ViewModels
         {
             WorkingWithWorkingHours = true;
             WorkingThemeIsToBeDecided = false;
-            await NavigationService.GoToSearchStaff();
+            await NavigationService.GoToSearchStaff(WorkingWithWorkingHours);
         }
 
         private async Task ToPostStaffTheme()
