@@ -195,11 +195,16 @@ namespace SimoneMaui.ViewModels
         }
         private async Task WannaDeleteDancerFromTeam()
         {
-            if(selectedTeam == null) 
+            if(SelectedTeam == null) 
             {
                 TellUserToChoseTeam.Invoke("Vælg hold, som eleven skal slettes på");
+
             }
-            await RemoveTeam();
+            else
+            {
+                await RemoveTeam();
+            }
+           
 
         }
 

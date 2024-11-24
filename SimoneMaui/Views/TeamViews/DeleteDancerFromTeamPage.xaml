@@ -4,10 +4,10 @@
              xmlns:vm="clr-namespace:SimoneMaui.ViewModels.TeamViewModels"
              x:Class="SimoneMaui.Views.TeamViews.DeleteDancerFromTeamPage"
              x:DataType="vm:DeleteDancerFromTeamViewModel"
-             Title="DeleteDancerFromTeamPage"> 
-    
-    
-    
+             Title="DeleteDancerFromTeamPage">
+
+
+    <ScrollView>
     <VerticalStackLayout
         HorizontalOptions="Center"
         >
@@ -41,7 +41,7 @@
             ItemsSource="{Binding DancersOnTeam}"
             SelectedItem="{Binding DancerToDelete}"
             SelectionMode="Single"
-            SelectionChangedCommand="{Binding DeleteDancerFromTeamCommand}">
+            >
             <CollectionView.ItemTemplate
                 HorizontalOptions="Center">
                 <DataTemplate>
@@ -93,9 +93,10 @@
       
 
     </VerticalStackLayout>
-    
-    
-    
-    
-    
+    </ScrollView>
+
+
+
+
+
 </ContentPage>

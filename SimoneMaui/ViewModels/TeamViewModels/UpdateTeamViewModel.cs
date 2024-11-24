@@ -309,6 +309,7 @@ namespace SimoneMaui.ViewModels
                 DancersOnTeam = mauiTeamDto.DancersOnTeam;
                 SelectedDancer = null;
                 DancerIsSelected = false;
+                IsEndOfProcedure = true;
             }
         }
 

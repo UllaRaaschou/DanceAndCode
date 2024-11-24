@@ -58,8 +58,8 @@ namespace SimoneMaui.ViewModels.TeamViewModels
 
        
         partial void OnDancerToDeleteChanged(DancerDto? newValue)
-        {            
-            DancerToDeleteIsSelected = newValue != null; 
+        {
+            DancerToDeleteIsSelected = true;
         }
 
 

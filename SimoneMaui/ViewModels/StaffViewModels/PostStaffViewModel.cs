@@ -83,16 +83,24 @@ namespace SimoneMaui.ViewModels
                 var request = new RestRequest("/StaffMember", Method.Post);
                 request.AddJsonBody(new { Name, TimeOfBirth = parsedDate, Role });
 
-                var response = await client.PostAsync<StaffDto>(request, CancellationToken.None);
-                
-                Name = string.Empty;
-                TimeOfBirth = string.Empty;
-                Role = MauiJobRoleEnum.None;
+                var response = await client.PostAsync(request, CancellationToken.None);
 
-                if (response != null)
+                if (response.IsSuccessful)
                 {
-                    DancerPosted?.Invoke($"Følgende medarbejder er oprettet: {response.Name}, {response.TimeOfBirth}, {response.Role}");
+                    DancerPosted?.Invoke($"Følgende medarbejder er oprettet: {Name}, {TimeOfBirth}, {Role}");
+
+                    Name = string.Empty;
+                    TimeOfBirth = string.Empty;
+                    Role = MauiJobRoleEnum.None;
                 }
+                else
+                {
+                    DancerPosted?.Invoke("Noget gik galt!");
+
+                }
+
+
+                
             }
 
             else
