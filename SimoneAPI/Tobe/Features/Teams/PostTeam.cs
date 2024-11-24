@@ -1,5 +1,7 @@
 ﻿using SimoneAPI.DataModels;
 using SimoneAPI.DbContexts;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Xml.Linq;
 
 namespace SimoneAPI.Tobe.Features.Teams
 {
@@ -25,8 +27,9 @@ namespace SimoneAPI.Tobe.Features.Teams
                 Number = teamDataModel.Number.ToString(),
                 Name = teamDataModel.Name,
                 SceduledTime = teamDataModel.ScheduledTime,
-                DayOfWeek = teamDataModel.DayOfWeek
-            };
+                DayOfWeek = teamDataModel.DayOfWeek,
+                TeamDetailsString = $"Hold {teamDataModel.Number} '{teamDataModel.Name}' - {teamDataModel.ScheduledTime}"
+    };
 
             return TypedResults.Created("/Teams", teamResponceDto);
 
@@ -48,6 +51,8 @@ namespace SimoneAPI.Tobe.Features.Teams
             public string Name { get; set; } = string.Empty;
             public string SceduledTime { get; set; } = string.Empty;
             public DayOfWeek DayOfWeek { get; set; } = default;
+
+            public string TeamDetailsString { get; set; }
         }
     }
 }

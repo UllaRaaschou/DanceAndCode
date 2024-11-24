@@ -26,6 +26,7 @@ namespace SimoneMaui.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(TeamDetailsString))]
         [NotifyCanExecuteChangedFor(nameof(RemoveTeamCommand))]
+        [NotifyCanExecuteChangedFor(nameof(WannaDeleteDancerFromTeamCommand))]
         private TeamDto? selectedTeam;
 
         [Required]
@@ -190,10 +191,16 @@ namespace SimoneMaui.ViewModels
         private bool CanWannaDeleteDancerFromTeam()
         {
             return SelectedDancer != null;
+
         }
         private async Task WannaDeleteDancerFromTeam()
         {
-            TellUserToChoseTeam.Invoke("Vælg hold, som eleven skal slettes på");
+            if(selectedTeam == null) 
+            {
+                TellUserToChoseTeam.Invoke("Vælg hold, som eleven skal slettes på");
+            }
+            await RemoveTeam();
+
         }
 
 
@@ -219,6 +226,7 @@ namespace SimoneMaui.ViewModels
 
                 ProblemDetails details = JsonSerializer.Deserialize<ProblemDetails>(returnedStatus.Content ?? "{}", _options)!;
             }
+            
             Teams.Remove(SelectedTeam);
             SelectedTeam = null;
             IsStartOfProcedure = false;

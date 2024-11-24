@@ -67,7 +67,9 @@
                 ItemsSource ="{Binding Teams}"
                 SelectedItem="{Binding SelectedTeam, Mode=TwoWay}"
                 SelectionMode="Single"
-                HorizontalOptions="FillAndExpand">
+                HorizontalOptions="FillAndExpand"
+                SelectionChangedCommand ="{Binding WannaDeleteDancerFromTeamCommand}">
+                
                 <CollectionView.EmptyView>
                     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                         <Label 
@@ -76,6 +78,7 @@
                         VerticalOptions="Center"/>
                     </Grid>
                 </CollectionView.EmptyView>
+                
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid HorizontalOptions="Center" VerticalOptions="Center">
@@ -86,6 +89,7 @@
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                
             </CollectionView>
 
 

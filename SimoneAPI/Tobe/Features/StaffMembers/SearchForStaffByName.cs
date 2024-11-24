@@ -13,7 +13,7 @@ namespace SimoneAPI.Tobe.Features.StaffMembers
             [FromQuery] string name)
         {
             IEnumerable<Staff> models = (IEnumerable<Staff>)await dbContext.Staffs
-                 .Where(d => d.Name.Contains(name)).ToListAsync();
+                 .Where(d => d.Name.ToLower().Contains(name.ToLower())).ToListAsync();
 
             if (!models.Any())
             {

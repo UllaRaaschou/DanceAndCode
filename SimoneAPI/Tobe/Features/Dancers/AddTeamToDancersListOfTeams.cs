@@ -13,7 +13,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
             public bool IsTrialLesson { get; set; }
         }
 
-        public static async Task<IResult> AddItemToListOfTeams(SimoneDbContext dbContext, IMapper mapper, Guid dancerId, 
+        public static async Task<IResult> AddItemToListOfTeams(SimoneDbContext dbContext,  Guid dancerId, 
             Guid teamId, AddDancingTeamRequest request)
         {
             var teamDataModel = await dbContext.TeamDataModels.FirstOrDefaultAsync(t => t.TeamId == teamId);

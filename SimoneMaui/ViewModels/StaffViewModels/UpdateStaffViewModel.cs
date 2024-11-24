@@ -56,7 +56,7 @@ namespace SimoneMaui.ViewModels.StaffViewModels
                 var options = new RestClientOptions("https://localhost:7163");
                 var client = new RestClient(options);
                 // The cancellation token comes from the caller. You can still make a call without it.
-                var request = new RestRequest($"/staffMember/{SelectedStaff.StaffId}", Method.Put);
+                var request = new RestRequest($"/StaffMember/{SelectedStaff.StaffId}", Method.Put);
 
                 request.AddJsonBody(new {Name, TimeOfBirth = parsedDate, Role });
 

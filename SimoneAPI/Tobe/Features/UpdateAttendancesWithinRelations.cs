@@ -16,8 +16,12 @@ namespace SimoneAPI.Tobe.Features
                 .Include(tdr => tdr.DancerDataModel)
                 .Where(tdr => tdr.TeamId == teamId)
                 .ToListAsync();
+            if (!teamDancerRelationsOnThisTeamFromDatabase.Any()) 
+            {
+                return TypedResults.NotFound();
+            }
 
-            if (teamDancerRelationsOnThisTeamFromDatabase.Any())
+                if (teamDancerRelationsOnThisTeamFromDatabase.Any())
             {
                 foreach (var relationFromDatabase in teamDancerRelationsOnThisTeamFromDatabase)
                 {

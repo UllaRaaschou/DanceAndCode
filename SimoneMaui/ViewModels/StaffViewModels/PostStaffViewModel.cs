@@ -80,7 +80,7 @@ namespace SimoneMaui.ViewModels
                     });
                 });
 
-                var request = new RestRequest("/staffMember", Method.Post);
+                var request = new RestRequest("/StaffMember", Method.Post);
                 request.AddJsonBody(new { Name, TimeOfBirth = parsedDate, Role });
 
                 var response = await client.PostAsync<StaffDto>(request, CancellationToken.None);

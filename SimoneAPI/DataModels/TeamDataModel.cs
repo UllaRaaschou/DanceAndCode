@@ -22,27 +22,7 @@ namespace SimoneAPI.DataModels
         public TeamDataModel(CalendarDataModel calendarDataModel) 
         {
             _calendarDataModel = calendarDataModel;
-        }
-       
-
-        public List<DateOnly> getDanceDates(SimoneDbContext context) 
-        {
-            CalendarDataModel? calendarDataModel = context.CalendarDataModels
-                                                    .OrderByDescending(c => c.CreatedDate)
-                                                    .FirstOrDefault();
-            if ((calendarDataModel != null))
-            {
-                var danceDates = DanceDatesCalculator.CalculateDanceDates(context, calendarDataModel, this);
-                return danceDates;
-            }
-            return null;
-
-            
-        }
-        
+        }   
     }
-
-
-
 }
     

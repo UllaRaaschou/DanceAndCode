@@ -40,7 +40,8 @@
             HorizontalOptions="FillAndExpand"
             ItemsSource="{Binding DancersOnTeam}"
             SelectedItem="{Binding DancerToDelete}"
-            SelectionMode="Single">
+            SelectionMode="Single"
+            SelectionChangedCommand="{Binding DeleteDancerFromTeamCommand}">
             <CollectionView.ItemTemplate
                 HorizontalOptions="Center">
                 <DataTemplate>

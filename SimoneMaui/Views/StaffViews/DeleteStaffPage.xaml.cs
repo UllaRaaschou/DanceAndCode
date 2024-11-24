@@ -8,5 +8,11 @@ public partial class DeleteStaffPage : ContentPage
 	{
 		InitializeComponent();
         BindingContext = vm;
+		vm.StaffDeleted += OnStaffDeleted;
+    }
+
+	public void OnStaffDeleted(string message) 
+	{
+        DisplayAlert("Besked", message, "OK");
     }
 }

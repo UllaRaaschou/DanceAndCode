@@ -22,6 +22,10 @@ namespace SimoneAPI.Tobe.Features.Teams
             {
                 return TypedResults.NotFound();
             }
+            foreach(var att in relation.Attendances) 
+            {
+                dbContext.Attendances.Remove(att);
+            }
             dbContext.TeamDancerRelations.Remove(relation);
             await dbContext.SaveChangesAsync();
 

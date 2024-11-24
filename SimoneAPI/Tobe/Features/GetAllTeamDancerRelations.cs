@@ -10,19 +10,21 @@ namespace SimoneAPI.Tobe.Features
     {
         public static async Task<IResult> Get(SimoneDbContext dbContext, Guid teamId)
         {
-            var teamDancerRelations = await dbContext.TeamDancerRelations
-                        .Include(tdr => tdr.DancerDataModel)
-                        .Include(tdr => tdr.Attendances)
-                        .Where(tdr => tdr.TeamId == teamId)                       
-                        .ToListAsync();      
             TeamDataModel? team = await dbContext.TeamDataModels
                                 .SingleOrDefaultAsync(t => t.TeamId == teamId);
 
-            List<DateOnly> teamDanceDates = new List<DateOnly>();
-            if (team != null) 
+            if (team == null)
             {
-               teamDanceDates = team.getDanceDates(dbContext);
+                return TypedResults.NotFound();
             }
+
+            List<DateOnly> teamDanceDates = await getDanceDates(dbContext, team);
+
+            var teamDancerRelations = await dbContext.TeamDancerRelations
+                        .Include(tdr => tdr.DancerDataModel)
+                        .Include(tdr => tdr.Attendances)
+                        .Where(tdr => tdr.TeamId == teamId)
+                        .ToListAsync();
 
             List<RelationsDto> attendanceDtoList = teamDancerRelations.Select(tdr => new RelationsDto
             {
@@ -30,12 +32,28 @@ namespace SimoneAPI.Tobe.Features
                 DancerId = tdr.DancerId,
                 DancerName = tdr.DancerDataModel.Name,
                 DancersLastDanceDate = tdr.LastDanceDate,
-                Attendances= tdr.Attendances.OrderBy(a=> a.Date).ToList()
+                Attendances = tdr.Attendances.OrderBy(a => a.Date).ToList()
             }).ToList();
 
             return TypedResults.Ok(attendanceDtoList);
         }
+
+
+        private static async Task<List<DateOnly>> getDanceDates(SimoneDbContext context, TeamDataModel team)
+        {
+            CalendarDataModel? calendarDataModel = await context.CalendarDataModels
+                                                    .OrderByDescending(c => c.CreatedDate)
+                                                    .FirstOrDefaultAsync();
+            if (calendarDataModel == null)
+            {
+                return new List<DateOnly>();
+            }
+
+            var danceDates = DanceDatesCalculator.CalculateDanceDates(context, calendarDataModel, team);
+            return danceDates;
+        }
     }
+
 
     public class RelationsDto
     {

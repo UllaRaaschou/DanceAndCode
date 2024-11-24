@@ -1,10 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RestSharp;
+using RestSharp.Serializers.Json;
 using SimoneMaui.Navigation;
 using SimoneMaui.ViewModels.Dtos;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 
 namespace SimoneMaui.ViewModels
@@ -102,22 +105,31 @@ namespace SimoneMaui.ViewModels
 
         private async Task PostTeam()
         {
+            DayOfWeek day = ToDayOfWeekConverter(DayOfWeekEntry);
+
             var options = new RestClientOptions("https://localhost:7163");
-            var client = new RestClient(options);
+            var client = new RestClient(options, configureSerialization: s =>
+            {
+                s.UseSystemTextJson(new JsonSerializerOptions
+                {
+                    Converters = { new JsonStringEnumConverter() }
+                });
+            });
+            
             string? number = NumberEntry?.ToString();
            
             var request = new RestRequest("/teams", Method.Post);
-            request.AddJsonBody(new { number, Name, SceduledTime, DayOfWeek });
+            request.AddJsonBody(new { number, Name, SceduledTime, day });
 
-            var teamDto = await client.PostAsync<TeamDto>(request, CancellationToken.None);
+            await client.PostAsync(request, CancellationToken.None);
 
+            NewTeamPosted?.Invoke($"Nyt dansehold oprettet: Hold {Number} '{Name}' - {SceduledTime}");
+
+            NumberEntry = null;
             Number = string.Empty;
             Name = string.Empty;
             DayOfWeekEntry = string.Empty;
             StartAndEndTime = string.Empty;
-
-            NewTeamPosted?.Invoke($"Nyt dansehold oprettet: {teamDto?.TeamDetailsString}");
-
         }
 
 
