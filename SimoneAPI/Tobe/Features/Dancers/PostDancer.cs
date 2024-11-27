@@ -17,7 +17,8 @@ namespace SimoneAPI.Tobe.Features.Dancer
                      d.TimeOfBirth == dto.TimeOfBirth);
             if (dancer != null)
             {
-                return TypedResults.Problem(title: "Already registered", detail:"some detail");
+                return TypedResults.Problem(title: "Already registered", 
+                    detail:"A dancer with the posted name and timeOfBirth already exists in db");
             }
 
             var dataModel = new DancerDataModel

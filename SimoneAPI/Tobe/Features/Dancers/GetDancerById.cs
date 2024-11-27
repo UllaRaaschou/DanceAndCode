@@ -9,17 +9,16 @@ namespace SimoneAPI.Tobe.Features.Dancer
 
     public static class GetDancerById
     {
-        public static void RegisterDancerEndpoint(this WebApplication endpointRouteBuilder)
+        public static async Task<Results<NotFound, Ok<GetDancerResponceDto>>> Get(
+            SimoneDbContext dbContext, IMapper mapper, Guid dancerId)
         {
-            endpointRouteBuilder.MapGet("dancers/{dancerId:guid}", Get);
-        }
-
-        public static async Task<Results<NotFound, Ok<GetDancerResponceDto>>> Get(SimoneDbContext dbContext, IMapper mapper, Guid dancerId)
-        {
-            var datamodel = await dbContext.DancerDataModels.FirstOrDefaultAsync(x => x.DancerId == dancerId);
+            var datamodel = await dbContext.DancerDataModels.FirstOrDefaultAsync(x =>
+            x.DancerId == dancerId);
             var responceDto = mapper.Map<GetDancerResponceDto>(datamodel);
 
-            return responceDto != null ? TypedResults.Ok(responceDto) : TypedResults.NotFound();
+            return responceDto != null 
+                ? TypedResults.Ok(responceDto) 
+                : TypedResults.NotFound();
         }
 
     }

@@ -13,6 +13,14 @@ namespace SimoneAPI.EndpointExtensions
         public static void RegisterDancersEndpoints(this IEndpointRouteBuilder endpointRouiteBuilder)
         {
             var dancersEndpoints = endpointRouiteBuilder.MapGroup("/dancers").WithTags("Dancers");
+            dancersEndpoints.MapGet("", GetAllDancersOnTeam.Get)
+                .WithName("GetAllDancersOnTeam")
+                .WithOpenApi()
+                .WithSummary("Get all dancers on a team");
+
+
+
+            
             //.RequireAuthorization();
             var dancersWithGuidEndpoints = dancersEndpoints.MapGroup("/{dancerId:guid}");
 
@@ -22,10 +30,7 @@ namespace SimoneAPI.EndpointExtensions
                 .WithSummary("Get a dancer by adding an id")
                 .WithDescription("This could be a longer desccription of the process");
 
-            dancersEndpoints.MapGet("", GetAllDancersOnTeam.Get)
-                .WithName("GetAllDancersOnTeam")
-                .WithOpenApi()
-                .WithSummary("Get all dancers on a team");
+            
 
             dancersEndpoints.MapPost("", PostDancer.Post)
                 .WithName("PostDancer")

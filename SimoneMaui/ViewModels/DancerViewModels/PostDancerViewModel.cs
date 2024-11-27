@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 using SimoneMaui.Navigation;
 using SimoneMaui.ViewModels.Dtos;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 
 
 namespace SimoneMaui.ViewModels
@@ -54,27 +56,48 @@ namespace SimoneMaui.ViewModels
         {
             if (DateOnly.TryParseExact(TimeOfBirth, "dd-MM-yyyy", out var parsedDate))
             {
-                var options = new RestClientOptions("https://localhost:7163");
-                var client = new RestClient(options);
-                // The cancellation token comes from the caller. You can still make a call without it.
+                var options = new RestClientOptions("https://localhost:7163");                
+                var client = new RestClient(options);               
                 var request = new RestRequest("/dancers", Method.Post);
                 request.AddJsonBody(new { Name, TimeOfBirth = parsedDate });
+                var response = await client.PostAsync(request, CancellationToken.None);
 
-                var response = await client.PostAsync<DancerDto>(request, CancellationToken.None);
-
-                Name = string.Empty;
-                TimeOfBirth = string.Empty;
-
-                if(response != null) 
+                if (!response.IsSuccessStatusCode && !string.IsNullOrEmpty(response.Content))
                 {
-                    DancerPosted?.Invoke($"Følgende elev er oprettet: {response.Name}, {response.TimeOfBirth}");
-                }               
+                    var problem = JsonSerializer.Deserialize<ProblemDetails>(response.Content);
+                    if (problem is not null)
+                    {
+                        DancerPosted.Invoke(FormatProblemDetails(problem));
+                    }
+                    else
+                    {
+                        DancerPosted.Invoke("Unknown error occurred.");
+                    }
+                }
+                if (response != null)
+                {
+                    DancerPosted?.Invoke($"Følgende elev er oprettet: {Name}, {TimeOfBirth}");
+                }
+                Name = string.Empty;
+                TimeOfBirth = string.Empty;                        
             }
-
             else 
             {
                 System.Diagnostics.Debug.WriteLine("Invalid date format");
             }          
+        }
+
+        private string FormatProblemDetails(ProblemDetails problem)
+        {
+            if (problem == null)
+            {
+                return "Unknown error occurred.";
+            }
+
+            return $"Error: {problem.Title}\n" +
+                   $"Status: {problem.Status}\n" +
+                   $"Detail: {problem.Detail}\n" +
+                   $"Instance: {problem.Instance}";
         }
 
         public bool CanPost() 

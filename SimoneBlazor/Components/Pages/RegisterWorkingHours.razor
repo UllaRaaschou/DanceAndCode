@@ -37,22 +37,7 @@
         <InputDate @bind-Value="selectedDate"/>
     </div>
 
-    @* <div class="entry-container">
-        @for(int i = 0; i < 4; i++)
-        {
-            @for(int j= 0; j < entryItems.Count; j++)
-            {
-                <div class="entry-item">
-                    <label>@entryItems[i].LabelText</label>
-                    <select @bind="entryItems[i].SelectedValue">
-                        @foreach(var value in dropdownValues)
-                        {
-                            <option value="@value">@value</option>
-                        }
-                    </select>
-                </div>
-            }
-        } *@
+   
         <div >
             <label> Løn 1</label>
             <select @bind="Loen1.SelectedValue">

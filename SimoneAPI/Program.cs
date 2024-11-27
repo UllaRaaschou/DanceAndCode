@@ -9,9 +9,16 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+
+
+
 // Tilføj logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
+
+
 
 // Add services to the container.
 builder.Services.AddDbContext<SimoneDbContext>(options =>
@@ -85,10 +92,15 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
+// Build the application
 var app = builder.Build();
+
+
+
 app.UseCors();
-//TODO: Register endpoints
-// NAMING IS IMPORTENT !!
+
+
+//Register endpoints
 app.UseAuthentication();
 app.UseAuthorization();
 app.RegisterDancersEndpoints();
@@ -113,8 +125,8 @@ if (!app.Environment.IsDevelopment())
     {
     app.UseExceptionHandler();
     }
-        
-      
+
+
 
 
 app.UseHttpsRedirection();

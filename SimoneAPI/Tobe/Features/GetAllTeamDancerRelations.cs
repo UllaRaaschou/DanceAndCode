@@ -26,7 +26,7 @@ namespace SimoneAPI.Tobe.Features
                         .Where(tdr => tdr.TeamId == teamId)
                         .ToListAsync();
 
-            List<RelationsDto> attendanceDtoList = teamDancerRelations.Select(tdr => new RelationsDto
+            List<RelationsDto> relationDtoList = teamDancerRelations.Select(tdr => new RelationsDto
             {
                 TeamId = tdr.TeamId,
                 DancerId = tdr.DancerId,
@@ -35,7 +35,7 @@ namespace SimoneAPI.Tobe.Features
                 Attendances = tdr.Attendances.OrderBy(a => a.Date).ToList()
             }).ToList();
 
-            return TypedResults.Ok(attendanceDtoList);
+            return TypedResults.Ok(relationDtoList);
         }
 
 
