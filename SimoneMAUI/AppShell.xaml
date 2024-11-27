@@ -8,7 +8,7 @@
     Shell.FlyoutBehavior="Disabled"
     Title="SimoneMaui">
 
-    <Shell.Resources>
+    <!--<Shell.Resources>
         <ResourceDictionary>
             <Style TargetType="ContentPage">
                 <Setter Property="BackgroundColor" Value="White" />
@@ -28,7 +28,7 @@
                 <Setter Property="TextColor" Value="Black" />
             </Style>
         </ResourceDictionary>
-    </Shell.Resources>
+    </Shell.Resources>-->
 
     <ShellItem Title="Home">
         

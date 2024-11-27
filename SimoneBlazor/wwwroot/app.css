@@ -1,16 +1,22 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    overflow: auto; /* Tilføjer scrollbars, hvis indholdet overstiger visningsområdet */
+    overflow: auto;  Tilføjer scrollbars, hvis indholdet overstiger visningsområdet 
 }
 
 button {
     background-color: #F9B9DA;
-    color: #000; /* Tekstfarve, juster efter behov */
+    color: #000;  Tekstfarve, juster efter behov 
 }
 
-    button:hover {
-        background-color: #E8A8C2; /* Mørkere farve ved hover, juster efter behov */
-    }
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+button:hover {
+    background-color: #E8A8C2;  Mørkere farve ved hover, juster efter behov 
+}
 
 a, .btn-link {
     color: #006bb7;

@@ -122,7 +122,7 @@ namespace SimoneMaui.ViewModels
 
         private bool CanWannaDeleteDancer()
         {
-            return selectedDancer != null;
+            return SelectedDancer != null;
         }
         private async Task WannaDeleteDancer()
         {
@@ -133,14 +133,12 @@ namespace SimoneMaui.ViewModels
 
         private bool CanWannaUpdateDancer()
         {
-            return selectedDancer != null; ;
+            return SelectedDancer != null; ;
         }
         private async Task WannaUpdateDancer()
         {
             await NavigationService.GoToUpdateDancer(SelectedDancer);
         }
-
-        
 
         private bool CanSearchAsync()
         {
@@ -152,7 +150,7 @@ namespace SimoneMaui.ViewModels
             return false;
         }
 
-        private async Task<ObservableCollection<DancerDto>> SearchAsyncDancer()
+        private async Task SearchAsyncDancer()
         {
             var options = new RestClientOptions("https://localhost:7163");
             var client = new RestClient(options);
@@ -181,16 +179,16 @@ namespace SimoneMaui.ViewModels
                 NoDancerFoundInDb.Invoke("Ingen danser i databasen matcher søgekritetriet");
             }
 
-            var dancerCollection = new ObservableCollection<DancerDto>(returnedCollection.Data);
-
             DancerDtoList.Clear();
-            foreach (var item in dancerCollection)
+     
+            foreach (var item in returnedCollection.Data)
             {
                 DancerDtoList.Add(item);
 
             }
-            
-            return dancerCollection;
+            searchResultVisible = true;
+
+            //return dancerCollection;
         }
 
 

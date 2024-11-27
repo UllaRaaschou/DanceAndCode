@@ -5,87 +5,85 @@
              xmlns:local="clr-namespace:SimoneMaui.Converters"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="SimoneMaui.Views.SearchDancerPage"   
-             x:DataType="vm:SearchDancerViewmodel"
-             >
+             x:DataType="vm:SearchDancerViewmodel">
     
     <ContentPage.Resources>
         <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </ContentPage.Resources>
 
-    
-        <ScrollView>            
-                <VerticalStackLayout 
-                     Padding="20" >
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" >
 
             <Button
-            Text="Til forsiden"
-            Command="{Binding NavigateToFirstPageCommand}"
-            HorizontalOptions="Start"
-            VerticalOptions="Start"
-            Margin="0,0,0,20"/>
+                Text="Til forsiden"
+                Command="{Binding NavigateToFirstPageCommand}"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                Margin="0,0,0,20"/>
 
             <Label Text="Fremsøg elev" FontSize="24" HorizontalOptions="Center"></Label>
 
-                <HorizontalStackLayout
-                     VerticalOptions="Center"
-                     HorizontalOptions="Center">
-                     <Button 
-                            Margin="20,10,20,10"
-                            Text="Opdater" 
-                            Command="{Binding WannaUpdateDancerCommand}" 
-                            IsVisible="{Binding IsUpdateButtonVisible}"/>
-                     <Button 
-                            Margin="20,10,20,10"
-                            Text="Slet" 
-                            Command="{Binding WannaDeleteDancerCommand}"
-                            IsVisible="{Binding IsDeleteButtonVisible}"/>
-                 </HorizontalStackLayout>
+            <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <Button 
+                    Margin="20,10,20,10"
+                    Text="Opdater" 
+                    Command="{Binding WannaUpdateDancerCommand}" 
+                    IsVisible="{Binding IsUpdateButtonVisible}"/>
 
+                <Button 
+                    Margin="20,10,20,10"
+                    Text="Slet" 
+                    Command="{Binding WannaDeleteDancerCommand}"
+                    IsVisible="{Binding IsDeleteButtonVisible}"/>
 
-                        <Entry
-                            HorizontalOptions="Center"
-                            Placeholder="Navn"
-                            Text="{Binding NameEntry, Mode=TwoWay}"/>
+            </HorizontalStackLayout>
 
-                        <Button
-                            Margin="20,10,20,10"
-                             Text="Søg"
-                             Command="{Binding SearchDancerCommand}"/>
+            <Entry
+                HorizontalOptions="Center"
+                Placeholder="Navn"
+                Text="{Binding NameEntry, Mode=TwoWay}"/>
 
-                       
-                        <CollectionView                    
-                            ItemsSource="{Binding DancerDtoList}"
-                            SelectedItem="{Binding SelectedDancer, Mode=TwoWay}"
-                            SelectionMode="Single"
-                            IsVisible="{Binding SearchResultVisible}"
-                            SelectionChangedCommand="{Binding DancerSelectedCommand}">
-                            <CollectionView.ItemTemplate>                               
-                                <DataTemplate>
-                        <HorizontalStackLayout
-                            HorizontalOptions="Center" Spacing="10">
-                            <Label HorizontalOptions="Center" Text="{Binding Name}"/>
-                            <Label HorizontalOptions="Center" Text="{Binding TimeOfBirth}"/>
-                            <CollectionView
-                             ItemsSource="{Binding Teams}">
+            <Button Margin="20,10,20,10" MaximumWidthRequest="250" Text="Søg" Command="{Binding SearchDancerCommand}"/>
+
+            <CollectionView        
+                MaximumWidthRequest="1000"
+                ItemsSource="{Binding DancerDtoList}"
+                SelectedItem="{Binding SelectedDancer, Mode=TwoWay}"
+                SelectionMode="Single"
+                IsVisible="{Binding SearchResultVisible}"
+                SelectionChangedCommand="{Binding DancerSelectedCommand}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0" Text="Name:" FontAttributes="Bold"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
+
+                            <Label Grid.Row="1" Grid.Column="0" Text="Time of Birth:" FontAttributes="Bold"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding TimeOfBirth}"/>
+
+                            <Label Grid.Row="2" Grid.Column="0" Text="Teams:" FontAttributes="Bold"/>
+                            <CollectionView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Teams}">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
-                                        <Label Text="{Binding TeamDetailsString}"/>
+                                        <Label Text="{Binding TeamDetailsString}" />
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
-                        </HorizontalStackLayout>
-                              </DataTemplate>
-                           </CollectionView.ItemTemplate>
-                        </CollectionView>
-
-           
-
-
-
-        </VerticalStackLayout>                   
-        </ScrollView>        
-   
-    
-    
-   
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

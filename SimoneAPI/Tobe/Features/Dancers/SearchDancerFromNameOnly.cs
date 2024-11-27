@@ -16,8 +16,7 @@ namespace SimoneAPI.Tobe.Features.Dancers
             var dancerModels = await dbContext.DancerDataModels
                 .Include(d => d.TeamDancerRelations)
                 .ThenInclude(tdr => tdr.TeamDataModel)
-                .Where(d =>
-                   (name != null && d.Name.Contains(name)))
+                .Where(d => name != null && d.Name.ToLower().Contains(name.ToLower()))
                 .ToListAsync();
 
             if (dancerModels == null)
