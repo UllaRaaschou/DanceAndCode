@@ -32,87 +32,86 @@
 
     <ShellItem Title="Home">
         
-        <ShellSection Title="First Page">
+        <ShellSection>
             <ShellContent
-                Title="First page"
                 ContentTemplate="{DataTemplate views:FirstPage}"
                 Route="firstPage" />
         </ShellSection>
 
-        <ShellSection Title="Calendar">
+        <ShellSection>
             <ShellContent
-        Title="Calendar"
+                ContentTemplate="{DataTemplate views:CalendarPage}"
+                Route="calendarPage" />
+        </ShellSection>
+
+        <ShellSection >
+            <ShellContent        
         ContentTemplate="{DataTemplate views:CalendarPage}"
         Route="calendarPage" />
         </ShellSection>
 
-        <ShellSection Title="Search Dancer">
-            <ShellContent
-                Title="Search Dancer"
+        <ShellSection >
+            <ShellContent                
                 ContentTemplate="{DataTemplate views:SearchDancerPage}"
                 Route="searchDancerPage" />
         </ShellSection>
-        <ShellSection Title="Update Dancer">
-            <ShellContent
-                Title="Update Dancer"
+        
+        <ShellSection >
+            <ShellContent                
                 ContentTemplate="{DataTemplate views:UpdateDancerPage}"
                 Route="UpdateDancerPage" />
         </ShellSection>
-        <ShellSection Title="Delete Dancer">
-            <ShellContent
-                Title="Delete Dancer"
+        
+        <ShellSection >
+            <ShellContent                
                 ContentTemplate="{DataTemplate views:DeleteDancerPage}"
                 Route="deleteDancerPage" />
         </ShellSection>
 
-        <ShellSection Title="Post Team">
-            <ShellContent
-         Title="Post Team"
+        <ShellSection >
+            <ShellContent        
          ContentTemplate="{DataTemplate views:PostTeamPage}"
          Route="postTeam" />
         </ShellSection>
-        <ShellSection Title="Search Team">
-            <ShellContent
-         Title="Search Team"
+        
+        <ShellSection >
+            <ShellContent        
          ContentTemplate="{DataTemplate views:SearchTeamPage}"
          Route="searchTeam" />
         </ShellSection>
-        <ShellSection Title="Update Team">
-            <ShellContent
-         Title="Update Team"
+        
+        <ShellSection >
+            <ShellContent         
          ContentTemplate="{DataTemplate views:UpdateTeamPage}"
          Route="updateTeam" />
         </ShellSection>
 
-        <ShellSection Title="Post Staff">
-            <ShellContent
-        Title="Post Staff"
+        <ShellSection>
+            <ShellContent       
         ContentTemplate="{DataTemplate views:PostStaffPage}"
         Route="postStaff" />
         </ShellSection>
-        <ShellSection Title="Search Staff">
-            <ShellContent
-        Title="Search Staff"
+        
+        <ShellSection >
+            <ShellContent        
         ContentTemplate="{DataTemplate views:SearchStaffPage}"
         Route="searchStaff" />
         </ShellSection>
-        <ShellSection Title="Update Staff">
-            <ShellContent
-        Title="Update Staff"
+        
+        <ShellSection >
+            <ShellContent       
         ContentTemplate="{DataTemplate views:UpdateStaffPage}"
         Route="updateStaff" />
         </ShellSection>
         
-        <ShellSection Title="Delete Staff">
-            <ShellContent
-         Title="Update Staff"
+        <ShellSection >
+            <ShellContent         
         ContentTemplate="{DataTemplate views:DeleteStaffPage}"
         Route="deleteStaff" />
         </ShellSection>
 
-        <ShellSection Title="Get WorkingHours">
-            <ShellContent
-        Title="Get WorkingHours"
+        <ShellSection >
+            <ShellContent        
         ContentTemplate="{DataTemplate views:GetWorkingHoursPage}"
         Route="GetWorkingHoursPage" />
         </ShellSection>

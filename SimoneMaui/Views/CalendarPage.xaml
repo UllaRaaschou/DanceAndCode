@@ -5,7 +5,7 @@
              xmlns:behaviors="clr-namespace:SimoneMaui.Behaviors"
              x:Class="SimoneMaui.Views.CalendarPage"
              x:DataType="vm:CalendarViewModel"
-             Title="CalendarPage">
+             >
     
     
     

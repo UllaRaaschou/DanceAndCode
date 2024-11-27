@@ -23,6 +23,7 @@ namespace SimoneBlazor.Components.Pages
 
         public List<DateOnly>? TeamDanceDates = new List<DateOnly>();
 
+        
         protected async override Task OnInitializedAsync()
         {
             var options = new RestClientOptions("https://localhost:7163");
@@ -34,6 +35,7 @@ namespace SimoneBlazor.Components.Pages
             var request2 = new RestRequest($"/Relations/{TeamId}", Method.Get);
             Relations = await client.GetAsync<List<RelationBlazor>>(request2, CancellationToken.None);
 
+            // Tobe.Teams.GetTeamdancedates: Needs an updated CalendardataModel and call to the static DataModel.DanceDateCalculator
             var request3 = new RestRequest($"/Teams/{TeamId}/DanceDates", Method.Get);
             TeamDanceDates = await client.GetAsync<List<DateOnly>>(request3, CancellationToken.None);
 

@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:SimoneMaui.ViewModels.StaffViewModels"
              x:Class="SimoneMaui.Views.DeleteStaffPage"
              x:DataType="vm:DeleteStaffViewModel"
-             Title="DeleteStaffPage">
+             >
 
 
     <VerticalStackLayout 

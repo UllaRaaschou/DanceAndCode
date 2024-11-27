@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:SimoneMaui.ViewModels.TeamViewModels"
              x:Class="SimoneMaui.Views.TeamViews.DeleteDancerFromTeamPage"
              x:DataType="vm:DeleteDancerFromTeamViewModel"
-             Title="DeleteDancerFromTeamPage">
+             >
 
 
     <ScrollView>

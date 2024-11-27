@@ -7,7 +7,7 @@
              x:Class="SimoneMaui.Views.UpdateStaffPage"
              x:DataType="vm:UpdateStaffViewModel"
              
-             Title="UpdateStaffPage">
+             >
     
     <ContentPage.Resources>
         <ResourceDictionary>

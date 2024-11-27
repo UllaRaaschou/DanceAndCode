@@ -6,7 +6,7 @@
              xmlns:converters="clr-namespace:SimoneMaui.Converters"
              x:Class="SimoneMaui.Views.PostStaffPage"
              x:DataType="vm:PostStaffViewModel"
-             Title="PostStaffPage">
+             >
 
     <ContentPage.Resources>
         <ResourceDictionary>

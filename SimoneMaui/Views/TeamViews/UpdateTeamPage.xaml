@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:SimoneMaui.ViewModels"
              x:Class="SimoneMaui.Views.UpdateTeamPage"
              x:DataType="vm:UpdateTeamViewModel"
-             Title="UpdateTeamPage">
+            >
 
     <VerticalStackLayout
         HorizontalOptions="Center"

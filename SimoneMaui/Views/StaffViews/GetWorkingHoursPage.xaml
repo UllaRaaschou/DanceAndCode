@@ -4,7 +4,7 @@
               xmlns:vm="clr-namespace:SimoneMaui.ViewModels.StaffViewModels"
              x:Class="SimoneMaui.Views.GetWorkingHoursPage"
               x:DataType="vm:GetWorkingHoursViewModel"
-             Title="GetWorkingHoursPage">
+             >
 
     <ScrollView>
     <VerticalStackLayout>

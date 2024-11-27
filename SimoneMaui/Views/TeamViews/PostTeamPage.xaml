@@ -6,7 +6,7 @@
              xmlns:b="clr-namespace:SimoneMaui.Behaviors"
              x:Class="SimoneMaui.Views.PostTeamPage"
              x:DataType="vm:PostTeamViewModel"
-             Title="PostTeamPage">
+             >
 
     <VerticalStackLayout>
         <Button
