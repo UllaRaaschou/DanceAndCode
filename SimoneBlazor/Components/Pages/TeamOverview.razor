@@ -9,16 +9,18 @@
     <p><em>Loading...</em></p>
 }
 
-<table class="table table-light">
-    <thead class="table-primary">
-        <tr>
-            <th></th>
-            <th>Holdnavn</th>
-            <th>Nummer</th>
-            <th>Ugedag</th>
-            <th>StartOgSlutTidspunkter</th>
-            <th>Elever</th>
-            <th></th>
+<!-- Eksempler på inline-styles -->
+
+<table class="table table-light" style="background-color: #F9B9DA;"> 
+    <thead class="table-primary" style="background-color: #F9B9DA;">
+        <tr style="background-color: #F9B9DA;">
+            <th style="background-color: #F9B9DA;"></th>
+            <th style="background-color: #F9B9DA;">Holdnavn</th>
+            <th style="background-color: #F9B9DA;">Nummer</th>
+            <th style="background-color: #F9B9DA;">Ugedag</th>
+            <th style="background-color: #F9B9DA;">StartOgSlutTidspunkter</th>
+            <th style="background-color: #F9B9DA;">Elever</th>
+            <th style="background-color: #F9B9DA;"></th>
         </tr>
     </thead>
     <tbody>
@@ -31,11 +33,11 @@
                 <td>@team.DayOfWeek</td>
                 <td>@team.ScheduledTime</td>
                 <td>
-                    <a href="@($"SpecificTeamDetails/{team.TeamId}")" class="btn btn-outline-primary btn-sm mb-1"> Til holdet </a>
+                    <a href="@($"SpecificTeamDetails/{team.TeamId}")" class="btn btn-outline-primary btn-sm mb-1" 
+                    style="border-color: #F9B9DA; color: black;"> Til holdet </a>
                 </td>
             </tr>            
         }
 
     </tbody>
-
 </table>

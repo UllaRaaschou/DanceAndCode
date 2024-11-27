@@ -7,8 +7,8 @@
         width: 40px;
         height: 40px;
         padding: 0;
-        border: 1px solid #007bff;
-        background-color: #f8f9fa;
+        border: 1px solid #000; /* Sort kant */
+        background-color: #fff; /* Hvid baggrund */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -17,7 +17,12 @@
     .checkmark {
         position: absolute;
         font-size: 24px;
-        color: #007bff;
+        color: #F9B9DA; /* Lyserød farve */
+    }
+
+    /* Tilføjet CSS-klasse for at gøre den øverste række lyserød */
+    .header-pink {
+        background-color: #F9B9DA;
     }
 </style>
 
@@ -27,12 +32,13 @@
     <br />
 
     <table class="table table-light">
-        <thead class="table-primary">            
+        <!-- Tilføjet CSS-klasse til thead for at gøre den øverste række lyserød -->
+        <thead class="header-pink">            
             <tr>
                 <th></th>
                 @foreach (var date in TeamDanceDates)
                 {
-                    <th>@date</th>
+                    <th>@date.ToString("dd/MM")</th>
                 }
                 <th></th>
             </tr>
@@ -62,9 +68,7 @@
                     style="width: 100px; height: 50px;">
                 Gem
             </button>
-
-
         
         </tbody>
     </table>
-</section> 
+</section>

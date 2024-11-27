@@ -8,6 +8,28 @@
     Shell.FlyoutBehavior="Disabled"
     Title="SimoneMaui">
 
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ContentPage">
+                <Setter Property="BackgroundColor" Value="White" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#F9B9DA" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+            <Style TargetType="SearchBar">
+                <Setter Property="BackgroundColor" Value="#F9B9DA" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
+
     <ShellItem Title="Home">
         
         <ShellSection Title="First Page">
@@ -23,9 +45,6 @@
         ContentTemplate="{DataTemplate views:CalendarPage}"
         Route="calendarPage" />
         </ShellSection>
-
-
-
 
         <ShellSection Title="Search Dancer">
             <ShellContent
@@ -97,10 +116,6 @@
         ContentTemplate="{DataTemplate views:GetWorkingHoursPage}"
         Route="GetWorkingHoursPage" />
         </ShellSection>
-
-
-
-
 
     </ShellItem>
 

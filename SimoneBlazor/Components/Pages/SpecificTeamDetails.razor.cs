@@ -12,6 +12,8 @@ namespace SimoneBlazor.Components.Pages
 {
     public partial class SpecificTeamDetails
     {
+        [Inject]
+        private NavigationManager NavigationManager { get; set; } 
 
         [Parameter]
         public Guid TeamId { get; set; }
@@ -20,16 +22,13 @@ namespace SimoneBlazor.Components.Pages
         public List<RelationBlazor>? Relations = new List<RelationBlazor>();
 
         public List<DateOnly>? TeamDanceDates = new List<DateOnly>();
-        
 
-       
         protected async override Task OnInitializedAsync()
         {
             var options = new RestClientOptions("https://localhost:7163");
             var client = new RestClient(options);
 
             var request1 = new RestRequest($"/Teams/{TeamId}", Method.Get);
-
             Team = await client.GetAsync<TeamBlazor>(request1, CancellationToken.None);
 
             var request2 = new RestRequest($"/Relations/{TeamId}", Method.Get);
@@ -38,9 +37,13 @@ namespace SimoneBlazor.Components.Pages
             var request3 = new RestRequest($"/Teams/{TeamId}/DanceDates", Method.Get);
             TeamDanceDates = await client.GetAsync<List<DateOnly>>(request3, CancellationToken.None);
 
-            foreach (var relation in Relations) 
+            // Filter dates to only include today and future dates
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            TeamDanceDates = TeamDanceDates.Where(date => date >= today).ToList();
+
+            foreach (var relation in Relations)
             {
-                if(!relation.Attendances.Any()) 
+                if (!relation.Attendances.Any())
                 {
                     relation.Attendances = new List<Attendance>();
                     foreach (var date in TeamDanceDates)
@@ -56,8 +59,12 @@ namespace SimoneBlazor.Components.Pages
                         });
                     }
                 }
+                else
+                {
+                    // Filter attendances to only include today and future dates
+                    relation.Attendances = relation.Attendances.Where(att => att.Date >= today).ToList();
+                }
             }
-
         }
 
         public async Task<AttendanceBlazor> GetAttendance(Guid dancerId, Guid teamId, DateOnly date)
@@ -70,20 +77,18 @@ namespace SimoneBlazor.Components.Pages
             return att;
         }
 
-
-        public async Task ChangeAttendanceStatus (Guid dancerId, DateOnly date, bool isPresent) 
+        public async Task ChangeAttendanceStatus(Guid dancerId, DateOnly date, bool isPresent)
         {
             var relation = Relations.FirstOrDefault(r => r.DancerId == dancerId && r.TeamId == TeamId);
-            if(relation != null) 
+            if (relation != null)
             {
                 var attendance = relation.Attendances.FirstOrDefault(a => a.Date == date);
-                if(attendance != null) 
+                if (attendance != null)
                 {
                     attendance.IsPresent = !attendance.IsPresent;
                     StateHasChanged();
                 }
             }
-                      
         }
 
         public void SaveChanges()
@@ -97,9 +102,12 @@ namespace SimoneBlazor.Components.Pages
             request.AddJsonBody(teamDancerRelations);
 
             client.PutAsync(request, CancellationToken.None);
+
+            // Navigate to the home page after saving changes
+            NavigationManager.NavigateTo("/");
         }
 
-        private TeamDancerRelation ToTeamDancerRelation(RelationBlazor relationBlazor) 
+        private TeamDancerRelation ToTeamDancerRelation(RelationBlazor relationBlazor)
         {
             return new TeamDancerRelation
             {
@@ -107,9 +115,8 @@ namespace SimoneBlazor.Components.Pages
                 DancerId = relationBlazor.DancerId,
                 IsTrialLesson = relationBlazor.IsTrialLesson,
                 LastDanceDate = relationBlazor.DancersLastDanceDate,
-                Attendances = relationBlazor.Attendances                
+                Attendances = relationBlazor.Attendances
             };
-            
         }
     }
 }
