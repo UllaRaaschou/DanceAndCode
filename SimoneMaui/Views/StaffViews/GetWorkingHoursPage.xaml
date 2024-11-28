@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              xmlns:vm="clr-namespace:SimoneMaui.ViewModels.StaffViewModels"
+             xmlns:vm="clr-namespace:SimoneMaui.ViewModels.StaffViewModels"
              x:Class="SimoneMaui.Views.GetWorkingHoursPage"
-              x:DataType="vm:GetWorkingHoursViewModel"
-             >
+             x:DataType="vm:GetWorkingHoursViewModel">
 
     <ScrollView>
-    <VerticalStackLayout>
-        
-
+        <VerticalStackLayout Padding="20">
             <Button
-            Text="Til forsiden"
-            Command="{Binding NavigateToFirstPageCommand}"
-            HorizontalOptions="Start"
-            VerticalOptions="Start"
-            Margin="0,0,0,20"/>
-
-            <Label            
-            Text="Fremsøg arbejdstimer for nedenstående medarbejder"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+                Text="Til forsiden"
+                Command="{Binding NavigateToFirstPageCommand}"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                Margin="0,0,0,20"/>
 
             <Label
-            HorizontalOptions="Center" 
-            Text="{Binding Name, Mode=TwoWay}"/>
+                Text="Fremsøg arbejdstimer for nedenstående medarbejder"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Margin="0,0,0,20"/>
 
-            <Label        
-            HorizontalOptions="Center" 
-            Text="{Binding TimeOfBirth, Mode=TwoWay}"/>
+            <Label
+                HorizontalOptions="Center"
+                Text="{Binding Name, Mode=TwoWay}"
+                Margin="0,0,0,10"/>
+
+            <Label
+                HorizontalOptions="Center"
+                Text="{Binding TimeOfBirth, Mode=TwoWay}"
+                Margin="0,0,0,20"/>
 
             <Button
-            Text="Fremsøg arbejdstimer"
-            Command="{Binding GetWorkingHoursCommand}"
-            HorizontalOptions="Center"
-            IsVisible="{Binding ButtonIsVisible}"/>
+                Text="Fremsøg arbejdstimer"
+                Command="{Binding GetWorkingHoursCommand}"
+                HorizontalOptions="Center"
+                IsVisible="{Binding ButtonIsVisible}"
+                Margin="0,0,0,20"/>
 
-            <Grid>
+            <Grid Margin="0,0,0,20">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -48,29 +49,30 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Label Text="Totalt timeantal af Løn 1" Grid.Column="0" Grid.Row="0" IsVisible="{Binding StaffIsConfirmed}" />
-                <Label Text="{Binding TotalValueOfLoen1}" Grid.Column="1" Grid.Row="0" IsVisible="{Binding StaffIsConfirmed}" />
+                <Label Text="Totalt timeantal af Løn 1:     " FontAttributes="Bold" Grid.Column="0" Grid.Row="0" IsVisible="{Binding StaffIsConfirmed}"  />
+                <Label Text="{Binding TotalValueOfLoen1}" FontAttributes="Bold" Grid.Column="1" Grid.Row="0" IsVisible="{Binding StaffIsConfirmed}" Margin="100,0,0,0" />
 
-                <Label Text="Totalt timeantal af Løn 2" Grid.Column="0" Grid.Row="1" IsVisible="{Binding StaffIsConfirmed}" />
-                <Label Text="{Binding TotalValueOfLoen2}" Grid.Column="1" Grid.Row="1" IsVisible="{Binding StaffIsConfirmed}" />
+                <Label Text="Totalt timeantal af Løn 2:     " FontAttributes="Bold" Grid.Column="0" Grid.Row="1" IsVisible="{Binding StaffIsConfirmed}" />
+                <Label Text="{Binding TotalValueOfLoen2}" FontAttributes="Bold" Grid.Column="1" Grid.Row="1" IsVisible="{Binding StaffIsConfirmed}" Margin="100,0,0,0"/>
 
-                <Label Text="Totalt timeantal af Løn 3" Grid.Column="0" Grid.Row="2" IsVisible="{Binding StaffIsConfirmed}" />
-                <Label Text="{Binding TotalValueOfLoen3}" Grid.Column="1" Grid.Row="2" IsVisible="{Binding StaffIsConfirmed}" />
+                <Label Text="Totalt timeantal af Løn 3:     " FontAttributes="Bold" Grid.Column="0" Grid.Row="2" IsVisible="{Binding StaffIsConfirmed}" />
+                <Label Text="{Binding TotalValueOfLoen3}" FontAttributes="Bold" Grid.Column="1" Grid.Row="2" IsVisible="{Binding StaffIsConfirmed}" Margin="100,0,0,0"/>
 
-                <Label Text="Totalt timeantal af Løn 4" Grid.Column="0" Grid.Row="3" IsVisible="{Binding StaffIsConfirmed}" />
-                <Label Text="{Binding TotalValueOfLoen4}" Grid.Column="1" Grid.Row="3" IsVisible="{Binding StaffIsConfirmed}" />
+                <Label Text="Totalt timeantal af Løn 4:     " FontAttributes="Bold" Grid.Column="0" Grid.Row="3" IsVisible="{Binding StaffIsConfirmed}" />
+                <Label Text="{Binding TotalValueOfLoen4}" FontAttributes="Bold" Grid.Column="1" Grid.Row="3" IsVisible="{Binding StaffIsConfirmed}" Margin="100,0,0,0"/>
             </Grid>
 
-            <CollectionView ItemsSource="{Binding WorkingHoursList}">
+            <CollectionView ItemsSource="{Binding WorkingHoursList}" Margin="0,0,0,20">
                 <CollectionView.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="400" />
                         </Grid.ColumnDefinitions>
 
                         <Label Text="Dato" Grid.Column="0" IsVisible="{Binding StaffIsConfirmed}" />
@@ -86,12 +88,13 @@
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="400" />
                             </Grid.ColumnDefinitions>
 
                             <Label Text="{Binding Date}" Grid.Column="0" IsVisible="{Binding StaffIsConfirmed}" />
@@ -105,7 +108,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 
 </ContentPage>

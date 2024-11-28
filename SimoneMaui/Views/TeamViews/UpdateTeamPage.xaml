@@ -75,11 +75,14 @@
             HorizontalOptions="Center">
             <Label
                 HorizontalOptions="Center"
-                Text="Antal elever på holdet:  ">
+                Text="Antal elever på holdet:  "
+                FontAttributes="Bold"
+                Margin="10,0,10,0 ">
             </Label>
             <Label
                 HorizontalOptions="Center"
-                Text="{Binding Count}">
+                Text="{Binding Count}"
+                FontAttributes="Bold">
             </Label>
         </HorizontalStackLayout>
         
@@ -87,7 +90,8 @@
             ItemsSource="{Binding DancersOnTeam, Mode=OneWay}"            
             SelectionMode="Single"            
             HorizontalOptions="Center"
-            VerticalOptions="Center">
+            VerticalOptions="Center"
+            Margin="20,10,20,10">
             
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -105,10 +109,7 @@
                                 
                                   </Style>
                         </Label.Style>
-                    </Label>
-                        
-                   
-                        
+                    </Label>            
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -121,7 +122,8 @@
         <Label 
             Text="Valgt elev:" 
             HorizontalOptions="Center"
-            IsVisible="{Binding DancerIsSelected}"/>
+            IsVisible="{Binding DancerIsSelected}"
+            FontAttributes="Bold"/>
 
         <HorizontalStackLayout
              HorizontalOptions="Center">
@@ -144,15 +146,18 @@
             HorizontalOptions="Center"
             Text="Føj valgte elev til holdet" 
             Command="{Binding AddDancerToTeamCommand}" 
-            IsVisible="{Binding PuttingDancerOnTeam}"/>
+            IsVisible="{Binding PuttingDancerOnTeam}"
+             Margin=" 10, 10, 10, 10"/>
 
         <Button 
             HorizontalOptions="Center"
             Text="Tildel valgte elev en prøvetime på holdet" 
             Command="{Binding AddTrialDancerCommand}" 
-            IsVisible="{Binding AddTrialDancerToTeam}"/>
+            IsVisible="{Binding AddTrialDancerToTeam}"
+            Margin=" 10, 10, 10, 10"/>
 
         <Button 
+            HorizontalOptions="Center"
             Text="Opdater og gem"  
             Margin="10, 10, 10, 10" 
             Command="{Binding FinalUpdateTeamCommand}"

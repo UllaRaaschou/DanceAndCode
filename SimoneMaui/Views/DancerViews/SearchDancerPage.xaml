@@ -66,13 +66,13 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Grid.Row="0" Grid.Column="0" Text="Name:" FontAttributes="Bold"/>
+                            <Label Grid.Row="0" Grid.Column="0" Text="Navn:" FontAttributes="Bold"/>
                             <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
 
-                            <Label Grid.Row="1" Grid.Column="0" Text="Time of Birth:" FontAttributes="Bold"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="Fødselsdag:" FontAttributes="Bold"/>
                             <Label Grid.Row="1" Grid.Column="1" Text="{Binding TimeOfBirth}"/>
 
-                            <Label Grid.Row="2" Grid.Column="0" Text="Teams:" FontAttributes="Bold"/>
+                            <Label Grid.Row="2" Grid.Column="0" Text="Tilmeldte hold:" FontAttributes="Bold"/>
                             <CollectionView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Teams}">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
