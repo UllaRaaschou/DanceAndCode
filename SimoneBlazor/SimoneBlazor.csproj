@@ -21,8 +21,4 @@
     <ProjectReference Include="..\SimoneAPI\SimoneAPI.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\NewFolder1\" />
-  </ItemGroup>
-
 </Project>
