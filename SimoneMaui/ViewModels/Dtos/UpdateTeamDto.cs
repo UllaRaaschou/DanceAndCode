@@ -11,8 +11,8 @@ namespace SimoneMaui.ViewModels.Dtos
         public Guid TeamId { get; set; } = Guid.Empty;
         public int Number { get; set; } = 0;
         public string Name { get; set; } = string.Empty;
-        public string SceduledTime { get; set; } = string.Empty;
-        public string TeamDetailsString => $"Hold {Number} '{Name}' - {SceduledTime}";
+        public string ScheduledTime { get; set; } = string.Empty;
+        public string TeamDetailsString => $"Hold {Number} '{Name}' - {ScheduledTime}";
 
 
 

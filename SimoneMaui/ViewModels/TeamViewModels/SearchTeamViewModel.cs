@@ -56,7 +56,7 @@ namespace SimoneMaui.ViewModels
         //private string number = string.Empty;
 
         [ObservableProperty]
-        private string sceduledTime = string.Empty;
+        private string scheduledTime = string.Empty;
 
         [ObservableProperty]
         private string teamDetailsString = string.Empty;
@@ -127,7 +127,7 @@ namespace SimoneMaui.ViewModels
         {
             TeamNameEntry = SelectedTeam.Name;
             TeamNumberEntry = int.TryParse(SelectedTeam.Number, out var teamNumberEntry)? teamNumberEntry:(int?)null;
-            SceduledTime = SelectedTeam.SceduledTime;
+            ScheduledTime = SelectedTeam.ScheduledTime;
             IsUpdateButtonVisible = true;
             IsDeleteButtonVisible = true;
             SearchResultVisible = false;

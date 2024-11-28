@@ -4,6 +4,7 @@ using SimoneAPI.DataModels;
 using SimoneAPI.Entities;
 using SimoneBlazor.Domain;
 using System.Runtime.CompilerServices;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SimoneBlazor.Components.Pages
 {
@@ -92,6 +93,15 @@ namespace SimoneBlazor.Components.Pages
             }
 
             StateHasChanged();
+            //selectedDate = DateTime.Today;
+            //Loen1 = new EntryItem();
+            //Loen2 = new EntryItem();
+            //Loen3 = new EntryItem();
+            //Loen4 = new EntryItem();
+            //IsVikar = false;
+            //Comment = string.Empty;
+
+
         }
 
         public string[] GetDropDownValues()

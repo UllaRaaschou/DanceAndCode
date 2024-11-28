@@ -45,7 +45,7 @@ namespace SimoneMaui.ViewModels
         [ObservableProperty]
         private string? startAndEndTime;
        
-        public string SceduledTime => $"{DayOfWeek} + {StartAndEndTime}";
+        public string ScheduledTime => $"{DayOfWeek} + {StartAndEndTime}";
 
         public IRelayCommand PostTeamCommand { get; }
         public INavigationService NavigationService { get; private set; }
@@ -119,11 +119,11 @@ namespace SimoneMaui.ViewModels
             string? number = NumberEntry?.ToString();
            
             var request = new RestRequest("/teams", Method.Post);
-            request.AddJsonBody(new { number, Name, SceduledTime, day });
+            request.AddJsonBody(new { number, Name, ScheduledTime, day });
 
             await client.PostAsync(request, CancellationToken.None);
 
-            NewTeamPosted?.Invoke($"Nyt dansehold oprettet: Hold {Number} '{Name}' - {SceduledTime}");
+            NewTeamPosted?.Invoke($"Nyt dansehold oprettet: Hold {Number} '{Name}' - {ScheduledTime}");
 
             NumberEntry = null;
             Number = string.Empty;

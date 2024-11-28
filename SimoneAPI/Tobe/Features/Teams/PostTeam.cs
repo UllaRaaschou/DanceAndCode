@@ -14,7 +14,7 @@ namespace SimoneAPI.Tobe.Features.Teams
             {
                 Number = int.Parse(dto.Number),
                 Name = dto.Name,
-                ScheduledTime = dto.SceduledTime,
+                ScheduledTime = dto.ScheduledTime,
                 DayOfWeek = dto.DayOfWeek
             };
 
@@ -26,7 +26,7 @@ namespace SimoneAPI.Tobe.Features.Teams
                 TeamId = teamDataModel.TeamId,
                 Number = teamDataModel.Number.ToString(),
                 Name = teamDataModel.Name,
-                SceduledTime = teamDataModel.ScheduledTime,
+                ScheduledTime = teamDataModel.ScheduledTime,
                 DayOfWeek = teamDataModel.DayOfWeek,
                 TeamDetailsString = $"Hold {teamDataModel.Number} '{teamDataModel.Name}' - {teamDataModel.ScheduledTime}"
     };
@@ -39,7 +39,7 @@ namespace SimoneAPI.Tobe.Features.Teams
         {
             public string Number { get; set; } = string.Empty;
             public string Name { get; set; } = string.Empty;
-            public string SceduledTime { get; set; } = string.Empty;
+            public string ScheduledTime { get; set; } = string.Empty;
             public DayOfWeek DayOfWeek { get; set; } = default;
 
         }
@@ -49,7 +49,7 @@ namespace SimoneAPI.Tobe.Features.Teams
             public Guid TeamId { get; set; }
             public string Number { get; set; } = string.Empty;
             public string Name { get; set; } = string.Empty;
-            public string SceduledTime { get; set; } = string.Empty;
+            public string ScheduledTime { get; set; } = string.Empty;
             public DayOfWeek DayOfWeek { get; set; } = default;
 
             public string TeamDetailsString { get; set; }

@@ -11,7 +11,7 @@ using SimoneAPI.DbContexts;
 namespace SimoneAPI.Migrations
 {
     [DbContext(typeof(SimoneDbContext))]
-    [Migration("20241128082717_FirstOne")]
+    [Migration("20241128121009_FirstOne")]
     partial class FirstOne
     {
         /// <inheritdoc />
@@ -107,7 +107,7 @@ namespace SimoneAPI.Migrations
                             ChristmasHolidayEnd = new DateOnly(2025, 1, 2),
                             ChristmasHolidayStart = new DateOnly(2024, 12, 23),
                             ChristmasShow = new DateOnly(2024, 12, 10),
-                            CreatedDate = new DateTime(2024, 11, 28, 8, 27, 17, 136, DateTimeKind.Utc).AddTicks(276),
+                            CreatedDate = new DateTime(2024, 11, 28, 12, 10, 9, 583, DateTimeKind.Utc).AddTicks(4044),
                             EasterHolidayEnd = new DateOnly(2025, 4, 17),
                             EasterHolidayStart = new DateOnly(2025, 4, 10),
                             RecitalShow = new DateOnly(2025, 6, 10),

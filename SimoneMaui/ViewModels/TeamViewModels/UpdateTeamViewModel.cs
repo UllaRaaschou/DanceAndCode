@@ -39,10 +39,13 @@ namespace SimoneMaui.ViewModels
         [TimeValidation(ErrorMessage = "Start- og sluttidspunkt skal være i formatet hh:mm")]
         [ObservableProperty]
         private string? startAndEndTime;
-        public string SceduledTime => $"{DayOfWeek} + {StartAndEndTime}";
+        public string ScheduledTime => $"{DayOfWeek} + {StartAndEndTime}";
 
         [ObservableProperty]
         private TeamDto? selectedTeam;
+
+        
+        
 
         [ObservableProperty]
         private DancerDto? selectedDancer;
@@ -161,7 +164,7 @@ namespace SimoneMaui.ViewModels
                 // The cancellation token comes from the caller. You can still make a call without it.
                 var request = new RestRequest($"/Teams", Method.Put);
 
-                request.AddJsonBody(new { SelectedTeam!.TeamId, Number, Name, StartAndEndTime, DancersOnTeam  });
+                request.AddJsonBody(new { SelectedTeam!.TeamId, Number, Name, ScheduledTime, DancersOnTeam  });
 
                 var returnedStatus = await client.PutAsync<TeamDto>(request, CancellationToken.None);
 
@@ -336,7 +339,7 @@ namespace SimoneMaui.ViewModels
                     SelectedTeam = teamDto;
                     Name = teamDto.Name;
                     Number = teamDto.Number;
-                    StartAndEndTime = teamDto.SceduledTime;
+                    StartAndEndTime = teamDto.ScheduledTime;
                     DancersOnTeam = new ObservableCollection<DancerDto>(teamDto.DancersOnTeam);
 
                 }

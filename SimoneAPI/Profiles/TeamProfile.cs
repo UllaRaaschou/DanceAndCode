@@ -31,7 +31,7 @@ namespace SimoneAPI.Profiles
             .ForMember(dest => dest.TeamId, opt => opt.MapFrom(src => src.TeamId))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.Number))
-            .ForMember(dest => dest.SceduledTime, opt => opt.MapFrom(src => src.ScheduledTime));
+            .ForMember(dest => dest.ScheduledTime, opt => opt.MapFrom(src => src.ScheduledTime));
 
 
             //CreateMap<TeamDataModel, SearchForTeamByNameOrNumber.GetTeamResponceDto>()

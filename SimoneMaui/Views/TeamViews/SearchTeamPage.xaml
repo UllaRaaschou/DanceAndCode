@@ -46,7 +46,7 @@
                      IsEnabled="{Binding IsTeamNameEntryEnabled, Mode=TwoWay}"/>
             <Entry  
                      HorizontalTextAlignment="Center"      
-                     Text="{Binding SceduledTime}"></Entry>
+                     Text="{Binding ScheduledTime}"></Entry>
             
             <Button
                      Margin="20,10,20,10"

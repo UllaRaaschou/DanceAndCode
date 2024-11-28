@@ -41,7 +41,7 @@ namespace SimoneAPI.Tobe.Features.Teams
                 TeamId = teamToUpdate.TeamId,
                 Number = teamToUpdate.Number.ToString(),
                 Name = teamToUpdate.Name,
-                SceduledTime = teamToUpdate.ScheduledTime,
+                ScheduledTime = teamToUpdate.ScheduledTime,
                 Dancers = teamToUpdate.TeamDancerRelations.Select(tdr =>
                 new DancerDto()
                 {
@@ -72,7 +72,7 @@ namespace SimoneAPI.Tobe.Features.Teams
             public Guid TeamId { get; set; }
             public string Number { get; set; } = string.Empty;
             public string Name { get; set; } = string.Empty;
-            public string SceduledTime { get; set; } = string.Empty;
+            public string ScheduledTime { get; set; } = string.Empty;
             public List<DancerDto> Dancers = new List<DancerDto>();
         }
     }

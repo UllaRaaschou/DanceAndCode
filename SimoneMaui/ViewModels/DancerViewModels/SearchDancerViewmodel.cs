@@ -159,7 +159,6 @@ namespace SimoneMaui.ViewModels
             if (NameEntry != null)
             {
                 request.AddOrUpdateParameter("name", NameEntry);
-                
             }
 
             var returnedCollection = await client.ExecuteGetAsync<List<DancerDto>>(request, CancellationToken.None);
@@ -173,22 +172,23 @@ namespace SimoneMaui.ViewModels
             }
 
             NameEntry = string.Empty;
-            
+
             if (!returnedCollection.Data.Any() || returnedCollection.Data == null)
             {
                 NoDancerFoundInDb.Invoke("Ingen danser i databasen matcher søgekritetriet");
             }
 
             DancerDtoList.Clear();
-     
-            foreach (var item in returnedCollection.Data)
+
+            // Sorter danserne alfabetisk efter navn
+            var sortedDancers = returnedCollection.Data.OrderBy(d => d.Name);
+
+            foreach (var item in sortedDancers)
             {
                 DancerDtoList.Add(item);
-
             }
-            searchResultVisible = true;
 
-            //return dancerCollection;
+            searchResultVisible = true;
         }
 
 

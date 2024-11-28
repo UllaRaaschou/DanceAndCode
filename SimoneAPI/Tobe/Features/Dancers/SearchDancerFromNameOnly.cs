@@ -37,7 +37,7 @@ namespace SimoneAPI.Tobe.Features.Dancers
                             TeamId = tdr.TeamDataModel.TeamId,
                             Number = tdr.TeamDataModel.Number.ToString(),
                             Name = tdr.TeamDataModel.Name,
-                            SceduledTime = tdr.TeamDataModel.ScheduledTime,
+                            ScheduledTime = tdr.TeamDataModel.ScheduledTime,
                             IsTrialLesson = tdr.IsTrialLesson
                         }
                         ).ToList())
@@ -62,7 +62,7 @@ namespace SimoneAPI.Tobe.Features.Dancers
             public Guid TeamId { get; set; }
             public string Number { get; set; } = string.Empty;
             public string Name { get; set; } = string.Empty;
-            public string SceduledTime { get; set; } = string.Empty;
+            public string ScheduledTime { get; set; } = string.Empty;
             public string TeamDetails { get; set; } = string.Empty;
             public bool IsTrialLesson { get; set; } = false;
 
@@ -73,7 +73,7 @@ namespace SimoneAPI.Tobe.Features.Dancers
 
             private void UpdateTeamDetails()
             {
-                TeamDetails = $"Hold {Number} '{Name}' - {SceduledTime}";
+                TeamDetails = $"Hold {Number} '{Name}' - {ScheduledTime}";
             }
 
         }

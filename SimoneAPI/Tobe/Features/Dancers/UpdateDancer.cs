@@ -56,7 +56,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
                         TeamId = tdr.TeamDataModel.TeamId,
                         Number = tdr.TeamDataModel.Number.ToString(),
                         Name = tdr.TeamDataModel.Name,
-                        SceduledTime = tdr.TeamDataModel.ScheduledTime,
+                        ScheduledTime = tdr.TeamDataModel.ScheduledTime,
                         DayOfWeek = tdr.TeamDataModel.DayOfWeek,
                         EnrolledDancers = tdr.TeamDataModel.TeamDancerRelations.Select(tdr =>
                         new RequestDancerDto
@@ -100,7 +100,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
             public Guid TeamId { get; set; }
             public string Number { get; set; } = string.Empty;
             public string Name { get; set; } = string.Empty;
-            public string SceduledTime { get; set; } = string.Empty;
+            public string ScheduledTime { get; set; } = string.Empty;
             public ICollection<RequestDancerDto>? EnrolledDancers { get; set; } = new List<RequestDancerDto>();
             public DateOnly LastDancedate { get; set; } = default;
             public DayOfWeek DayOfWeek { get; set; } = default;
