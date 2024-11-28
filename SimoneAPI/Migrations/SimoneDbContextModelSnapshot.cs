@@ -104,7 +104,7 @@ namespace SimoneAPI.Migrations
                             ChristmasHolidayEnd = new DateOnly(2025, 1, 2),
                             ChristmasHolidayStart = new DateOnly(2024, 12, 23),
                             ChristmasShow = new DateOnly(2024, 12, 10),
-                            CreatedDate = new DateTime(2024, 11, 28, 12, 10, 9, 583, DateTimeKind.Utc).AddTicks(4044),
+                            CreatedDate = new DateTime(2024, 11, 28, 13, 17, 6, 237, DateTimeKind.Utc).AddTicks(4453),
                             EasterHolidayEnd = new DateOnly(2025, 4, 17),
                             EasterHolidayStart = new DateOnly(2025, 4, 10),
                             RecitalShow = new DateOnly(2025, 6, 10),
@@ -760,7 +760,7 @@ namespace SimoneAPI.Migrations
                         new
                         {
                             TeamId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            DayOfWeek = 0,
+                            DayOfWeek = 1,
                             Name = "Hiphop1",
                             Number = 1,
                             ScheduledTime = "Mandag 16:00 - 16:45"
@@ -768,7 +768,7 @@ namespace SimoneAPI.Migrations
                         new
                         {
                             TeamId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            DayOfWeek = 0,
+                            DayOfWeek = 2,
                             Name = "MGP",
                             Number = 2,
                             ScheduledTime = "Tirsdag 15:15 - 16:00"
@@ -776,7 +776,7 @@ namespace SimoneAPI.Migrations
                         new
                         {
                             TeamId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            DayOfWeek = 0,
+                            DayOfWeek = 3,
                             Name = "Ballet",
                             Number = 3,
                             ScheduledTime = "Onsdag 17:00 - 17:45"
@@ -784,7 +784,7 @@ namespace SimoneAPI.Migrations
                         new
                         {
                             TeamId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            DayOfWeek = 0,
+                            DayOfWeek = 4,
                             Name = "Hiphop2",
                             Number = 4,
                             ScheduledTime = "Torsdag 16:00 - 16:45"
@@ -792,7 +792,7 @@ namespace SimoneAPI.Migrations
                         new
                         {
                             TeamId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            DayOfWeek = 0,
+                            DayOfWeek = 5,
                             Name = "Streetdance",
                             Number = 5,
                             ScheduledTime = "Fredag 15:00 - 15:45"
@@ -800,7 +800,7 @@ namespace SimoneAPI.Migrations
                         new
                         {
                             TeamId = new Guid("66666666-6666-6666-6666-666666666666"),
-                            DayOfWeek = 0,
+                            DayOfWeek = 6,
                             Name = "Argentinsk Tango",
                             Number = 6,
                             ScheduledTime = "Lørdag 11:00 - 11:45"
@@ -808,7 +808,7 @@ namespace SimoneAPI.Migrations
                         new
                         {
                             TeamId = new Guid("77777777-7777-7777-7777-777777777777"),
-                            DayOfWeek = 0,
+                            DayOfWeek = 1,
                             Name = "Salsa",
                             Number = 7,
                             ScheduledTime = "Mandag 18:00 - 18:45"
@@ -816,7 +816,7 @@ namespace SimoneAPI.Migrations
                         new
                         {
                             TeamId = new Guid("88888888-8888-8888-8888-888888888888"),
-                            DayOfWeek = 0,
+                            DayOfWeek = 2,
                             Name = "Showdance 1",
                             Number = 8,
                             ScheduledTime = "Tirsdag 17:00 - 17:45"
@@ -824,7 +824,7 @@ namespace SimoneAPI.Migrations
                         new
                         {
                             TeamId = new Guid("99999999-9999-9999-9999-999999999999"),
-                            DayOfWeek = 0,
+                            DayOfWeek = 3,
                             Name = "Showdance 2",
                             Number = 9,
                             ScheduledTime = "Onsdag 18:00 - 18:45"
@@ -832,7 +832,7 @@ namespace SimoneAPI.Migrations
                         new
                         {
                             TeamId = new Guid("07000000-0000-0000-0000-000000000000"),
-                            DayOfWeek = 0,
+                            DayOfWeek = 4,
                             Name = "Showdance 3",
                             Number = 10,
                             ScheduledTime = "Torsdag 17:15 - 18:00"
