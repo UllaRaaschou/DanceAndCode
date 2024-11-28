@@ -31,7 +31,7 @@ namespace SimoneAPI.Profiles
             //        TeamId = tdr.TeamDataModel.TeamId,
             //        Number = tdr.TeamDataModel.Number.ToString(),
             //        Name = tdr.TeamDataModel.Name,
-            //        SceduledTime = tdr.TeamDataModel.SceduledTime
+            //        ScheduledTime = tdr.TeamDataModel.ScheduledTime
             //    })
             //    : Enumerable.Empty<SearchDancerFromNameOnly.TeamDto>()));
 

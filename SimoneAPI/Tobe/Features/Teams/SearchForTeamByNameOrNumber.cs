@@ -38,7 +38,7 @@ namespace SimoneAPI.Tobe.Features
                 teamDto.TeamId = teamDataModel.TeamId;
                 teamDto.Name = teamDataModel.Name;
                 teamDto.Number = teamDataModel.Number.ToString();
-                teamDto.SceduledTime = teamDataModel.ScheduledTime.ToString();
+                teamDto.ScheduledTime = teamDataModel.ScheduledTime.ToString();
                 var dancerIdsOnTeam = new List<Guid>();
                 var dancersOnTeam = new List<DancerDto>();
                 if(teamDataModel.TeamDancerRelations!= null) 
@@ -60,7 +60,7 @@ namespace SimoneAPI.Tobe.Features
         public Guid TeamId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Number { get; set; } = string.Empty;     
-        public string SceduledTime { get; set; } = string.Empty;
+        public string ScheduledTime { get; set; } = string.Empty;
         public List<DancerDto> DancersOnTeam { get; set; } = [];
     }
 

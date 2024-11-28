@@ -16,7 +16,7 @@ namespace SimoneMaui.ViewModels.Dtos
         public bool IsHighlighted { get; set; } = false;
         public bool IsTrialLesson { get; set; } = false;
         public string DancerDetailsString => $"{Name} {TimeOfBirth} {IfTrialLessonIsTrue}";
-        public string IfTrialLessonIsTrue => IsTrialLesson ? " - PRØVETIME" : "jj";
+        public string IfTrialLessonIsTrue => IsTrialLesson ? " - PRØVETIME" : "";
 
         public DateOnly LastDancedate { get; set; } = default;
     }

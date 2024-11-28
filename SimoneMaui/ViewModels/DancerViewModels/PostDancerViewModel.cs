@@ -84,7 +84,8 @@ namespace SimoneMaui.ViewModels
             else 
             {
                 System.Diagnostics.Debug.WriteLine("Invalid date format");
-            }          
+            }
+            await Shell.Current.GoToAsync($"//firstPage?unique={Guid.NewGuid()}");
         }
 
         private string FormatProblemDetails(ProblemDetails problem)
