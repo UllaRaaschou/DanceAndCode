@@ -76,7 +76,7 @@ builder.Services.AddAuthentication("BasicAuthorization")
 builder.Services.AddAuthorization();
 
 
-builder.Services.AddSingleton<CalendarDataModel>();
+builder.Services.AddSingleton<CalendarDataModel>(); // Registrering i Dependency Injection - Containeren
 
 
 //Har profiler som parametre, som scannes for mapping-konfigurationer
