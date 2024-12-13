@@ -3,10 +3,10 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 using System.Text.Json;
-using SimoneMaui.ViewModels.Dtos;
 using CommunityToolkit.Maui.Alerts;
 using System.Collections.ObjectModel;
 using SimoneMaui.Navigation;
+using SimoneMaui.Models;
 
 namespace SimoneMaui.ViewModels
 {

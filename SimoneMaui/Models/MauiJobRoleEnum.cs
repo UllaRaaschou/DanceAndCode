@@ -1,4 +1,4 @@
-﻿namespace SimoneMaui.ViewModels.Dtos
+﻿namespace SimoneMaui.Models
 {
     public enum MauiJobRoleEnum
     {
@@ -6,6 +6,6 @@
         Teacher,
         SubstituteTeacher,
         Assistant
-        
+
     }
 }

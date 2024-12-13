@@ -2,8 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
+using SimoneMaui.Models;
 using SimoneMaui.Navigation;
-using SimoneMaui.ViewModels.Dtos;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 

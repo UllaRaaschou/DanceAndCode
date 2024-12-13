@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RestSharp;
+using SimoneMaui.Models;
 using SimoneMaui.Navigation;
-using SimoneMaui.ViewModels.Dtos;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 

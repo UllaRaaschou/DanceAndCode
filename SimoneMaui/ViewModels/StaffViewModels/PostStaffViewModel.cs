@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RestSharp;
-using SimoneMaui.ViewModels.Dtos;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Xml.Linq;
@@ -9,6 +8,7 @@ using RestSharp.Serializers.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using SimoneMaui.Navigation;
+using SimoneMaui.Models;
 
 namespace SimoneMaui.ViewModels
 {

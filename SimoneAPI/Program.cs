@@ -8,17 +8,9 @@ using SimoneAPI.EndpointExtensions;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
-
-
-
-
 // Tilføj logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
-
-
 
 // Add services to the container.
 builder.Services.AddDbContext<SimoneDbContext>(options =>
@@ -67,21 +59,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddProblemDetails();
 builder.Services.AddAuthentication("BasicAuthorization")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthorization", null);//.AddJwtBearer();
-//builder.Services.AddAuthorization(options =>
-//{
-//    options.FallbackPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
-//    .RequireAuthenticatedUser()
-//    .Build();
-//});
 builder.Services.AddAuthorization();
-
-
 builder.Services.AddSingleton<CalendarDataModel>(); // Registrering i Dependency Injection - Containeren
-
-
-//Har profiler som parametre, som scannes for mapping-konfigurationer
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -95,10 +75,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 // Build the application
 var app = builder.Build();
 
-
-
 app.UseCors();
-
 
 //Register endpoints
 app.UseAuthentication();
@@ -110,24 +87,18 @@ app.RegisterStaffEndpoints();
 app.RegisterRelationEndpoints();
 app.RegisterWorkingHoursEndpoints();
 
-
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<SimoneDbContext>();
     //context.Database.EnsureCreated();
     context.Database.Migrate();
 }
-
-
 // Configure the HTTP request pipeline.
 
 if (!app.Environment.IsDevelopment()) 
     {
     app.UseExceptionHandler();
     }
-
-
-
 
 app.UseHttpsRedirection();
 
@@ -146,8 +117,6 @@ app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
 });
-
-
 
 app.Run();
 

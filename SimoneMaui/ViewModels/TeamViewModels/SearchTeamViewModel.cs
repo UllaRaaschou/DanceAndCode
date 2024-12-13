@@ -5,9 +5,9 @@ using RestSharp;
 using SimoneMaui.Navigation;
 using System.Collections.ObjectModel;
 using System.Text.Json;
-using SimoneMaui.ViewModels.Dtos;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using SimoneMaui.Models;
 
 namespace SimoneMaui.ViewModels
 {

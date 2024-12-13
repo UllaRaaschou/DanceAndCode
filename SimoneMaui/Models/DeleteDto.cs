@@ -1,4 +1,4 @@
-﻿namespace SimoneMaui.ViewModels.Dtos
+﻿namespace SimoneMaui.Models
 {
     public class DeleteDto
     {

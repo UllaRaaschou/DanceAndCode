@@ -17,9 +17,6 @@ namespace SimoneAPI.EndpointExtensions
                 .WithName("GetAllDancersOnTeam")
                 .WithOpenApi()
                 .WithSummary("Get all dancers on a team");
-
-
-
             
             //.RequireAuthorization();
             var dancersWithGuidEndpoints = dancersEndpoints.MapGroup("/{dancerId:guid}");
@@ -28,9 +25,7 @@ namespace SimoneAPI.EndpointExtensions
                 .WithName("GetDancer")
                 .WithOpenApi()
                 .WithSummary("Get a dancer by adding an id")
-                .WithDescription("This could be a longer desccription of the process");
-
-            
+                .WithDescription("This could be a longer desccription of the process");            
 
             dancersEndpoints.MapPost("", PostDancer.Post)
                 .WithName("PostDancer")
@@ -46,11 +41,6 @@ namespace SimoneAPI.EndpointExtensions
                 .WithName("DeleteDancer")
                 .WithOpenApi()
                 .WithSummary("Delete a dancer from database");
-
-            //dancersWithGuidEndpoints.MapDelete("/Teams/{TeamId}", DeleteItemFromDancersListOfTeams.DeleteItemFromListOfTeams)
-            //    .WithName("DeleteItemFromDancersListOfTeams")
-            //    .WithOpenApi()
-            //    .WithSummary("Delete a team from a dancers list of teams");
 
             dancersEndpoints.MapGet("/SearchDancerFromNameOnly", SearchDancerFromNameOnly.Search)
                 .WithName("SearchForDancerFromName")
@@ -110,9 +100,7 @@ namespace SimoneAPI.EndpointExtensions
                 .WithName("UpdateTeam")
                 .WithOpenApi()
                 .WithSummary("Update basic data of a team");
-
-            //teamsEndpoints.MapGet("")
-
+         
             teamsWithGuidEndpoints.MapGet("", GetTeamById.Get)
                 .WithName("GetTeamById")
                 .WithOpenApi()
@@ -177,19 +165,10 @@ namespace SimoneAPI.EndpointExtensions
                .WithName("DeleteAttendance")
                .WithOpenApi()
                .WithSummary("Delete a dancers attendance on a team");
-
-            //    attendanceEndpoints.MapPut("", UpdateAttendance.Put)
-            //      .WithName("UpdateAttendance")
-            //      .WithOpenApi()
-            //      .WithSummary("Update a dancers attendance on a team");
-            //}
         }
 
         public static void RegisterStaffEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
         {
-
-
-            //TODO: BRUG TAG TIL AT GRUPPERE GET/PUT/POST SAMMEN SE STAFFMEMBER I SWAGGER
             var staffEndpoints = endpointRouteBuilder.MapGroup("/StaffMember")
                 .WithTags("StaffMember")
                 .WithOpenApi();
@@ -211,26 +190,10 @@ namespace SimoneAPI.EndpointExtensions
                 .WithName("UpdateStaff")
                 .WithSummary("Update basic data of a member of staff by Id");
 
-
-            //staffWithGuidEndpoints.MapPut("/{workedHours:decimal}/{date:datetime}", RegisterWorkingHours.Register)
-            //    .WithName("RegisterWorkingHours")
-            //    .WithSummary("Add a new register of working hours");
-
-            //staffWithGuidEndpoints.MapGet("/{firstDayOfPeriod:dateOnly}/{lastDayInPeriod:dateOnly}", GetNumberOfWorkingHoursForPeriod.Get)
-            //    .WithName("GeNumberOfWorkingHoursForPeriod")
-            //    .WithSummary("Write a period and get the number of working hours for a staff in that periode returned");
-
-            //staffEndpoints.MapPut("", UpdateStaff.Put)
-            //    .WithName("UpdateStaff")
-            //    .WithOpenApi()
-            //    .WithSummary("Update a member of staff");
-
             staffWithGuidEndpoints.MapDelete("", DeleteStaff.Delete)
                 .WithName("DeleteStaff")
                 .WithOpenApi()
                 .WithSummary("Delete a member of staff");
-
-
         }
 
 
@@ -243,11 +206,8 @@ namespace SimoneAPI.EndpointExtensions
             workingHoursEndpoints.MapGet("/{staffId:guid}", GetWorkingHours.Get)
                 .WithSummary("Post a new registration of working hours");
 
-            //var staffWithGuidEndpoints = staffEndpoints.MapGroup("/{staffId:guid}");
-
             workingHoursEndpoints.MapPost("", RegisterWorkingHours.Register)
                 .WithSummary("Post a new registration of working hours");
-
             
         }
     }

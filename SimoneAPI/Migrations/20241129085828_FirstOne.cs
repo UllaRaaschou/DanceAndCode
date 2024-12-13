@@ -155,7 +155,7 @@ namespace SimoneAPI.Migrations
             migrationBuilder.InsertData(
                 table: "CalendarDataModels",
                 columns: new[] { "CalendarId", "AutumnHolidayEnd", "AutumnHolidayStart", "ChristmasHolidayEnd", "ChristmasHolidayStart", "ChristmasShow", "CreatedDate", "EasterHolidayEnd", "EasterHolidayStart", "RecitalShow", "SummerHolidayEnd", "SummerHolidayStart", "WintherHolidayEnd", "WintherHolidayStart" },
-                values: new object[] { new Guid("00000000-1111-0000-0000-000000000000"), new DateOnly(2024, 10, 21), new DateOnly(2024, 10, 17), new DateOnly(2025, 1, 2), new DateOnly(2024, 12, 23), new DateOnly(2024, 12, 10), new DateTime(2024, 11, 28, 13, 17, 6, 237, DateTimeKind.Utc).AddTicks(4453), new DateOnly(2025, 4, 17), new DateOnly(2025, 4, 10), new DateOnly(2025, 6, 10), new DateOnly(2024, 8, 7), new DateOnly(2024, 6, 27), new DateOnly(2025, 2, 17), new DateOnly(2025, 2, 13) });
+                values: new object[] { new Guid("00000000-1111-0000-0000-000000000000"), new DateOnly(2024, 10, 21), new DateOnly(2024, 10, 17), new DateOnly(2025, 1, 2), new DateOnly(2024, 12, 23), new DateOnly(2024, 12, 10), new DateTime(2024, 11, 29, 8, 58, 28, 53, DateTimeKind.Utc).AddTicks(2981), new DateOnly(2025, 4, 17), new DateOnly(2025, 4, 10), new DateOnly(2025, 6, 10), new DateOnly(2024, 8, 7), new DateOnly(2024, 6, 27), new DateOnly(2025, 2, 17), new DateOnly(2025, 2, 13) });
 
             migrationBuilder.InsertData(
                 table: "DancerDataModels",

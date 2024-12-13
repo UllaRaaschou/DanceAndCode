@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using SimoneAPI.DbContexts;
-using SimoneAPI.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace SimoneAPI.Tobe.Features.Dancer
@@ -9,8 +8,7 @@ namespace SimoneAPI.Tobe.Features.Dancer
 
     public static class GetDancerById
     {
-        public static async Task<Results<NotFound, Ok<GetDancerResponceDto>>> Get(
-            SimoneDbContext dbContext, IMapper mapper, Guid dancerId)
+        public static async Task<Results<NotFound, Ok<GetDancerResponceDto>>> Get(SimoneDbContext dbContext, IMapper mapper, Guid dancerId)
         {
             var datamodel = await dbContext.DancerDataModels.FirstOrDefaultAsync(x =>
             x.DancerId == dancerId);
@@ -20,8 +18,15 @@ namespace SimoneAPI.Tobe.Features.Dancer
                 ? TypedResults.Ok(responceDto) 
                 : TypedResults.NotFound();
         }
-
     }
+
+
+
+
+
+
+
+
 
     public class GetDancerResponceDto
     {

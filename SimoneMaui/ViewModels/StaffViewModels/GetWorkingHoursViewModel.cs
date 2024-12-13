@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RestSharp;
+using SimoneMaui.Models;
 using SimoneMaui.Navigation;
-using SimoneMaui.ViewModels.Dtos;
 using System.Collections.ObjectModel;
 
 namespace SimoneMaui.ViewModels.StaffViewModels

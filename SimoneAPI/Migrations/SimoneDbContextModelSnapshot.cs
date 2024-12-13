@@ -104,7 +104,7 @@ namespace SimoneAPI.Migrations
                             ChristmasHolidayEnd = new DateOnly(2025, 1, 2),
                             ChristmasHolidayStart = new DateOnly(2024, 12, 23),
                             ChristmasShow = new DateOnly(2024, 12, 10),
-                            CreatedDate = new DateTime(2024, 11, 28, 13, 17, 6, 237, DateTimeKind.Utc).AddTicks(4453),
+                            CreatedDate = new DateTime(2024, 11, 29, 8, 58, 28, 53, DateTimeKind.Utc).AddTicks(2981),
                             EasterHolidayEnd = new DateOnly(2025, 4, 17),
                             EasterHolidayStart = new DateOnly(2025, 4, 10),
                             RecitalShow = new DateOnly(2025, 6, 10),

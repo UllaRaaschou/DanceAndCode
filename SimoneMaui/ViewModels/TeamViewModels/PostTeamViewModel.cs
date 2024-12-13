@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using RestSharp;
 using RestSharp.Serializers.Json;
 using SimoneMaui.Navigation;
-using SimoneMaui.ViewModels.Dtos;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;

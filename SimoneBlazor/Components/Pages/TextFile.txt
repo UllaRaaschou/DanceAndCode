@@ -1,0 +1,62 @@
+﻿Enum-class:
+public enum LoengroupEnum
+{
+    Loen1,
+    Loen2,
+    Loen3,
+    Loen4
+}
+
+
+Registration-class:
+public class Registration
+{
+    public LoengroupEnum Loengroup { get; set; }
+    public double Hours { get; set; }
+}
+
+
+
+
+Blazor-component:
+
+@page "/register" // Definerer ruten for denne side
+@using SimoneBlazor 
+
+@code {
+    // Opretter en ny instans af Registration-klassen
+    private Registration registration = new Registration();
+    
+    // Variabler til binding i formularen
+    private LoengroupEnum selectedLoengroup; // Valgt løngruppe
+    private double hours; // Indtastede timer
+
+    // Metode til at gemme registreringen
+    private void SaveRegistration()
+    {
+        registration.Loengroup = selectedLoengroup; // Sætter den valgte løngruppe
+        registration.Hours = hours; // Sætter de indtastede timer
+        // Gem registreringen i databasen eller udfør andre handlinger
+    }
+}
+
+<h3>Register Hours</h3> <!-- Overskrift for formularen -->
+
+<div>
+    <!-- Label og inputfelt for antal timer -->
+    <label for="hours">Hours:</label>
+    <input type="number" id="hours" @bind="hours" />
+
+    <!-- Label og dropdown-menu for valg af løngruppe -->
+    <label for="loengroup">Loengroup:</label>
+    <select id="loengroup" @bind="selectedLoengroup">
+        @foreach (var loengroup in Enum.GetValues(typeof(LoengroupEnum)))
+        {
+            <option value="@loengroup">@loengroup</option> <!-- Dropdown-muligheder -->
+        }
+    </select>
+
+    <!-- Knap til at gemme registreringen -->
+    <button @onclick="SaveRegistration">Save</button>
+</div>
+

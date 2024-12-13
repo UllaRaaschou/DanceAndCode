@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 using SimoneMaui.Navigation;
-using SimoneMaui.ViewModels.Dtos;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;

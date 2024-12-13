@@ -1,7 +1,7 @@
 ﻿
 using SimoneMaui.Views;
-using SimoneMaui.ViewModels.Dtos;
 using SimoneMaui.Views.TeamViews;
+using SimoneMaui.Models;
 namespace SimoneMaui.Navigation
 {
 

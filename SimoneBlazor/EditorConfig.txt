@@ -1,0 +1,6 @@
+﻿# top-most EditorConfig file
+root = true
+
+# Ignore CSS039 warning in .razor files
+[*.razor]
+dotnet_diagnostic.CSS039.severity = none

@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 using System.Collections.ObjectModel;
 using System.Text.Json;
-using SimoneMaui.ViewModels.Dtos;
 using SimoneMaui.Navigation;
+using SimoneMaui.Models;
 
 namespace SimoneMaui.ViewModels
 {

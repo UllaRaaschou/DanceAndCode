@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace SimoneMaui.ViewModels.Dtos
+namespace SimoneMaui.Models
 {
     public class TeamDto
     {
@@ -8,7 +8,7 @@ namespace SimoneMaui.ViewModels.Dtos
         public string Number { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string ScheduledTime { get; set; } = string.Empty;
-        public DayOfWeek DayOfWeek { get; set; }=default;
+        public DayOfWeek DayOfWeek { get; set; } = default;
         public DateOnly LastDancedate { get; set; } = default;
 
         public bool IsTrialLesson { get; set; } = false;
@@ -17,7 +17,7 @@ namespace SimoneMaui.ViewModels.Dtos
         public ObservableCollection<DancerDto> DancersOnTeam { get; set; } = new();
         public int Count => DancersOnTeam?.Count ?? 0;
 
-       
+
 
     }
 }

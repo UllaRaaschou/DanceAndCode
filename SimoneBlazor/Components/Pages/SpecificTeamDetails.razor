@@ -1,6 +1,7 @@
 ﻿@page "/SpecificTeamDetails/{TeamId:guid}"
 @rendermode InteractiveServer   // sætter signalR-connection op
 
+<!-- Internal CSS-styling -->
 <style>
     .attendance-button {
         position: relative;
@@ -32,7 +33,7 @@
     <br />
 
     <table class="table table-light">
-        <!-- Tilføjet CSS-klasse til thead for at gøre den øverste række lyserød -->
+        <!-- Internal CSS-styling i anvendelse, hvor Css defineret i style element højere oppe på siden              -->
         <thead class="header-pink">            
             <tr>
                 <th></th>
@@ -55,6 +56,8 @@
                             <button type="button"
                                     @onclick="(() => ChangeAttendanceStatus(relation.DancerId, att.Date, att.IsPresent ))"
                                     class=" btn btn-outline-primary attendance-button">
+
+                                <!-- Inline styling.         -->                               
                             <span class="checkmark" style="display: @(att.IsPresent ? "inline" : "none")">✔</span>
                             </button>                           
                         </td>

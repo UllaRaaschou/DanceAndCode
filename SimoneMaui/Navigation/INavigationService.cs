@@ -1,4 +1,4 @@
-﻿using SimoneMaui.ViewModels.Dtos;
+﻿using SimoneMaui.Models;
 
 namespace SimoneMaui.Navigation;
 public interface INavigationService
